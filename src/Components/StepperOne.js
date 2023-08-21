@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useTheme } from "@mui/material/styles";
-import Box from "@mui/material/Box";
+import { useRef } from 'react'
 import Card from "@mui/material/Card";
 import CardHeader from "react-bootstrap/esm/CardHeader";
 import CardContent from "@mui/material/CardContent";
@@ -14,31 +14,35 @@ import { Button } from "@mui/material";
 import { Info } from "@mui/icons-material";
 import axios from "axios";
 
+
+
 const validationSchema = yup.object({
   email: yup
     .string("Enter your email")
     .email("Enter a valid email")
     .required("Email is required"),
-  name: yup.string("Enter your name").required("Family Name is required"),
+  name: yup.string("Enter your Family name").required("Family Name is required"),
   firstName: yup
     .string("Enter your FirstName")
-    .required("FirstName is required"),
+    .required("First name is required"),
   nationality: yup
     .string("Enter your nationality")
     .required("Nationality is required"),
   portOfArrival: yup
-    .string("Enter your Port Of Arrival")
-    .required("Port Of Arrival is required"),
-  dob: yup.string("Enter your Date of Birth").required("Password is required"),
+    .string("Enter your Port of arrival")
+    .required("Port of arrival is required"),
+  dob: yup.string("Enter your Date of Birth").required("Date of Birth is required"),
   phoneNumber: yup
-    .string("Enter your phoneNumber")
-    .required("Password is required"),
+    .string("Enter your Phone number")
+    .required("Phone number is required"),
   EDOA: yup
     .string("Enter your expected date of Arrival")
-    .required("Password is required"),
+    .required("Expected date of Arrival is required"),
   visaService: yup
-    .string("Enter your visaService")
-    .required("Password is required"),
+    .string("Enter your Visa service")
+    .required("Visa service is required"),
+    visaOptions: yup
+    .string("Enter your Visa Option")
 });
 
 export default function StepperOne() {
@@ -56,6 +60,7 @@ export default function StepperOne() {
     visaService: "",
     visaOptions: [],
   });
+
 
   const map = {
     "eTOURIST VISA": [
@@ -82,6 +87,7 @@ export default function StepperOne() {
     "G20 eConference VISA": [],
   };
 
+  
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -102,7 +108,8 @@ export default function StepperOne() {
     },
   });
 
-  console.log(map[formik.values.visaService]);
+  const inputRef = useRef()
+  const inputRef2 = useRef()
 
   return (
     <Card>
@@ -231,6 +238,7 @@ export default function StepperOne() {
                 }
               />
             </Grid>
+
             <Grid item xs={12} md={6}>
               <TextField
                 fullWidth
@@ -263,6 +271,10 @@ export default function StepperOne() {
                 }}
                 onChange={formik.handleChange}
                 value={formik.values.dob}
+                inputRef={inputRef}
+                onClick={() => {
+                  inputRef.current.showPicker()
+                }} 
                 onBlur={formik.handleBlur}
                 error={formik.touched.dob && Boolean(formik.errors.dob)}
                 helperText={formik.touched.dob && formik.errors.dob}
@@ -330,6 +342,10 @@ export default function StepperOne() {
                 }}
                 onChange={formik.handleChange}
                 value={formik.values.EDOA}
+                inputRef={inputRef2}
+                onClick={() => {
+                  inputRef2.current.showPicker()
+                }} 
                 onBlur={formik.handleBlur}
                 error={formik.touched.EDOA && Boolean(formik.errors.EDOA)}
                 helperText={formik.touched.EDOA && formik.errors.EDOA}
