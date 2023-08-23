@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useTheme } from "@mui/material/styles";
-import { useRef } from 'react'
+import { useRef } from "react";
 import Card from "@mui/material/Card";
 import CardHeader from "react-bootstrap/esm/CardHeader";
 import CardContent from "@mui/material/CardContent";
@@ -13,15 +13,24 @@ import Question from "@mui/icons-material/QuestionMarkRounded";
 import { Button } from "@mui/material";
 import { Info } from "@mui/icons-material";
 import axios from "axios";
-
-
+import Spinner from "../utils/Spinner";
+import Notification from "../utils/Notification";
+import { COUNTRIES } from "../utils/Countries";
+import Captcha from "./Captcha";
+import {MonthMap} from '../utils/MonthMap'
 
 const validationSchema = yup.object({
   email: yup
     .string("Enter your email")
     .email("Enter a valid email")
     .required("Email is required"),
-  name: yup.string("Enter your Family name").required("Family Name is required"),
+  reEmail: yup
+    .string("Enter your email")
+    .email("Should match the email")
+    .required("Email is required"),
+  name: yup
+    .string("Enter your Family name")
+    .required("Family Name is required"),
   firstName: yup
     .string("Enter your FirstName")
     .required("First name is required"),
@@ -31,7 +40,9 @@ const validationSchema = yup.object({
   portOfArrival: yup
     .string("Enter your Port of arrival")
     .required("Port of arrival is required"),
-  dob: yup.string("Enter your Date of Birth").required("Date of Birth is required"),
+  dob: yup
+    .string("Enter your Date of Birth")
+    .required("Date of Birth is required"),
   phoneNumber: yup
     .string("Enter your Phone number")
     .required("Phone number is required"),
@@ -41,8 +52,7 @@ const validationSchema = yup.object({
   visaService: yup
     .string("Enter your Visa service")
     .required("Visa service is required"),
-    visaOptions: yup
-    .string("Enter your Visa Option")
+  visaOptions: yup.string("Enter your Visa Option"),
 });
 
 export default function StepperOne() {
@@ -61,6 +71,11 @@ export default function StepperOne() {
     visaOptions: [],
   });
 
+  const [loader, setLoader] = React.useState(false);
+  const [notification, setNotification] = React.useState({
+    open: false,
+    content: "",
+  });
 
   const map = {
     "eTOURIST VISA": [
@@ -87,7 +102,6 @@ export default function StepperOne() {
     "G20 eConference VISA": [],
   };
 
-  
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -96,6 +110,7 @@ export default function StepperOne() {
       portOfArrival: "",
       dob: "",
       email: "",
+      reEmail: "",
       phoneNumber: "",
       EDOA: "",
       visaService: "",
@@ -103,13 +118,30 @@ export default function StepperOne() {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      const response = await axios.post("http://localhost:8081/create", values);
-      console.log(response);
+      setLoader(true);
+      try {
+        const response = await axios.post(
+          "http://localhost:8081/create",
+          values
+        );
+      } catch (error) {
+        setLoader(false);
+        setNotification({ ...notification, open: true, content: "Error!" });
+      }
+      setLoader(false);
     },
   });
 
-  const inputRef = useRef()
-  const inputRef2 = useRef()
+  const setOpen = () => {
+    setNotification({ ...notification, open: false, content: "" });
+  };
+
+  const handleCP = (e) => {
+    e.preventDefault();
+  };
+
+  const inputRef = useRef();
+  const inputRef2 = useRef();
 
   return (
     <Card>
@@ -124,10 +156,17 @@ export default function StepperOne() {
       >
         Personal Details
       </CardHeader>
+      {
+        <Notification
+          open={notification.open}
+          content={notification.content}
+          handleClose={setOpen}
+        ></Notification>
+      }
       <CardContent sx={{ flex: "1 0 auto" }} style={{ padding: "30px" }}>
         <form onSubmit={formik.handleSubmit}>
-          <Grid container columnSpacing={8} rowSpacing={2}>
-            <Grid item xs={12} md={6}>
+          <Grid container columnSpacing={8} rowSpacing={3}>
+            <Grid  item xs={12} md={6}>
               <TextField
                 fullWidth
                 InputProps={{
@@ -225,6 +264,7 @@ export default function StepperOne() {
                 fullWidth
                 id="nationality"
                 name="nationality"
+                select
                 label="Nationality"
                 onChange={formik.handleChange}
                 value={formik.values.nationality}
@@ -236,7 +276,15 @@ export default function StepperOne() {
                 helperText={
                   formik.touched.nationality && formik.errors.nationality
                 }
-              />
+              >
+                {COUNTRIES.map((val) => {
+                  return (
+                    <MenuItem value={val.name} key={val.name}>
+                      {val.name}
+                    </MenuItem>
+                  );
+                })}
+              </TextField>
             </Grid>
 
             <Grid item xs={12} md={6}>
@@ -273,12 +321,16 @@ export default function StepperOne() {
                 value={formik.values.dob}
                 inputRef={inputRef}
                 onClick={() => {
-                  inputRef.current.showPicker()
-                }} 
+                  inputRef.current.showPicker();
+                }}
                 onBlur={formik.handleBlur}
                 error={formik.touched.dob && Boolean(formik.errors.dob)}
                 helperText={formik.touched.dob && formik.errors.dob}
               />
+              {new Date(formik.values.dob).getDate() ? 
+              <div style={{fontWeight:"bold", marginTop:"6px"}}>
+              { new Date(formik.values.dob).getDate() +'-' + MonthMap[new Date(formik.values.dob).getMonth()] + '-' +new Date(formik.values.dob).getFullYear()}
+              </div> : null}
             </Grid>
 
             <Grid item xs={12} md={6}>
@@ -301,16 +353,43 @@ export default function StepperOne() {
                 id="reEmail"
                 name="reEmail"
                 label="Re-Enter Email"
+                onCut={handleCP}
+                onCopy={handleCP}
+                onPaste={handleCP}
                 type="reEmail"
                 onChange={formik.handleChange}
                 value={formik.values.reEmail}
                 onBlur={formik.handleBlur}
-                error={formik.touched.reEmail && Boolean(formik.errors.reEmail)}
-                helperText={formik.touched.reEmail && formik.errors.reEmail}
+                error={formik.values.email !== formik.values.reEmail}
+                helperText={
+                  formik.values.email !== formik.values.reEmail
+                    ? "Enter same email"
+                    : ""
+                }
               />
             </Grid>
 
-            <Grid item xs={12} md={6}>
+           
+            <Grid item xs={4} md={2}>
+              
+              <TextField
+              fullWidth
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              select
+              label="Select code"
+              >
+                {COUNTRIES.map((val) => {
+                  return(
+                    <MenuItem key={val.mobileCode} value={val.mobileCode}>{val.mobileCode}</MenuItem>
+                  )
+                })}
+
+              </TextField>
+              </Grid>
+             
+              <Grid rowSpacing={0} item xs={8} md={4}>
               <TextField
                 fullWidth
                 id="phoneNumber"
@@ -329,6 +408,7 @@ export default function StepperOne() {
                 }
               />
             </Grid>
+            
 
             <Grid item xs={12} md={6}>
               <TextField
@@ -344,12 +424,16 @@ export default function StepperOne() {
                 value={formik.values.EDOA}
                 inputRef={inputRef2}
                 onClick={() => {
-                  inputRef2.current.showPicker()
-                }} 
+                  inputRef2.current.showPicker();
+                }}
                 onBlur={formik.handleBlur}
                 error={formik.touched.EDOA && Boolean(formik.errors.EDOA)}
                 helperText={formik.touched.EDOA && formik.errors.EDOA}
               />
+               {new Date(formik.values.EDOA).getDate() ? 
+              <div style={{fontWeight:"bold", marginTop:"6px"}}>
+              { new Date(formik.values.EDOA).getDate() +'-' + MonthMap[new Date(formik.values.EDOA).getMonth()] + '-' +new Date(formik.values.EDOA).getFullYear()}
+              </div> : null}
             </Grid>
 
             <Grid item xs={12} md={6}>
@@ -411,6 +495,9 @@ export default function StepperOne() {
                 </TextField>
               </Grid>
             ) : null}
+            <Grid item xs={12} md={12}>
+              <Captcha/>
+            </Grid>
           </Grid>
           <div className="next-button">
             <Button type="submit" variant="contained" color="success">
@@ -418,6 +505,7 @@ export default function StepperOne() {
             </Button>
           </div>
         </form>
+        {loader && <Spinner></Spinner>}
       </CardContent>
     </Card>
   );
