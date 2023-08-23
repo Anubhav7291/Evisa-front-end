@@ -18,6 +18,7 @@ import Notification from "../utils/Notification";
 import { COUNTRIES } from "../utils/Countries";
 import Captcha from "./Captcha";
 import {MonthMap} from '../utils/MonthMap'
+import { AIRPORTS } from "../utils/Countries";
 
 const validationSchema = yup.object({
   email: yup
@@ -294,6 +295,7 @@ export default function StepperOne() {
                 name="portOfArrival"
                 label="Port Of Arrival"
                 type="portOfArrival"
+                select
                 onChange={formik.handleChange}
                 value={formik.values.portOfArrival}
                 onBlur={formik.handleBlur}
@@ -304,7 +306,13 @@ export default function StepperOne() {
                 helperText={
                   formik.touched.portOfArrival && formik.errors.portOfArrival
                 }
-              />
+              >
+                {AIRPORTS.map((val) => {
+                  return (<MenuItem key={val.airport_name} value={val.airport_name.toUpperCase()}>
+                  {val.airport_name.toUpperCase()}
+                  </MenuItem>)
+                })}
+              </TextField>
             </Grid>
 
             <Grid item xs={12} md={6}>
