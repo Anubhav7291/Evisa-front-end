@@ -165,7 +165,7 @@ export default function StepperOne() {
       }
       <CardContent sx={{ flex: "1 0 auto" }} style={{ padding: "30px" }}>
         <form onSubmit={formik.handleSubmit}>
-          <Grid container columnSpacing={8} rowSpacing={3}>
+          <Grid container columnSpacing={8} rowSpacing={4}>
             <Grid  item xs={12} md={6}>
               <TextField
                 fullWidth
@@ -370,7 +370,7 @@ export default function StepperOne() {
             </Grid>
 
            
-            <Grid item xs={4} md={2}>
+            <Grid container item xs={4} md={2}>
               
               <TextField
               fullWidth
@@ -389,7 +389,7 @@ export default function StepperOne() {
               </TextField>
               </Grid>
              
-              <Grid rowSpacing={0} item xs={8} md={4}>
+              <Grid container item xs={8} md={4} columnSpacing={6}>
               <TextField
                 fullWidth
                 id="phoneNumber"
