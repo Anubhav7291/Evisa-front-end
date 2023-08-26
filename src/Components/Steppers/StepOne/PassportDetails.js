@@ -107,7 +107,7 @@ export default function PassportDetails({formValue, tempId}) {
         }else{
             paramId = id;
         }
-        const response = await axios.put(`https://evisa-backend-j0rxg8bfl-anubhav7291.vercel.app/update/${paramId}`, formValue);
+        const response = await axios.put(`https://evisa-backend.vercel.app/update/${paramId}`, formValue);
         console.log(response)
         
       } catch (error) {}

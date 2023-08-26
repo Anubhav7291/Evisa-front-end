@@ -83,7 +83,7 @@ export default function StepperOne() {
 
     async function fetch() {
       try {
-        const response = await axios.get(`https://evisa-backend-j0rxg8bfl-anubhav7291.vercel.app/tempId/${id}`);
+        const response = await axios.get(`https://evisa-backend.vercel.app/tempId/${id}`);
         console.log("responsee", response.data.Result);
         if (response.data.Result?.length >= 1) {
           setFormValues(response.data.Result[0]);
@@ -144,7 +144,7 @@ export default function StepperOne() {
       setLoader(true);
       try {
         const response = await axios.post(
-          "https://evisa-backend-j0rxg8bfl-anubhav7291.vercel.app/create",
+          "https://evisa-backend.vercel.app/create",
           values
         );
         if (response.data.message === "Success") {
