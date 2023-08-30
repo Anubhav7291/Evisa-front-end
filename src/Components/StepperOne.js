@@ -642,7 +642,7 @@ export default function StepperOne() {
           {loader && <Spinner></Spinner>}
         </CardContent>
       </Card>
-      {true ? (
+      {hideButton ? (
         <PassportDetails tempId={tempId} formValue={formik.values} />
       ) : null}
     </>
