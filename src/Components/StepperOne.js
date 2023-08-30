@@ -61,6 +61,7 @@ const validationSchema = yup.object({
   visaOptions: yup.string("Enter your Visa Option"),
 });
 
+
 export default function StepperOne() {
   const [toggle, setToggle] = React.useState({
     name: false,
@@ -83,7 +84,9 @@ export default function StepperOne() {
 
     async function fetch() {
       try {
-        const response = await axios.get(`https://evisa-backend.vercel.app/tempId/${id}`);
+        const response = await axios.get(
+          `https://evisa-backend.vercel.app/tempId/${id}`
+        );
         console.log("responsee", response.data.Result);
         if (response.data.Result?.length >= 1) {
           setFormValues(response.data.Result[0]);
@@ -149,7 +152,7 @@ export default function StepperOne() {
         );
         if (response.data.message === "Success") {
           setHideButton(true);
-          setTempId(response.data.tempId)
+          setTempId(response.data.tempId);
         }
       } catch (error) {
         setLoader(false);
@@ -178,7 +181,7 @@ export default function StepperOne() {
             backgroundColor: "#1a75ff",
             color: "white",
             fontWeight: "bold",
-            fontSize: "18px",
+            fontSize: "16px",
             padding: "6px",
           }}
         >
@@ -198,6 +201,10 @@ export default function StepperOne() {
                 <TextField
                   fullWidth
                   InputProps={{
+                    style: {
+                      height: "50px",
+                      fontSize: "12px",
+                    },
                     endAdornment: (
                       <InputAdornment position="end">
                         <IconButton
@@ -243,6 +250,10 @@ export default function StepperOne() {
                 <TextField
                   fullWidth
                   InputProps={{
+                    style: {
+                      height: "50px",
+                      fontSize: "12px",
+                    },
                     endAdornment: (
                       <InputAdornment
                         position="end"
@@ -291,6 +302,12 @@ export default function StepperOne() {
 
               <Grid item xs={12} md={6}>
                 <TextField
+                  InputProps={{
+                    style: {
+                      height: "50px",
+                      fontSize: "12px",
+                    },
+                  }}
                   fullWidth
                   id="nationality"
                   name="nationality"
@@ -319,6 +336,12 @@ export default function StepperOne() {
 
               <Grid item xs={12} md={6}>
                 <TextField
+                  InputProps={{
+                    style: {
+                      height: "50px",
+                      fontSize: "12px",
+                    },
+                  }}
                   fullWidth
                   id="portOfArrival"
                   name="portOfArrival"
@@ -351,6 +374,12 @@ export default function StepperOne() {
 
               <Grid item xs={12} md={6}>
                 <TextField
+                  InputProps={{
+                    style: {
+                      height: "50px",
+                      fontSize: "12px",
+                    },
+                  }}
                   fullWidth
                   id="dob"
                   name="dob"
@@ -382,6 +411,12 @@ export default function StepperOne() {
 
               <Grid item xs={12} md={6}>
                 <TextField
+                  InputProps={{
+                    style: {
+                      height: "50px",
+                      fontSize: "12px",
+                    },
+                  }}
                   fullWidth
                   id="email"
                   name="email"
@@ -396,6 +431,12 @@ export default function StepperOne() {
 
               <Grid item xs={12} md={6}>
                 <TextField
+                  InputProps={{
+                    style: {
+                      height: "50px",
+                      fontSize: "12px",
+                    },
+                  }}
                   fullWidth
                   id="reEmail"
                   name="reEmail"
@@ -418,6 +459,12 @@ export default function StepperOne() {
 
               <Grid container item xs={4} md={2}>
                 <TextField
+                  InputProps={{
+                    style: {
+                      height: "50px",
+                      fontSize: "12px",
+                    },
+                  }}
                   fullWidth
                   InputLabelProps={{
                     shrink: true,
@@ -448,6 +495,12 @@ export default function StepperOne() {
 
               <Grid container item xs={8} md={4} columnSpacing={6}>
                 <TextField
+                  InputProps={{
+                    style: {
+                      height: "50px",
+                      fontSize: "12px",
+                    },
+                  }}
                   fullWidth
                   id="phoneNumber"
                   name="phoneNumber"
@@ -468,6 +521,12 @@ export default function StepperOne() {
 
               <Grid item xs={12} md={6}>
                 <TextField
+                  InputProps={{
+                    style: {
+                      height: "50px",
+                      fontSize: "12px",
+                    },
+                  }}
                   fullWidth
                   id="password"
                   name="EDOA"
@@ -499,6 +558,12 @@ export default function StepperOne() {
 
               <Grid item xs={12} md={6}>
                 <TextField
+                  InputProps={{
+                    style: {
+                      height: "50px",
+                      fontSize: "12px",
+                    },
+                  }}
                   fullWidth
                   id="visaService"
                   name="visaService"
@@ -529,6 +594,12 @@ export default function StepperOne() {
               map[formik.values.visaService].length !== 0 ? (
                 <Grid item xs={12} md={6}>
                   <TextField
+                    InputProps={{
+                      style: {
+                        height: "50px",
+                        fontSize: "12px",
+                      },
+                    }}
                     fullWidth
                     id="visaOptions"
                     name="visaOptions"
@@ -571,7 +642,9 @@ export default function StepperOne() {
           {loader && <Spinner></Spinner>}
         </CardContent>
       </Card>
-      {hideButton ? <PassportDetails tempId={tempId} formValue={formik.values} /> : null}
+      {true ? (
+        <PassportDetails tempId={tempId} formValue={formik.values} />
+      ) : null}
     </>
   );
 }

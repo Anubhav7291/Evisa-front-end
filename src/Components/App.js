@@ -8,7 +8,7 @@ import StepperOne from "./StepperOne";
 
 function App() {
   return (
-    <Container maxWidth='lg' style={{ fontFamily:"sans-serif"}}>
+  <Container fixed style={{ fontFamily:"sans-serif",  fontSize: "14px"}}>
         <Header/>
         <br/>
         <br/>
