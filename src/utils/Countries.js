@@ -1,4 +1,4 @@
-export const COUNTRIES = [
+export const MOBILE_CODES = [
     {
       name: 'Afghanistan',
       code: 'AF',
@@ -1744,18 +1744,181 @@ export const COUNTRIES = [
     },
   ];
 
+  export const COUNTRIES = [
+    { name: 'Albania' },
+    { name: 'Andorra' },
+    { name: 'Angola' },
+    { name: 'Anguilla' },
+    { name: 'Antigua & Barbuda' },
+    { name: 'Argentina' },
+    { name: 'Armenia' },
+    { name: 'Aruba' },
+    { name: 'Australia' },
+    { name: 'Austria' },
+    { name: 'Azerbaijan' },
+    { name: 'Bahamas' },
+    { name: 'Barbados' },
+    { name: 'Belarus' },
+    { name: 'Belgium' },
+    { name: 'Belize' },
+    { name: 'Benin' },
+    { name: 'Bolivia' },
+    { name: 'Bosnia & Herzegovina' },
+    { name: 'Botswana' },
+    { name: 'Brazil' },
+    { name: 'Brunei' },
+    { name: 'Bulgaria' },
+    { name: 'Burundi' },
+    { name: 'Cambodia' },
+    { name: 'Cameroon Union Republic' },
+    { name: 'Canada' },
+    { name: 'Cape Verde' },
+    { name: 'Cayman Island' },
+    { name: 'Chile' },
+    { name: 'Colombia' },
+    { name: 'Comoros' },
+    { name: 'Cook Islands' },
+    { name: 'Costa Rica' },
+    { name: 'Cote d\'lvoire' },
+    { name: 'Croatia' },
+    { name: 'Cuba' },
+    { name: 'Cyprus' },
+    { name: 'Czech Republic' },
+    { name: 'Denmark' },
+    { name: 'Djibouti' },
+    { name: 'Dominica' },
+    { name: 'Dominican Republic' },
+    { name: 'East Timor' },
+    { name: 'Ecuador' },
+    { name: 'El Salvador' },
+    { name: 'Equatorial Guinea' },
+    { name: 'Eritrea' },
+    { name: 'Estonia' },
+    { name: 'Fiji' },
+    { name: 'Finland' },
+    { name: 'France' },
+    { name: 'Gabon' },
+    { name: 'Gambia' },
+    { name: 'Georgia' },
+    { name: 'Germany' },
+    { name: 'Ghana' },
+    { name: 'Greece' },
+    { name: 'Grenada' },
+    { name: 'Guatemala' },
+    { name: 'Guinea' },
+    { name: 'Guyana' },
+    { name: 'Haiti' },
+    { name: 'Honduras' },
+    { name: 'Hungary' },
+    { name: 'Iceland' },
+    { name: 'Indonesia' },
+    { name: 'Ireland' },
+    { name: 'Israel' },
+    { name: 'Italy' },
+    { name: 'Jamaica' },
+    { name: 'Japan' },
+    { name: 'Jordan' },
+    { name: 'Kazakhstan' },
+    { name: 'Kenya' },
+    { name: 'Kiribati' },
+    { name: 'Kyrgyzstan' },
+    { name: 'Laos' },
+    { name: 'Latvia' },
+    { name: 'Lesotho' },
+    { name: 'Liberia' },
+    { name: 'Liechtenstein' },
+    { name: 'Lithuania' },
+    { name: 'Luxembourg' },
+    { name: 'Macedonia' },
+    { name: 'Madagascar' },
+    { name: 'Malawi' },
+    { name: 'Malaysia' },
+    { name: 'Mali' },
+    { name: 'Malta' },
+    { name: 'Marshall Islands' },
+    { name: 'Mauritius' },
+    { name: 'Mexico' },
+    { name: 'Micronesia' },
+    { name: 'Moldova' },
+    { name: 'Monaco' },
+    { name: 'Mongolia' },
+    { name: 'Montenegro' },
+    { name: 'Montserrat' },
+    { name: 'Mozambique' },
+    { name: 'Myanmar' },
+    { name: 'Namibia' },
+    { name: 'Nauru' },
+    { name: 'Netherlands' },
+    { name: 'New Zealand' },
+    { name: 'Nicaragua' },
+    { name: 'Niger Republic' },
+    { name: 'Niue Island' },
+    { name: 'Norway' },
+    { name: 'Oman' },
+    { name: 'Palau' },
+    { name: 'Palestine' },
+    { name: 'Panama' },
+    { name: 'Papua New Guinea' },
+    { name: 'Paraguay' },
+    { name: 'Peru' },
+    { name: 'Philippines' },
+    { name: 'Poland' },
+    { name: 'Portugal' },
+    { name: 'Republic of Korea' },
+    { name: 'Romania' },
+    { name: 'Russia' },
+    { name: 'Rwanda' },
+    { name: 'Saint Christopher and Nevis' },
+    { name: 'Saint Lucia' },
+    { name: 'Saint Vincent & the Grenadines' },
+    { name: 'Samoa' },
+    { name: 'San Marino' },
+    { name: 'Saudi Arabia' },
+    { name: 'Senegal' },
+    { name: 'Serbia' },
+    { name: 'Seychelles' },
+    { name: 'Sierra Leone' },
+    { name: 'Singapore' },
+    { name: 'Slovakia' },
+    { name: 'Slovenia' },
+    { name: 'Solomon Islands' },
+    { name: 'South Africa' },
+    { name: 'Spain' },
+    { name: 'Sri Lanka' },
+    { name: 'Suriname' },
+    { name: 'Swaziland' },
+    { name: 'Sweden' },
+    { name: 'Switzerland' },
+    { name: 'Taiwan' },
+    { name: 'Tajikistan' },
+    { name: 'Tanzania' },
+    { name: 'Thailand' },
+    { name: 'Togo' },
+    { name: 'Tonga' },
+    { name: 'Trinidad & Tobago' },
+    { name: 'Turks & Caicos Island' },
+    { name: 'Tuvalu' },
+    { name: 'UAE' },
+    { name: 'Uganda' },
+    { name: 'Ukraine' },
+    { name: 'United Kingdom' },
+    { name: 'Uruguay' },
+    { name: 'USA' },
+    { name: 'Uzbekistan' },
+    { name: 'Vanuatu' },
+    { name: 'Vatican City-Holy See' },
+    { name: 'Venezuela' },
+    { name: 'Vietnam' },
+    { name: 'Zambia and Zimbabwe' }
+  ];
+
+  
   export const AIRPORTS = [
       {
         "IATA_code": "AMD",
         "ICAO_code": "VAAH",
         "airport_name": "Ahmedabad Airport",
         "city_name": "Ahmedabad"
-      },
-      {
-        "IATA_code": "AJL",
-        "ICAO_code": "VEAZ",
-        "airport_name": "Aizawl Airport",
-        "city_name": "Aizawl"
       },
     
       {
@@ -1774,7 +1937,7 @@ export const COUNTRIES = [
       {
         "IATA_code": "BLR",
         "ICAO_code": "VOBG",
-        "airport_name": "Bengaluru International Airport",
+        "airport_name": "Bengaluru Airport",
         "city_name": "Bangalore"
       },
       
@@ -1786,28 +1949,10 @@ export const COUNTRIES = [
       },
      
       {
-        "IATA_code": "PAB",
-        "ICAO_code": "VABI",
-        "airport_name": "Bilaspur Airport",
-        "city_name": "Bilaspur"
-      },
-      {
         "IATA_code": "Cal",
         "ICAO_code": "Cal",
         "airport_name": "Calicut Airport",
         "city_name": "Calicut"
-      },
-      {
-        "IATA_code": "IXR",
-        "ICAO_code": "VERC",
-        "airport_name": "Birsa Munda International Airport",
-        "city_name": "Ranchi"
-      },
-      {
-        "IATA_code": "GAU",
-        "ICAO_code": "VEGT",
-        "airport_name": "Borjhar Airport",
-        "city_name": "Guwahati"
       },
      
       {
@@ -1819,7 +1964,7 @@ export const COUNTRIES = [
       {
         "IATA_code": "MAA",
         "ICAO_code": "VOMM",
-        "airport_name": "Chennai International Airport",
+        "airport_name": "Chennai Airport",
         "city_name": "Chennai"
       },
       {
@@ -1831,8 +1976,14 @@ export const COUNTRIES = [
       {
         "IATA_code": "COK",
         "ICAO_code": "VOCI",
-        "airport_name": "Cochin International Airport",
+        "airport_name": "Cochin Airport",
         "city_name": "Kochi"
+      },
+      {
+        "IATA_code": "COK",
+        "ICAO_code": "VOCI",
+        "airport_name": "Cochin Seaport",
+        "city_name": "cochin"
       },
      
       {
@@ -1882,7 +2033,7 @@ export const COUNTRIES = [
       {
         "IATA_code": "HYD",
         "ICAO_code": "VOHY",
-        "airport_name": "Hyderabad International Airport",
+        "airport_name": "Hyderabad Airport",
         "city_name": "Hyderabad"
       },
       
@@ -1897,12 +2048,6 @@ export const COUNTRIES = [
         "ICAO_code": "VAKP",
         "airport_name": "Kannur Airport",
         "city_name": "Kannur"
-      },
-      {
-        "IATA_code": "KTU",
-        "ICAO_code": "VIKO",
-        "airport_name": "Kota Airport",
-        "city_name": "Kota"
       },
       {
         "IATA_code": "CCJ",

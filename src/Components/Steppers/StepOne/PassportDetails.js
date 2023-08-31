@@ -13,7 +13,7 @@ import { COUNTRIES, EDUCATION, RELIGION } from "../../../utils/Countries";
 import { MonthMap } from "../../../utils/MonthMap";
 import Notification from "../../../utils/Notification";
 import Spinner from "../../../utils/Spinner";
-import '../../../style.css'
+import "../../../style.css";
 
 const validationSchema = yup.object({
   city: yup.string("Enter your city"),
@@ -147,12 +147,13 @@ export default function PassportDetails({ formValue, tempId }) {
           <form onSubmit={formik.handleSubmit}>
             <Grid container columnSpacing={8} rowSpacing={4}>
               <Grid item xs={12} md={6}>
-                <TextField 
-                InputProps={{
-                    style: {
+                <TextField
+                  InputProps={{
+                  style: {
                       height: "50px",
-                      fontSize: "12px",
-                    },}}
+                      fontSize: "15px",
+                    }
+                  }}
                   fullWidth
                   id="city"
                   name="city"
@@ -166,12 +167,13 @@ export default function PassportDetails({ formValue, tempId }) {
               </Grid>
 
               <Grid item xs={12} md={6}>
-                <TextField 
-                InputProps={{
-                    style: {
+                <TextField
+                  InputProps={{
+                  style: {
                       height: "50px",
-                      fontSize: "12px",
-                    },}}
+                      fontSize: "15px",
+                    }
+                  }}
                   fullWidth
                   select
                   id="country"
@@ -185,21 +187,19 @@ export default function PassportDetails({ formValue, tempId }) {
                   }
                   helperText={formik.touched.country && formik.errors.country}
                 >
-                    {COUNTRIES.map((val) => {
-                        return (
-                            <MenuItem value={val.name}>{val.name}</MenuItem>
-                        )
-                    })}
+                  {COUNTRIES.map((val) => {
+                    return <MenuItem value={val.name}>{val.name}</MenuItem>;
+                  })}
                 </TextField>
               </Grid>
 
-              <Grid item xs={12} md={6}>
+              {/* <Grid item xs={12} md={6}>
                 <TextField 
                 InputProps={{
-                    style: {
+                  style: {
                       height: "50px",
-                      fontSize: "12px",
-                    },}}
+                      fontSize: "15px",
+                    }}}
                   fullWidth
                   id="citizenship"
                   name="citizenship"
@@ -215,15 +215,16 @@ export default function PassportDetails({ formValue, tempId }) {
                     formik.touched.citizenship && formik.errors.citizenship
                   }
                 />
-              </Grid>
+              </Grid> */}
 
               <Grid item xs={12} md={6}>
-                <TextField 
-                InputProps={{
-                    style: {
+                <TextField
+                  InputProps={{
+                  style: {
                       height: "50px",
-                      fontSize: "12px",
-                    },}}
+                      fontSize: "15px",
+                    }
+                  }}
                   fullWidth
                   select
                   id="religion"
@@ -249,16 +250,21 @@ export default function PassportDetails({ formValue, tempId }) {
               </Grid>
 
               <Grid item xs={12} md={6}>
-                <TextField 
-                InputProps={{
+                <TextField
+                  InputProps={{
                     style: {
                       height: "50px",
-                      fontSize: "12px",
-                    },}}
+                      fontSize: "15px",
+                    },
+                  }}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                   fullWidth
                   id="mark"
                   name="mark"
                   label="Visible identification marks"
+                  placeholder="Birth mark, mole, tattoo, none"
                   onChange={formik.handleChange}
                   value={formik.values.mark}
                   onBlur={formik.handleBlur}
@@ -268,12 +274,13 @@ export default function PassportDetails({ formValue, tempId }) {
               </Grid>
 
               <Grid item xs={12} md={6}>
-                <TextField 
-                InputProps={{
-                    style: {
+                <TextField
+                  InputProps={{
+                  style: {
                       height: "50px",
-                      fontSize: "12px",
-                    },}}
+                      fontSize: "15px",
+                    }
+                  }}
                   fullWidth
                   select
                   id="qualification"
@@ -301,12 +308,13 @@ export default function PassportDetails({ formValue, tempId }) {
               </Grid>
 
               <Grid item xs={12} md={6}>
-                <TextField 
-                InputProps={{
-                    style: {
+                <TextField
+                  InputProps={{
+                  style: {
                       height: "50px",
-                      fontSize: "12px",
-                    },}}
+                      fontSize: "15px",
+                    }
+                  }}
                   fullWidth
                   id="passportNumber"
                   name="passportNumber"
@@ -330,12 +338,13 @@ export default function PassportDetails({ formValue, tempId }) {
               </Grid>
 
               <Grid item xs={12} md={6}>
-                <TextField 
-                InputProps={{
-                    style: {
+                <TextField
+                  InputProps={{
+                  style: {
                       height: "50px",
-                      fontSize: "12px",
-                    },}}
+                      fontSize: "15px",
+                    }
+                  }}
                   fullWidth
                   id="issueDate"
                   name="issueDate"
@@ -370,12 +379,13 @@ export default function PassportDetails({ formValue, tempId }) {
               </Grid>
 
               <Grid item xs={12} md={6}>
-                <TextField 
-                InputProps={{
-                    style: {
+                <TextField
+                  InputProps={{
+                  style: {
                       height: "50px",
-                      fontSize: "12px",
-                    },}}
+                      fontSize: "15px",
+                    }
+                  }}
                   fullWidth
                   id="expiryDate"
                   name="expiryDate"
@@ -451,12 +461,13 @@ export default function PassportDetails({ formValue, tempId }) {
               {formik.values.yes ? (
                 <>
                   <Grid item xs={12} md={6}>
-                    <TextField 
-                    InputProps={{
-                    style: {
-                      height: "50px",
-                      fontSize: "12px",
-                    },}}
+                    <TextField
+                      InputProps={{
+                        style: {
+                          height: "50px",
+                          fontSize: "12px",
+                        },
+                      }}
                       fullWidth
                       id="IssueCountry"
                       name="IssueCountry"
@@ -476,12 +487,13 @@ export default function PassportDetails({ formValue, tempId }) {
                     />
                   </Grid>
                   <Grid item xs={12} md={6}>
-                    <TextField 
-                    InputProps={{
-                    style: {
-                      height: "50px",
-                      fontSize: "12px",
-                    },}}
+                    <TextField
+                      InputProps={{
+                        style: {
+                          height: "50px",
+                          fontSize: "12px",
+                        },
+                      }}
                       fullWidth
                       id="otherPassportNumber"
                       name="otherPassportNumber"
@@ -501,12 +513,13 @@ export default function PassportDetails({ formValue, tempId }) {
                     />
                   </Grid>
                   <Grid item xs={12} md={6}>
-                    <TextField 
-                    InputProps={{
-                    style: {
-                      height: "50px",
-                      fontSize: "12px",
-                    },}}
+                    <TextField
+                      InputProps={{
+                        style: {
+                          height: "50px",
+                          fontSize: "12px",
+                        },
+                      }}
                       fullWidth
                       id="otherDateOfIssue"
                       name="otherDateOfIssue"
@@ -526,12 +539,13 @@ export default function PassportDetails({ formValue, tempId }) {
                     />
                   </Grid>
                   <Grid item xs={12} md={6}>
-                    <TextField 
-                    InputProps={{
-                    style: {
-                      height: "50px",
-                      fontSize: "12px",
-                    },}}
+                    <TextField
+                      InputProps={{
+                        style: {
+                          height: "50px",
+                          fontSize: "12px",
+                        },
+                      }}
                       fullWidth
                       id="otherPlaceIssue"
                       name="otherPlaceIssue"
@@ -551,12 +565,13 @@ export default function PassportDetails({ formValue, tempId }) {
                     />
                   </Grid>
                   <Grid item xs={12} md={6}>
-                    <TextField 
-                    InputProps={{
-                    style: {
-                      height: "50px",
-                      fontSize: "12px",
-                    },}}
+                    <TextField
+                      InputProps={{
+                        style: {
+                          height: "50px",
+                          fontSize: "12px",
+                        },
+                      }}
                       fullWidth
                       id="otherNationality"
                       name="otherNationality"

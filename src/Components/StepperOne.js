@@ -15,7 +15,7 @@ import { Info } from "@mui/icons-material";
 import axios from "axios";
 import Spinner from "../utils/Spinner";
 import Notification from "../utils/Notification";
-import { COUNTRIES } from "../utils/Countries";
+import { COUNTRIES , MOBILE_CODES} from "../utils/Countries";
 import Captcha from "./Captcha";
 import { MonthMap } from "../utils/MonthMap";
 import { AIRPORTS } from "../utils/Countries";
@@ -32,8 +32,7 @@ const validationSchema = yup.object({
     .email("Should match the email")
     .required("Email is required"),
   name: yup
-    .string("Enter your Family name")
-    .required("Family Name is required"),
+    .string("Enter your Family name"),
   firstName: yup
     .string("Enter your FirstName")
     .required("First name is required"),
@@ -60,7 +59,6 @@ const validationSchema = yup.object({
     .required("Visa service is required"),
   visaOptions: yup.string("Enter your Visa Option"),
 });
-
 
 export default function StepperOne() {
   const [toggle, setToggle] = React.useState({
@@ -172,6 +170,9 @@ export default function StepperOne() {
 
   const inputRef = useRef();
   const inputRef2 = useRef();
+  const currentDate = new Date();
+  const minDate = new Date(currentDate);
+  minDate.setDate(currentDate.getDate() + 3);
 
   return (
     <>
@@ -201,58 +202,9 @@ export default function StepperOne() {
                 <TextField
                   fullWidth
                   InputProps={{
-                    style: {
+                  style: {
                       height: "50px",
-                      fontSize: "12px",
-                    },
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          id="question-button"
-                          onClick={() =>
-                            setToggle({ ...toggle, name: !toggle.name })
-                          }
-                        >
-                          <Question
-                            id="question-icon"
-                            sx={{ stroke: "#ffffff", strokeWidth: 1 }}
-                          />
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                  id="name"
-                  name="name"
-                  label="Surname/Family Name"
-                  onChange={formik.handleChange}
-                  value={formik.values.name}
-                  onBlur={formik.handleBlur}
-                  error={formik.touched.name && Boolean(formik.errors.name)}
-                  helperText={formik.touched.name && formik.errors.name}
-                />
-                <div className="info-div">
-                  <Info id="info-icon" />
-                  <span style={{ marginLeft: "3px" }}>
-                    Enter your Surname exactly as shown in your passport
-                  </span>
-                </div>
-                {toggle.name ? (
-                  <div className="extra-details">
-                    <span>
-                      Family name is also known as Last name or Surname. Enter
-                      ALL name(s) as they appear on your passport.
-                    </span>
-                  </div>
-                ) : null}
-              </Grid>
-
-              <Grid item xs={12} md={6}>
-                <TextField
-                  fullWidth
-                  InputProps={{
-                    style: {
-                      height: "50px",
-                      fontSize: "12px",
+                      fontSize: "15px",
                     },
                     endAdornment: (
                       <InputAdornment
@@ -299,13 +251,61 @@ export default function StepperOne() {
                   </div>
                 ) : null}
               </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  fullWidth
+                  InputProps={{
+                  style: {
+                      height: "50px",
+                      fontSize: "15px",
+                    },
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          id="question-button"
+                          onClick={() =>
+                            setToggle({ ...toggle, name: !toggle.name })
+                          }
+                        >
+                          <Question
+                            id="question-icon"
+                            sx={{ stroke: "#ffffff", strokeWidth: 1 }}
+                          />
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                  id="name"
+                  name="name"
+                  label="Surname/Family Name"
+                  onChange={formik.handleChange}
+                  value={formik.values.name}
+                  onBlur={formik.handleBlur}
+                  error={formik.touched.name && Boolean(formik.errors.name)}
+                  helperText={formik.touched.name && formik.errors.name}
+                />
+                <div className="info-div">
+                  <Info id="info-icon" />
+                  <span style={{ marginLeft: "3px" }}>
+                    Enter your Surname exactly as shown in your passport
+                  </span>
+                </div>
+                {toggle.name ? (
+                  <div className="extra-details">
+                    <span>
+                      Family name is also known as Last name or Surname. Enter
+                      ALL name(s) as they appear on your passport.
+                    </span>
+                  </div>
+                ) : null}
+              </Grid>
 
               <Grid item xs={12} md={6}>
                 <TextField
                   InputProps={{
-                    style: {
+                  style: {
                       height: "50px",
-                      fontSize: "12px",
+                      fontSize: "15px",
                     },
                   }}
                   fullWidth
@@ -337,9 +337,9 @@ export default function StepperOne() {
               <Grid item xs={12} md={6}>
                 <TextField
                   InputProps={{
-                    style: {
+                  style: {
                       height: "50px",
-                      fontSize: "12px",
+                      fontSize: "15px",
                     },
                   }}
                   fullWidth
@@ -377,9 +377,11 @@ export default function StepperOne() {
                   InputProps={{
                     style: {
                       height: "50px",
-                      fontSize: "12px",
+                      fontSize: "15px",
+                     
                     },
                   }}
+                 
                   fullWidth
                   id="dob"
                   name="dob"
@@ -412,9 +414,9 @@ export default function StepperOne() {
               <Grid item xs={12} md={6}>
                 <TextField
                   InputProps={{
-                    style: {
+                  style: {
                       height: "50px",
-                      fontSize: "12px",
+                      fontSize: "15px",
                     },
                   }}
                   fullWidth
@@ -432,9 +434,9 @@ export default function StepperOne() {
               <Grid item xs={12} md={6}>
                 <TextField
                   InputProps={{
-                    style: {
+                  style: {
                       height: "50px",
-                      fontSize: "12px",
+                      fontSize: "15px",
                     },
                   }}
                   fullWidth
@@ -460,9 +462,9 @@ export default function StepperOne() {
               <Grid container item xs={4} md={2}>
                 <TextField
                   InputProps={{
-                    style: {
+                  style: {
                       height: "50px",
-                      fontSize: "12px",
+                      fontSize: "15px",
                     },
                   }}
                   fullWidth
@@ -483,10 +485,10 @@ export default function StepperOne() {
                     formik.touched.mobileCode && formik.errors.mobileCode
                   }
                 >
-                  {COUNTRIES.map((val) => {
+                  {MOBILE_CODES.map((val) => {
                     return (
                       <MenuItem key={val.mobileCode} value={val.mobileCode}>
-                        {val.mobileCode}
+                        {val.name} {val.mobileCode}
                       </MenuItem>
                     );
                   })}
@@ -496,9 +498,9 @@ export default function StepperOne() {
               <Grid container item xs={8} md={4} columnSpacing={6}>
                 <TextField
                   InputProps={{
-                    style: {
+                  style: {
                       height: "50px",
-                      fontSize: "12px",
+                      fontSize: "15px",
                     },
                   }}
                   fullWidth
@@ -522,10 +524,14 @@ export default function StepperOne() {
               <Grid item xs={12} md={6}>
                 <TextField
                   InputProps={{
-                    style: {
+                  style: {
                       height: "50px",
-                      fontSize: "12px",
+                      fontSize: "15px",
                     },
+                  }}
+                  inputProps={{
+                    // only needs the first 16 characters in the date string
+                    min: minDate.toISOString().slice(0, 10),
                   }}
                   fullWidth
                   id="password"
@@ -559,9 +565,9 @@ export default function StepperOne() {
               <Grid item xs={12} md={6}>
                 <TextField
                   InputProps={{
-                    style: {
+                  style: {
                       height: "50px",
-                      fontSize: "12px",
+                      fontSize: "15px",
                     },
                   }}
                   fullWidth
