@@ -7,8 +7,13 @@ import MUIDataTable from "mui-datatables";
 import axios from "axios";
 import { useState } from "react";
 
-const Dashboard = () => {
+const Dashboard = (props) => {
   const [data, setData] = useState([]);
+  const [width, setWidth] = useState('lg')
+  const {open} = props
+  console.log('props',props)
+ 
+ 
   const columns = [
     {
       name: "firstName",
@@ -116,6 +121,7 @@ const Dashboard = () => {
       },
   ];
 
+
   useEffect(() => {
     const fetch = async () => {
       const response = await axios.get(
@@ -141,7 +147,7 @@ const Dashboard = () => {
     showResponsive: true
   };
   return (
-    <Container style={{padding:0, margin:0}} maxWidth="md">
+    <Container style={{padding:0, margin:0}} maxWidth={open ? 'md' : 'lg'}>
     
         <MUIDataTable
           title={"Leads"}
