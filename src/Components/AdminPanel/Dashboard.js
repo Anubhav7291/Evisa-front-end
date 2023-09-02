@@ -141,7 +141,7 @@ const Dashboard = () => {
     showResponsive: true
   };
   return (
-    <Container style={{margin:0,padding:0}} maxWidth="lg">
+    <Container style={{padding:0, margin:0}} maxWidth="md">
     
         <MUIDataTable
           title={"Leads"}
