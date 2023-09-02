@@ -122,8 +122,7 @@ export default function StepperOne() {
     "G20 eConference VISA": [],
   };
 
-  console.log("formValues?.dob", formValues);
-
+  console.log(process.env.REACT_APP_BASE_URL)
   const formik = useFormik({
     initialValues: {
       name: formValues?.name || "",

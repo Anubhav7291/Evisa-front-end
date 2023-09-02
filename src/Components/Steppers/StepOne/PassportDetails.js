@@ -48,6 +48,8 @@ const validationSchema = yup.object({
 export default function PassportDetails({ formValue, tempId }) {
   const theme = useTheme();
 
+  console.log(process.env.REACT_APP_BASE_URL)
+
   const [toggle, setToggle] = React.useState({
     name: false,
     firstName: false,

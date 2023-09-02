@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './Components/App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Route, Routes } from 'react-router-dom/dist';
+import LoginPage from './Components/AdminPanel/LoginPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -11,6 +12,7 @@ root.render(
       <Routes>
         <Route path="/" element={ <App /> }></Route>
         <Route path="/register/:id"  element={ <App /> }></Route>
+        <Route path="/login"  element={ <LoginPage /> }></Route>
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
