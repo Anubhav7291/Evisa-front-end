@@ -19,12 +19,20 @@
     color: white;
 }
 
-.Step-todo{
+.Step-payment{
     padding: 20px;
     width: 25%;
     -webkit-clip-path: polygon(0% 0%, calc(100% - 20px) 0%, 100% 50%, calc(100% - 20px) 100%, 0% 100%);
     /* background-color: aqua; */
     color: #1a75ff;
+}
+
+.Step-details{
+  padding: 20px;
+  width: 25%;
+  -webkit-clip-path: polygon(0% 0%, calc(100% - 20px) 0%, 100% 50%, calc(100% - 20px) 100%, 0% 100%);
+  /* background-color: aqua; */
+  color: #1a75ff;
 }
 #question-button{
  background-color:#1a75ff;
@@ -59,6 +67,7 @@
 .next-button{
     text-align: end;
     margin-top: 10px;
+ 
 }
  /* Login */
 

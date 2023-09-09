@@ -4,15 +4,28 @@ import App from './Components/App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Route, Routes } from 'react-router-dom/dist';
 import LoginPage from './Components/AdminPanel/LoginPage';
+import Payment from './Components/Steppers/StepTwo/Payment';
+import Details from './Components/Steppers/StepThree/Details';
+import Header from './Components/Header';
+import StepperNav from './Components/StepperNav';
+import { Container } from '@mui/material';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
    <BrowserRouter>
+   <Container fixed style={{ fontFamily:"sans-serif",  fontSize: "14px"}}>
+   <Header/>
+   <br/>
+   <br/>
+   <StepperNav/>
+   </Container>
       <Routes>
         <Route path="/" element={ <App /> }></Route>
         <Route path="/register/:id"  element={ <App /> }></Route>
         <Route path="/login"  element={ <LoginPage /> }></Route>
+        <Route path="/payment"  element={ <Payment /> }></Route>
+        <Route path="/details"  element={ <Details /> }></Route>
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

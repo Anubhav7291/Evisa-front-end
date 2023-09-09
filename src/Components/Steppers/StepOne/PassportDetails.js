@@ -14,6 +14,7 @@ import { MonthMap } from "../../../utils/MonthMap";
 import Notification from "../../../utils/Notification";
 import Spinner from "../../../utils/Spinner";
 import "../../../style.css";
+import { useNavigate } from "react-router-dom";
 
 const validationSchema = yup.object({
   city: yup.string("Enter your city"),
@@ -48,20 +49,7 @@ const validationSchema = yup.object({
 export default function PassportDetails({ formValue, tempId }) {
   const theme = useTheme();
 
-  console.log(process.env.REACT_APP_BASE_URL)
-
-  const [toggle, setToggle] = React.useState({
-    name: false,
-    firstName: false,
-    nationality: "",
-    portOfArrival: "",
-    dob: "",
-    email: "",
-    phoneNumber: "",
-    EDOA: "",
-    visaService: "",
-    visaOptions: [],
-  });
+  const navigate = useNavigate();
 
   const [loader, setLoader] = React.useState(false);
   const [notification, setNotification] = React.useState({
@@ -104,7 +92,9 @@ export default function PassportDetails({ formValue, tempId }) {
           `https://evisa-backend.vercel.app/update/${paramId}`,
           formValue
         );
-        console.log(response);
+        if(response.data.message === "Success"){
+            navigate('/payment',{ state: {tempId:tempId} })
+        }
       } catch (error) {}
       setLoader(false);
     },
@@ -595,7 +585,7 @@ export default function PassportDetails({ formValue, tempId }) {
                 </>
               ) : null}
             </Grid>
-            <div className="next-button">
+            <div className="next-button" >
               <Button type="submit" variant="contained" color="success">
                 Continue
               </Button>

@@ -5,8 +5,8 @@ function StepperNav() {
   return (
     <div className="stepper">
       <div className="Step-complete">1. Submit Application Online</div>
-      <div className="Step-todo">2. Review and Confirm Payment</div>
-      <div className="Step-todo">3. Receive Approved Visa</div>
+      <div id="Step-payment" className="Step-payment">2. Review and Confirm Payment</div>
+      <div id="Step-details" className="Step-details">3. Receive Approved Visa</div>
     </div>
   );
 }
