@@ -14,8 +14,13 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
    <BrowserRouter>
+    <Routes>
+    <Route path="/login"  element={ <LoginPage /> }></Route>
+    </Routes>
+  
    <Container fixed style={{ fontFamily:"sans-serif",  fontSize: "14px"}}>
    <Header/>
+   
    <br/>
    <br/>
    <StepperNav/>
@@ -23,7 +28,7 @@ root.render(
       <Routes>
         <Route path="/" element={ <App /> }></Route>
         <Route path="/register/:id"  element={ <App /> }></Route>
-        <Route path="/login"  element={ <LoginPage /> }></Route>
+       
         <Route path="/payment"  element={ <Payment /> }></Route>
         <Route path="/details"  element={ <Details /> }></Route>
       </Routes>

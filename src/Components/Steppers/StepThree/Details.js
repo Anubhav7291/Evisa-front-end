@@ -172,7 +172,7 @@ export default function Details(props) {
       setLoader(true);
       try {
         const response = await axios.post(
-          `http://localhost:8081/otherDetails`,
+          `https://evisa-backend.vercel.app/otherDetails`,
           formData
         );
         if (response.data.message === "Success") {
