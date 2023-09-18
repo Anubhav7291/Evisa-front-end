@@ -139,6 +139,7 @@ export default function CustomerDetail(props) {
       style={{ fontFamily: "sans-serif", marginTop: "17px", fontSize: "14px" }}
     >
       <Card>
+        <h3 style={{textAlign:"center"}}>Application Number ({id}) Complete Details</h3>
         <div style={{ marginLeft: "23%" }}>
           {ApplicantImageUrl.split(",")[1] && (
             <img src={ApplicantImageUrl} height={"300px"} width={"300px"} />
