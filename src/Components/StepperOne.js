@@ -83,7 +83,7 @@ export default function StepperOne() {
     async function fetch() {
       try {
         const response = await axios.get(
-          `https://evisa-backend.vercel.app/tempId/${id}`
+          process.env.REACT_APP_BASE_URL+`/tempId/${id}`
         );
         console.log("responsee", response.data.Result);
         if (response.data.Result?.length >= 1) {
@@ -122,7 +122,6 @@ export default function StepperOne() {
     "G20 eConference VISA": [],
   };
 
-  console.log(process.env.REACT_APP_BASE_URL)
   const formik = useFormik({
     initialValues: {
       name: formValues?.name || "",
@@ -144,7 +143,7 @@ export default function StepperOne() {
       setLoader(true);
       try {
         const response = await axios.post(
-          "https://evisa-backend.vercel.app/create",
+          process.env.REACT_APP_BASE_URL+"/create",
           values
         );
         if (response.data.message === "Success") {

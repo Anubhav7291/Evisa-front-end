@@ -89,11 +89,11 @@ export default function PassportDetails({ formValue, tempId }) {
           paramId = id;
         }
         const response = await axios.put(
-          `https://evisa-backend.vercel.app/update/${paramId}`,
+          process.env.REACT_APP_BASE_URL+`/update/${paramId}`,
           formValue
         );
         if(response.data.message === "Success"){
-            navigate('/payment',{ state: {tempId:tempId} })
+            navigate('/payment',{ state: {tempId:paramId} })
         }
       } catch (error) {}
       setLoader(false);

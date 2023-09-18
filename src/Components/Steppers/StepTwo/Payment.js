@@ -1,10 +1,11 @@
 import React from "react";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate ,useLocation} from "react-router-dom";
 
 function Payment(props) {
   const navigate = useNavigate();
-  const tempId = props?.location?.state;
+  const location = useLocation();
+  const tempId = location?.state?.tempId;
   useEffect(() => {
     const navdom = document.querySelector("#Step-payment");
     navdom.style.backgroundColor = "#1a75ff";

@@ -12,6 +12,7 @@ import { COUNTRIES, EDUCATION, RELIGION } from "../../../utils/Countries";
 import Notification from "../../../utils/Notification";
 import Spinner from "../../../utils/Spinner";
 import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 // const validationSchema = yup.object({
 //   city: yup.string("Enter your city"),
@@ -45,7 +46,8 @@ import { useEffect } from "react";
 
 export default function Details(props) {
   const theme = useTheme();
-  const tempId = props?.location?.state;
+  const location = useLocation();
+  const tempId = location?.state?.tempId
   const navigate = useNavigate();
 
   const [loader, setLoader] = React.useState(false);
@@ -74,6 +76,7 @@ export default function Details(props) {
       spouseName: "",
       spouseNation: "",
       spousePlace: "",
+      spouseAddress:"",
       spouseCountry: "",
       spouseOccupation: "",
       spousePhone: "",
@@ -121,13 +124,13 @@ export default function Details(props) {
       // Initialize an empty FormData object
       const formData = new FormData();
       console.log(values);
-      console.log("formData", formData);
+      console.log("formData", tempId);
 
       // Add each field to the FormData object
       formData.append("id", tempId);
       formData.append("village", values.village);
       formData.append("street", values.street);
-      formData.append("village", values.village);
+     
       formData.append("addresscountry", values.street);
       formData.append("state", values.state);
       formData.append("postal", values.postal);
@@ -171,8 +174,8 @@ export default function Details(props) {
       console.log(formData.get("applicantFile"));
       setLoader(true);
       try {
-        const response = await axios.post(
-          `https://evisa-backend.vercel.app/otherDetails`,
+        const response = await axios.put(
+          process.env.REACT_APP_BASE_URL+`/otherDetails`,
           formData
         );
         if (response.data.message === "Success") {
