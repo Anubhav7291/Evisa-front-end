@@ -18,12 +18,12 @@ export default function CustomerDetail(props) {
   const [PassportImageUrl, setPassportImageUrl] = useState("");
   const [result, setResult] = useState([]);
   const location = useLocation();
-  const id = location?.state?.tempId
+  const id = location?.state?.tempId;
 
   useEffect(() => {
     const fetchApi = async () => {
       const res = await axios.get(
-        process.env.REACT_APP_BASE_URL+`/getLeadbyId/${id}`
+        process.env.REACT_APP_BASE_URL + `/getLeadbyId/${id}`
       );
       if (res.data.message === "Success") {
         setResult(res.data.data[0]);
@@ -92,7 +92,12 @@ export default function CustomerDetail(props) {
       spouseCountry: result.spouseCountry,
       spouseOccupation: result.spouseOccupation,
       spousePhone: result.spousePhone,
-      yesDefence:(result.defenceOrganization || result.defenceDesignation || result.defenceRank) ?  true : false,
+      yesDefence:
+        result.defenceOrganization ||
+        result.defenceDesignation ||
+        result.defenceRank
+          ? true
+          : false,
       defenceOrganization: result.defenceOrganization,
       defenceDesignation: result.defenceDesignation,
       defenceRank: result.defenceRank,
@@ -126,7 +131,7 @@ export default function CustomerDetail(props) {
     //validationSchema: validationSchema,
   });
 
-  console.log(PassportImageUrl)
+  console.log(PassportImageUrl);
 
   return (
     <Container
@@ -134,16 +139,14 @@ export default function CustomerDetail(props) {
       style={{ fontFamily: "sans-serif", marginTop: "17px", fontSize: "14px" }}
     >
       <Card>
-        <div style={{marginLeft:"23%"}}>
-        {ApplicantImageUrl.split(',')[1] && (
-          <img src={ApplicantImageUrl} height={"300px"} width={"300px"} />
-        )}
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-        {PassportImageUrl.split(',')[1] && (
-          <img src={PassportImageUrl} height={"300px"} width={"300px"} />
-        )}
+        <div style={{ marginLeft: "23%" }}>
+          {ApplicantImageUrl.split(",")[1] && (
+            <img src={ApplicantImageUrl} height={"300px"} width={"300px"} />
+          )}
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          {PassportImageUrl.split(",")[1] && (
+            <img src={PassportImageUrl} height={"300px"} width={"300px"} />
+          )}
         </div>
         <CardHeader
           style={{
@@ -161,6 +164,7 @@ export default function CustomerDetail(props) {
               <Grid container columnSpacing={8} rowSpacing={4}>
                 <Grid item xs={12} md={6}>
                   <TextField
+                    disabled
                     InputLabelProps={{
                       shrink: true,
                     }}
@@ -189,6 +193,7 @@ export default function CustomerDetail(props) {
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <TextField
+                    disabled
                     InputLabelProps={{
                       shrink: true,
                     }}
@@ -213,6 +218,7 @@ export default function CustomerDetail(props) {
 
                 <Grid item xs={12} md={6}>
                   <TextField
+                    disabled
                     InputLabelProps={{
                       shrink: true,
                     }}
@@ -235,6 +241,7 @@ export default function CustomerDetail(props) {
 
                 <Grid item xs={12} md={6}>
                   <TextField
+                    disabled
                     InputLabelProps={{
                       shrink: true,
                     }}
@@ -266,6 +273,7 @@ export default function CustomerDetail(props) {
 
                 <Grid item xs={12} md={6}>
                   <TextField
+                    disabled
                     InputLabelProps={{
                       shrink: true,
                     }}
@@ -296,6 +304,7 @@ export default function CustomerDetail(props) {
 
                 <Grid item xs={12} md={6}>
                   <TextField
+                    disabled
                     InputLabelProps={{
                       shrink: true,
                     }}
@@ -320,6 +329,7 @@ export default function CustomerDetail(props) {
 
                 <Grid item xs={12} md={6}>
                   <TextField
+                    disabled
                     InputLabelProps={{
                       shrink: true,
                     }}
@@ -349,6 +359,7 @@ export default function CustomerDetail(props) {
 
                 <Grid container item xs={4} md={2}>
                   <TextField
+                    disabled
                     InputLabelProps={{
                       shrink: true,
                     }}
@@ -377,6 +388,7 @@ export default function CustomerDetail(props) {
 
                 <Grid container item xs={8} md={4} columnSpacing={6}>
                   <TextField
+                    disabled
                     InputLabelProps={{
                       shrink: true,
                     }}
@@ -407,6 +419,7 @@ export default function CustomerDetail(props) {
 
                 <Grid item xs={12} md={6}>
                   <TextField
+                    disabled
                     InputLabelProps={{
                       shrink: true,
                     }}
@@ -440,6 +453,7 @@ export default function CustomerDetail(props) {
 
                 <Grid item xs={12} md={6}>
                   <TextField
+                    disabled
                     InputLabelProps={{
                       shrink: true,
                     }}
@@ -469,6 +483,7 @@ export default function CustomerDetail(props) {
 
                 <Grid item xs={12} md={6}>
                   <TextField
+                    disabled
                     InputLabelProps={{
                       shrink: true,
                     }}
@@ -516,6 +531,7 @@ export default function CustomerDetail(props) {
             <Grid container columnSpacing={8} rowSpacing={4}>
               <Grid item xs={12} md={6}>
                 <TextField
+                  disabled
                   InputLabelProps={{
                     shrink: true,
                   }}
@@ -540,6 +556,7 @@ export default function CustomerDetail(props) {
 
               <Grid item xs={12} md={6}>
                 <TextField
+                  disabled
                   InputLabelProps={{
                     shrink: true,
                   }}
@@ -566,6 +583,7 @@ export default function CustomerDetail(props) {
 
               <Grid item xs={12} md={6}>
                 <TextField
+                  disabled
                   InputLabelProps={{
                     shrink: true,
                   }}
@@ -593,6 +611,7 @@ export default function CustomerDetail(props) {
 
               <Grid item xs={12} md={6}>
                 <TextField
+                  disabled
                   InputLabelProps={{
                     shrink: true,
                   }}
@@ -618,6 +637,7 @@ export default function CustomerDetail(props) {
 
               <Grid item xs={12} md={6}>
                 <TextField
+                  disabled
                   InputLabelProps={{
                     shrink: true,
                   }}
@@ -647,6 +667,7 @@ export default function CustomerDetail(props) {
 
               <Grid item xs={12} md={6}>
                 <TextField
+                  disabled
                   InputLabelProps={{
                     shrink: true,
                   }}
@@ -678,6 +699,7 @@ export default function CustomerDetail(props) {
 
               <Grid item xs={12} md={6}>
                 <TextField
+                  disabled
                   InputLabelProps={{
                     shrink: true,
                   }}
@@ -712,6 +734,7 @@ export default function CustomerDetail(props) {
 
               <Grid item xs={12} md={6}>
                 <TextField
+                  disabled
                   InputLabelProps={{
                     shrink: true,
                   }}
@@ -747,6 +770,7 @@ export default function CustomerDetail(props) {
 
               <Grid item xs={12} md={6}>
                 <TextField
+                  disabled
                   InputLabelProps={{
                     shrink: true,
                   }}
@@ -776,6 +800,7 @@ export default function CustomerDetail(props) {
               </Grid>
               <Grid item xs={12} md={6}>
                 <TextField
+                  disabled
                   InputLabelProps={{
                     shrink: true,
                   }}
@@ -806,6 +831,7 @@ export default function CustomerDetail(props) {
               </Grid>
               <Grid item xs={12} md={6}>
                 <TextField
+                  disabled
                   InputLabelProps={{
                     shrink: true,
                   }}
@@ -836,6 +862,7 @@ export default function CustomerDetail(props) {
               </Grid>
               <Grid item xs={12} md={6}>
                 <TextField
+                  disabled
                   variant="standard"
                   InputLabelProps={{
                     shrink: true,
@@ -866,6 +893,7 @@ export default function CustomerDetail(props) {
               </Grid>
               <Grid item xs={12} md={6}>
                 <TextField
+                  disabled
                   InputLabelProps={{
                     shrink: true,
                   }}
@@ -917,6 +945,7 @@ export default function CustomerDetail(props) {
                 <Grid container columnSpacing={8} rowSpacing={4}>
                   <Grid item xs={12} md={6}>
                     <TextField
+                      disabled
                       InputLabelProps={{
                         shrink: true,
                       }}
@@ -943,6 +972,7 @@ export default function CustomerDetail(props) {
 
                   <Grid item xs={12} md={6}>
                     <TextField
+                      disabled
                       InputLabelProps={{
                         shrink: true,
                       }}
@@ -971,6 +1001,7 @@ export default function CustomerDetail(props) {
 
                   <Grid item xs={12} md={6}>
                     <TextField
+                      disabled
                       InputLabelProps={{
                         shrink: true,
                       }}
@@ -1002,6 +1033,7 @@ export default function CustomerDetail(props) {
 
                   <Grid item xs={12} md={6}>
                     <TextField
+                      disabled
                       InputLabelProps={{
                         shrink: true,
                       }}
@@ -1028,6 +1060,7 @@ export default function CustomerDetail(props) {
 
                   <Grid item xs={12} md={6}>
                     <TextField
+                      disabled
                       InputLabelProps={{
                         shrink: true,
                       }}
@@ -1073,6 +1106,7 @@ export default function CustomerDetail(props) {
                 <Grid container columnSpacing={8} rowSpacing={4}>
                   <Grid item xs={12} md={6}>
                     <TextField
+                      disabled
                       InputLabelProps={{
                         shrink: true,
                       }}
@@ -1102,6 +1136,7 @@ export default function CustomerDetail(props) {
 
                   <Grid item xs={12} md={6}>
                     <TextField
+                      disabled
                       InputLabelProps={{
                         shrink: true,
                       }}
@@ -1132,6 +1167,7 @@ export default function CustomerDetail(props) {
 
                   <Grid item xs={12} md={6}>
                     <TextField
+                      disabled
                       InputLabelProps={{
                         shrink: true,
                       }}
@@ -1161,6 +1197,7 @@ export default function CustomerDetail(props) {
 
                   <Grid item xs={12} md={6}>
                     <TextField
+                      disabled
                       InputLabelProps={{
                         shrink: true,
                       }}
@@ -1208,6 +1245,7 @@ export default function CustomerDetail(props) {
                 <Grid container columnSpacing={8} rowSpacing={4}>
                   <Grid item xs={12} md={6}>
                     <TextField
+                      disabled
                       InputLabelProps={{
                         shrink: true,
                       }}
@@ -1237,6 +1275,7 @@ export default function CustomerDetail(props) {
 
                   <Grid item xs={12} md={6}>
                     <TextField
+                      disabled
                       InputLabelProps={{
                         shrink: true,
                       }}
@@ -1267,6 +1306,7 @@ export default function CustomerDetail(props) {
 
                   <Grid item xs={12} md={6}>
                     <TextField
+                      disabled
                       InputLabelProps={{
                         shrink: true,
                       }}
@@ -1297,6 +1337,7 @@ export default function CustomerDetail(props) {
 
                   <Grid item xs={12} md={6}>
                     <TextField
+                      disabled
                       InputLabelProps={{
                         shrink: true,
                       }}
@@ -1344,6 +1385,7 @@ export default function CustomerDetail(props) {
                 <Grid container columnSpacing={8} rowSpacing={4}>
                   <Grid item xs={12} md={6}>
                     <TextField
+                      disabled
                       InputLabelProps={{
                         shrink: true,
                       }}
@@ -1375,6 +1417,7 @@ export default function CustomerDetail(props) {
                   <>
                     <Grid item xs={12} md={6}>
                       <TextField
+                        disabled
                         InputLabelProps={{
                           shrink: true,
                         }}
@@ -1403,6 +1446,7 @@ export default function CustomerDetail(props) {
                     </Grid>
                     <Grid item xs={12} md={6}>
                       <TextField
+                        disabled
                         InputLabelProps={{
                           shrink: true,
                         }}
@@ -1432,6 +1476,7 @@ export default function CustomerDetail(props) {
                     </Grid>
                     <Grid item xs={12} md={6}>
                       <TextField
+                        disabled
                         InputLabelProps={{
                           shrink: true,
                         }}
@@ -1461,6 +1506,7 @@ export default function CustomerDetail(props) {
                     </Grid>
                     <Grid item xs={12} md={6}>
                       <TextField
+                        disabled
                         InputLabelProps={{
                           shrink: true,
                         }}
@@ -1490,6 +1536,7 @@ export default function CustomerDetail(props) {
                     </Grid>
                     <Grid item xs={12} md={6}>
                       <TextField
+                        disabled
                         InputLabelProps={{
                           shrink: true,
                         }}
@@ -1519,6 +1566,7 @@ export default function CustomerDetail(props) {
                     </Grid>
                     <Grid item xs={12} md={6}>
                       <TextField
+                        disabled
                         InputLabelProps={{
                           shrink: true,
                         }}
@@ -1544,6 +1592,7 @@ export default function CustomerDetail(props) {
                     </Grid>
                     <Grid item xs={12} md={6}>
                       <TextField
+                        disabled
                         InputLabelProps={{
                           shrink: true,
                         }}
@@ -1587,6 +1636,7 @@ export default function CustomerDetail(props) {
                     <>
                       <Grid item xs={12} md={6}>
                         <TextField
+                          disabled
                           InputLabelProps={{
                             shrink: true,
                           }}
@@ -1607,6 +1657,7 @@ export default function CustomerDetail(props) {
                       </Grid>
                       <Grid item xs={12} md={6}>
                         <TextField
+                          disabled
                           InputLabelProps={{
                             shrink: true,
                           }}
@@ -1627,6 +1678,7 @@ export default function CustomerDetail(props) {
                       </Grid>
                       <Grid item xs={12} md={6}>
                         <TextField
+                          disabled
                           InputLabelProps={{
                             shrink: true,
                           }}
@@ -1647,6 +1699,7 @@ export default function CustomerDetail(props) {
                       </Grid>
                       <Grid item xs={12} md={6}>
                         <TextField
+                          disabled
                           InputLabelProps={{
                             shrink: true,
                           }}
@@ -1678,6 +1731,7 @@ export default function CustomerDetail(props) {
                     <>
                       <Grid item xs={12} md={6}>
                         <TextField
+                          disabled
                           InputLabelProps={{
                             shrink: true,
                           }}
@@ -1698,6 +1752,7 @@ export default function CustomerDetail(props) {
                       </Grid>
                       <Grid item xs={12} md={6}>
                         <TextField
+                          disabled
                           InputLabelProps={{
                             shrink: true,
                           }}
@@ -1718,6 +1773,7 @@ export default function CustomerDetail(props) {
                       </Grid>
                       <Grid item xs={12} md={6}>
                         <TextField
+                          disabled
                           InputLabelProps={{
                             shrink: true,
                           }}
@@ -1738,6 +1794,7 @@ export default function CustomerDetail(props) {
                       </Grid>
                       <Grid item xs={12} md={6}>
                         <TextField
+                          disabled
                           InputLabelProps={{
                             shrink: true,
                           }}
@@ -1758,6 +1815,7 @@ export default function CustomerDetail(props) {
                       </Grid>
                       <Grid item xs={12} md={6}>
                         <TextField
+                          disabled
                           InputLabelProps={{
                             shrink: true,
                           }}
@@ -1778,6 +1836,7 @@ export default function CustomerDetail(props) {
                       </Grid>
                       <Grid item xs={12} md={6}>
                         <TextField
+                          disabled
                           InputLabelProps={{
                             shrink: true,
                           }}
@@ -1813,6 +1872,7 @@ export default function CustomerDetail(props) {
                     <>
                       <Grid item xs={12} md={6}>
                         <TextField
+                          disabled
                           InputLabelProps={{
                             shrink: true,
                           }}
@@ -1833,6 +1893,7 @@ export default function CustomerDetail(props) {
                       </Grid>
                       <Grid item xs={12} md={6}>
                         <TextField
+                          disabled
                           InputLabelProps={{
                             shrink: true,
                           }}
@@ -1866,6 +1927,7 @@ export default function CustomerDetail(props) {
                   {formik.values.Q1Yes ? (
                     <Grid item xs={12} md={6}>
                       <TextField
+                        disabled
                         InputLabelProps={{
                           shrink: true,
                         }}
@@ -1898,6 +1960,7 @@ export default function CustomerDetail(props) {
                   {formik.values.Q2Yes ? (
                     <Grid item xs={12} md={6}>
                       <TextField
+                        disabled
                         InputLabelProps={{
                           shrink: true,
                         }}
@@ -1931,6 +1994,7 @@ export default function CustomerDetail(props) {
                   {formik.values.Q3Yes ? (
                     <Grid item xs={12} md={6}>
                       <TextField
+                        disabled
                         InputLabelProps={{
                           shrink: true,
                         }}
@@ -1963,6 +2027,7 @@ export default function CustomerDetail(props) {
                   {formik.values.Q4Yes ? (
                     <Grid item xs={12} md={6}>
                       <TextField
+                        disabled
                         InputLabelProps={{
                           shrink: true,
                         }}
@@ -1996,6 +2061,7 @@ export default function CustomerDetail(props) {
                   {formik.values.Q5Yes ? (
                     <Grid item xs={12} md={6}>
                       <TextField
+                        disabled
                         InputLabelProps={{
                           shrink: true,
                         }}
@@ -2026,6 +2092,7 @@ export default function CustomerDetail(props) {
                   {formik.values.Q6Yes ? (
                     <Grid item xs={12} md={6}>
                       <TextField
+                        disabled
                         InputLabelProps={{
                           shrink: true,
                         }}
