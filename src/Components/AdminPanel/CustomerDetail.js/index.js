@@ -164,13 +164,13 @@ export default function CustomerDetail(props) {
               <Grid container columnSpacing={8} rowSpacing={4}>
                 <Grid item xs={12} md={6}>
                   <TextField
-                    disabled
                     InputLabelProps={{
                       shrink: true,
                     }}
                     variant="standard"
                     fullWidth
                     InputProps={{
+                      readOnly: true,
                       style: {
                         height: "50px",
                         fontSize: "15px",
@@ -193,13 +193,13 @@ export default function CustomerDetail(props) {
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <TextField
-                    disabled
                     InputLabelProps={{
                       shrink: true,
                     }}
                     variant="standard"
                     fullWidth
                     InputProps={{
+                      readOnly: true,
                       style: {
                         height: "50px",
                         fontSize: "15px",
@@ -218,12 +218,12 @@ export default function CustomerDetail(props) {
 
                 <Grid item xs={12} md={6}>
                   <TextField
-                    disabled
                     InputLabelProps={{
                       shrink: true,
                     }}
                     variant="standard"
                     InputProps={{
+                      readOnly: true,
                       style: {
                         height: "50px",
                         fontSize: "15px",
@@ -241,12 +241,12 @@ export default function CustomerDetail(props) {
 
                 <Grid item xs={12} md={6}>
                   <TextField
-                    disabled
                     InputLabelProps={{
                       shrink: true,
                     }}
                     variant="standard"
                     InputProps={{
+                      readOnly: true,
                       style: {
                         height: "50px",
                         fontSize: "15px",
@@ -273,7 +273,6 @@ export default function CustomerDetail(props) {
 
                 <Grid item xs={12} md={6}>
                   <TextField
-                    disabled
                     InputLabelProps={{
                       shrink: true,
                     }}
@@ -283,6 +282,7 @@ export default function CustomerDetail(props) {
                         height: "50px",
                         fontSize: "15px",
                       },
+                      readOnly: true,
                     }}
                     fullWidth
                     id="dob"
@@ -304,7 +304,6 @@ export default function CustomerDetail(props) {
 
                 <Grid item xs={12} md={6}>
                   <TextField
-                    disabled
                     InputLabelProps={{
                       shrink: true,
                     }}
@@ -314,6 +313,7 @@ export default function CustomerDetail(props) {
                         height: "50px",
                         fontSize: "15px",
                       },
+                      readOnly: true,
                     }}
                     fullWidth
                     id="email"
@@ -329,7 +329,6 @@ export default function CustomerDetail(props) {
 
                 <Grid item xs={12} md={6}>
                   <TextField
-                    disabled
                     InputLabelProps={{
                       shrink: true,
                     }}
@@ -339,6 +338,7 @@ export default function CustomerDetail(props) {
                         height: "50px",
                         fontSize: "15px",
                       },
+                      readOnly: true,
                     }}
                     fullWidth
                     id="reEmail"
@@ -359,7 +359,6 @@ export default function CustomerDetail(props) {
 
                 <Grid container item xs={4} md={2}>
                   <TextField
-                    disabled
                     InputLabelProps={{
                       shrink: true,
                     }}
@@ -369,6 +368,7 @@ export default function CustomerDetail(props) {
                         height: "50px",
                         fontSize: "15px",
                       },
+                      readOnly: true,
                     }}
                     fullWidth
                     label="Select code"
@@ -388,7 +388,6 @@ export default function CustomerDetail(props) {
 
                 <Grid container item xs={8} md={4} columnSpacing={6}>
                   <TextField
-                    disabled
                     InputLabelProps={{
                       shrink: true,
                     }}
@@ -398,6 +397,7 @@ export default function CustomerDetail(props) {
                         height: "50px",
                         fontSize: "15px",
                       },
+                      readOnly: true,
                     }}
                     fullWidth
                     id="phoneNumber"
@@ -419,12 +419,12 @@ export default function CustomerDetail(props) {
 
                 <Grid item xs={12} md={6}>
                   <TextField
-                    disabled
                     InputLabelProps={{
                       shrink: true,
                     }}
                     variant="standard"
                     InputProps={{
+                      readOnly: true,
                       style: {
                         height: "50px",
                         fontSize: "15px",
@@ -435,30 +435,27 @@ export default function CustomerDetail(props) {
                     name="EDOA"
                     label="Expected date of Arrival"
                     onChange={formik.handleChange}
-                    value={formik.values.EDOA}
+                    value={
+                      new Date(formik.values.EDOA).getDate() +
+                      "-" +
+                      MonthMap[new Date(formik.values.EDOA).getMonth()] +
+                      "-" +
+                      new Date(formik.values.EDOA).getFullYear()
+                    }
                     onBlur={formik.handleBlur}
                     error={formik.touched.EDOA && Boolean(formik.errors.EDOA)}
                     helperText={formik.touched.EDOA && formik.errors.EDOA}
                   />
-                  {new Date(formik.values.EDOA).getDate() ? (
-                    <div style={{ fontWeight: "bold", marginTop: "6px" }}>
-                      {new Date(formik.values.EDOA).getDate() +
-                        "-" +
-                        MonthMap[new Date(formik.values.EDOA).getMonth()] +
-                        "-" +
-                        new Date(formik.values.EDOA).getFullYear()}
-                    </div>
-                  ) : null}
                 </Grid>
 
                 <Grid item xs={12} md={6}>
                   <TextField
-                    disabled
                     InputLabelProps={{
                       shrink: true,
                     }}
                     variant="standard"
                     InputProps={{
+                      readOnly: true,
                       style: {
                         height: "50px",
                         fontSize: "15px",
@@ -483,7 +480,6 @@ export default function CustomerDetail(props) {
 
                 <Grid item xs={12} md={6}>
                   <TextField
-                    disabled
                     InputLabelProps={{
                       shrink: true,
                     }}
@@ -493,6 +489,7 @@ export default function CustomerDetail(props) {
                         height: "50px",
                         fontSize: "12px",
                       },
+                      readOnly: true,
                     }}
                     fullWidth
                     id="visaOptions"
@@ -531,12 +528,12 @@ export default function CustomerDetail(props) {
             <Grid container columnSpacing={8} rowSpacing={4}>
               <Grid item xs={12} md={6}>
                 <TextField
-                  disabled
                   InputLabelProps={{
                     shrink: true,
                   }}
                   variant="standard"
                   InputProps={{
+                    readOnly: true,
                     style: {
                       height: "50px",
                       fontSize: "15px",
@@ -556,12 +553,12 @@ export default function CustomerDetail(props) {
 
               <Grid item xs={12} md={6}>
                 <TextField
-                  disabled
                   InputLabelProps={{
                     shrink: true,
                   }}
                   variant="standard"
                   InputProps={{
+                    readOnly: true,
                     style: {
                       height: "50px",
                       fontSize: "15px",
@@ -583,12 +580,12 @@ export default function CustomerDetail(props) {
 
               <Grid item xs={12} md={6}>
                 <TextField
-                  disabled
                   InputLabelProps={{
                     shrink: true,
                   }}
                   variant="standard"
                   InputProps={{
+                    readOnly: true,
                     style: {
                       height: "50px",
                       fontSize: "15px",
@@ -611,12 +608,12 @@ export default function CustomerDetail(props) {
 
               <Grid item xs={12} md={6}>
                 <TextField
-                  disabled
                   InputLabelProps={{
                     shrink: true,
                   }}
                   variant="standard"
                   InputProps={{
+                    readOnly: true,
                     style: {
                       height: "50px",
                       fontSize: "15px",
@@ -637,12 +634,12 @@ export default function CustomerDetail(props) {
 
               <Grid item xs={12} md={6}>
                 <TextField
-                  disabled
                   InputLabelProps={{
                     shrink: true,
                   }}
                   variant="standard"
                   InputProps={{
+                    readOnly: true,
                     style: {
                       height: "50px",
                       fontSize: "15px",
@@ -667,12 +664,12 @@ export default function CustomerDetail(props) {
 
               <Grid item xs={12} md={6}>
                 <TextField
-                  disabled
                   InputLabelProps={{
                     shrink: true,
                   }}
                   variant="standard"
                   InputProps={{
+                    readOnly: true,
                     style: {
                       height: "50px",
                       fontSize: "15px",
@@ -699,12 +696,12 @@ export default function CustomerDetail(props) {
 
               <Grid item xs={12} md={6}>
                 <TextField
-                  disabled
                   InputLabelProps={{
                     shrink: true,
                   }}
                   variant="standard"
                   InputProps={{
+                    readOnly: true,
                     style: {
                       height: "50px",
                       fontSize: "15px",
@@ -734,12 +731,12 @@ export default function CustomerDetail(props) {
 
               <Grid item xs={12} md={6}>
                 <TextField
-                  disabled
                   InputLabelProps={{
                     shrink: true,
                   }}
                   variant="standard"
                   InputProps={{
+                    readOnly: true,
                     style: {
                       height: "50px",
                       fontSize: "15px",
@@ -770,12 +767,12 @@ export default function CustomerDetail(props) {
 
               <Grid item xs={12} md={6}>
                 <TextField
-                  disabled
                   InputLabelProps={{
                     shrink: true,
                   }}
                   variant="standard"
                   InputProps={{
+                    readOnly: true,
                     style: {
                       height: "50px",
                       fontSize: "12px",
@@ -800,12 +797,12 @@ export default function CustomerDetail(props) {
               </Grid>
               <Grid item xs={12} md={6}>
                 <TextField
-                  disabled
                   InputLabelProps={{
                     shrink: true,
                   }}
                   variant="standard"
                   InputProps={{
+                    readOnly: true,
                     style: {
                       height: "50px",
                       fontSize: "12px",
@@ -831,12 +828,12 @@ export default function CustomerDetail(props) {
               </Grid>
               <Grid item xs={12} md={6}>
                 <TextField
-                  disabled
                   InputLabelProps={{
                     shrink: true,
                   }}
                   variant="standard"
                   InputProps={{
+                    readOnly: true,
                     style: {
                       height: "50px",
                       fontSize: "12px",
@@ -862,12 +859,12 @@ export default function CustomerDetail(props) {
               </Grid>
               <Grid item xs={12} md={6}>
                 <TextField
-                  disabled
                   variant="standard"
                   InputLabelProps={{
                     shrink: true,
                   }}
                   InputProps={{
+                    readOnly: true,
                     style: {
                       height: "50px",
                       fontSize: "12px",
@@ -893,12 +890,12 @@ export default function CustomerDetail(props) {
               </Grid>
               <Grid item xs={12} md={6}>
                 <TextField
-                  disabled
                   InputLabelProps={{
                     shrink: true,
                   }}
                   variant="standard"
                   InputProps={{
+                    readOnly: true,
                     style: {
                       height: "50px",
                       fontSize: "12px",
@@ -945,12 +942,12 @@ export default function CustomerDetail(props) {
                 <Grid container columnSpacing={8} rowSpacing={4}>
                   <Grid item xs={12} md={6}>
                     <TextField
-                      disabled
                       InputLabelProps={{
                         shrink: true,
                       }}
                       variant="standard"
                       InputProps={{
+                        readOnly: true,
                         style: {
                           height: "50px",
                           fontSize: "15px",
@@ -972,12 +969,12 @@ export default function CustomerDetail(props) {
 
                   <Grid item xs={12} md={6}>
                     <TextField
-                      disabled
                       InputLabelProps={{
                         shrink: true,
                       }}
                       variant="standard"
                       InputProps={{
+                        readOnly: true,
                         style: {
                           height: "50px",
                           fontSize: "15px",
@@ -1001,12 +998,12 @@ export default function CustomerDetail(props) {
 
                   <Grid item xs={12} md={6}>
                     <TextField
-                      disabled
                       InputLabelProps={{
                         shrink: true,
                       }}
                       variant="standard"
                       InputProps={{
+                        readOnly: true,
                         style: {
                           height: "50px",
                           fontSize: "15px",
@@ -1033,12 +1030,12 @@ export default function CustomerDetail(props) {
 
                   <Grid item xs={12} md={6}>
                     <TextField
-                      disabled
                       InputLabelProps={{
                         shrink: true,
                       }}
                       variant="standard"
                       InputProps={{
+                        readOnly: true,
                         style: {
                           height: "50px",
                           fontSize: "15px",
@@ -1060,12 +1057,12 @@ export default function CustomerDetail(props) {
 
                   <Grid item xs={12} md={6}>
                     <TextField
-                      disabled
                       InputLabelProps={{
                         shrink: true,
                       }}
                       variant="standard"
                       InputProps={{
+                        readOnly: true,
                         style: {
                           height: "50px",
                           fontSize: "15px",
@@ -1106,12 +1103,12 @@ export default function CustomerDetail(props) {
                 <Grid container columnSpacing={8} rowSpacing={4}>
                   <Grid item xs={12} md={6}>
                     <TextField
-                      disabled
                       InputLabelProps={{
                         shrink: true,
                       }}
                       variant="standard"
                       InputProps={{
+                        readOnly: true,
                         style: {
                           height: "50px",
                           fontSize: "15px",
@@ -1136,12 +1133,12 @@ export default function CustomerDetail(props) {
 
                   <Grid item xs={12} md={6}>
                     <TextField
-                      disabled
                       InputLabelProps={{
                         shrink: true,
                       }}
                       variant="standard"
                       InputProps={{
+                        readOnly: true,
                         style: {
                           height: "50px",
                           fontSize: "15px",
@@ -1167,12 +1164,12 @@ export default function CustomerDetail(props) {
 
                   <Grid item xs={12} md={6}>
                     <TextField
-                      disabled
                       InputLabelProps={{
                         shrink: true,
                       }}
                       variant="standard"
                       InputProps={{
+                        readOnly: true,
                         style: {
                           height: "50px",
                           fontSize: "15px",
@@ -1197,12 +1194,12 @@ export default function CustomerDetail(props) {
 
                   <Grid item xs={12} md={6}>
                     <TextField
-                      disabled
                       InputLabelProps={{
                         shrink: true,
                       }}
                       variant="standard"
                       InputProps={{
+                        readOnly: true,
                         style: {
                           height: "50px",
                           fontSize: "15px",
@@ -1245,12 +1242,12 @@ export default function CustomerDetail(props) {
                 <Grid container columnSpacing={8} rowSpacing={4}>
                   <Grid item xs={12} md={6}>
                     <TextField
-                      disabled
                       InputLabelProps={{
                         shrink: true,
                       }}
                       variant="standard"
                       InputProps={{
+                        readOnly: true,
                         style: {
                           height: "50px",
                           fontSize: "15px",
@@ -1275,12 +1272,12 @@ export default function CustomerDetail(props) {
 
                   <Grid item xs={12} md={6}>
                     <TextField
-                      disabled
                       InputLabelProps={{
                         shrink: true,
                       }}
                       variant="standard"
                       InputProps={{
+                        readOnly: true,
                         style: {
                           height: "50px",
                           fontSize: "15px",
@@ -1306,12 +1303,12 @@ export default function CustomerDetail(props) {
 
                   <Grid item xs={12} md={6}>
                     <TextField
-                      disabled
                       InputLabelProps={{
                         shrink: true,
                       }}
                       variant="standard"
                       InputProps={{
+                        readOnly: true,
                         style: {
                           height: "50px",
                           fontSize: "15px",
@@ -1337,12 +1334,12 @@ export default function CustomerDetail(props) {
 
                   <Grid item xs={12} md={6}>
                     <TextField
-                      disabled
                       InputLabelProps={{
                         shrink: true,
                       }}
                       variant="standard"
                       InputProps={{
+                        readOnly: true,
                         style: {
                           height: "50px",
                           fontSize: "15px",
@@ -1385,12 +1382,12 @@ export default function CustomerDetail(props) {
                 <Grid container columnSpacing={8} rowSpacing={4}>
                   <Grid item xs={12} md={6}>
                     <TextField
-                      disabled
                       InputLabelProps={{
                         shrink: true,
                       }}
                       variant="standard"
                       InputProps={{
+                        readOnly: true,
                         style: {
                           height: "50px",
                           fontSize: "15px",
@@ -1417,12 +1414,12 @@ export default function CustomerDetail(props) {
                   <>
                     <Grid item xs={12} md={6}>
                       <TextField
-                        disabled
                         InputLabelProps={{
                           shrink: true,
                         }}
                         variant="standard"
                         InputProps={{
+                          readOnly: true,
                           style: {
                             height: "50px",
                             fontSize: "15px",
@@ -1446,12 +1443,12 @@ export default function CustomerDetail(props) {
                     </Grid>
                     <Grid item xs={12} md={6}>
                       <TextField
-                        disabled
                         InputLabelProps={{
                           shrink: true,
                         }}
                         variant="standard"
                         InputProps={{
+                          readOnly: true,
                           style: {
                             height: "50px",
                             fontSize: "15px",
@@ -1476,12 +1473,12 @@ export default function CustomerDetail(props) {
                     </Grid>
                     <Grid item xs={12} md={6}>
                       <TextField
-                        disabled
                         InputLabelProps={{
                           shrink: true,
                         }}
                         variant="standard"
                         InputProps={{
+                          readOnly: true,
                           style: {
                             height: "50px",
                             fontSize: "15px",
@@ -1506,12 +1503,12 @@ export default function CustomerDetail(props) {
                     </Grid>
                     <Grid item xs={12} md={6}>
                       <TextField
-                        disabled
                         InputLabelProps={{
                           shrink: true,
                         }}
                         variant="standard"
                         InputProps={{
+                          readOnly: true,
                           style: {
                             height: "50px",
                             fontSize: "15px",
@@ -1536,12 +1533,12 @@ export default function CustomerDetail(props) {
                     </Grid>
                     <Grid item xs={12} md={6}>
                       <TextField
-                        disabled
                         InputLabelProps={{
                           shrink: true,
                         }}
                         variant="standard"
                         InputProps={{
+                          readOnly: true,
                           style: {
                             height: "50px",
                             fontSize: "15px",
@@ -1566,12 +1563,12 @@ export default function CustomerDetail(props) {
                     </Grid>
                     <Grid item xs={12} md={6}>
                       <TextField
-                        disabled
                         InputLabelProps={{
                           shrink: true,
                         }}
                         variant="standard"
                         InputProps={{
+                          readOnly: true,
                           style: {
                             height: "50px",
                             fontSize: "15px",
@@ -1592,12 +1589,12 @@ export default function CustomerDetail(props) {
                     </Grid>
                     <Grid item xs={12} md={6}>
                       <TextField
-                        disabled
                         InputLabelProps={{
                           shrink: true,
                         }}
                         variant="standard"
                         InputProps={{
+                          readOnly: true,
                           style: {
                             height: "50px",
                             fontSize: "15px",
@@ -1636,12 +1633,12 @@ export default function CustomerDetail(props) {
                     <>
                       <Grid item xs={12} md={6}>
                         <TextField
-                          disabled
                           InputLabelProps={{
                             shrink: true,
                           }}
                           variant="standard"
                           InputProps={{
+                            readOnly: true,
                             style: {
                               height: "50px",
                               fontSize: "15px",
@@ -1657,12 +1654,12 @@ export default function CustomerDetail(props) {
                       </Grid>
                       <Grid item xs={12} md={6}>
                         <TextField
-                          disabled
                           InputLabelProps={{
                             shrink: true,
                           }}
                           variant="standard"
                           InputProps={{
+                            readOnly: true,
                             style: {
                               height: "50px",
                               fontSize: "15px",
@@ -1678,12 +1675,12 @@ export default function CustomerDetail(props) {
                       </Grid>
                       <Grid item xs={12} md={6}>
                         <TextField
-                          disabled
                           InputLabelProps={{
                             shrink: true,
                           }}
                           variant="standard"
                           InputProps={{
+                            readOnly: true,
                             style: {
                               height: "50px",
                               fontSize: "15px",
@@ -1699,12 +1696,12 @@ export default function CustomerDetail(props) {
                       </Grid>
                       <Grid item xs={12} md={6}>
                         <TextField
-                          disabled
                           InputLabelProps={{
                             shrink: true,
                           }}
                           variant="standard"
                           InputProps={{
+                            readOnly: true,
                             style: {
                               height: "50px",
                               fontSize: "15px",
@@ -1731,12 +1728,12 @@ export default function CustomerDetail(props) {
                     <>
                       <Grid item xs={12} md={6}>
                         <TextField
-                          disabled
                           InputLabelProps={{
                             shrink: true,
                           }}
                           variant="standard"
                           InputProps={{
+                            readOnly: true,
                             style: {
                               height: "50px",
                               fontSize: "15px",
@@ -1752,12 +1749,12 @@ export default function CustomerDetail(props) {
                       </Grid>
                       <Grid item xs={12} md={6}>
                         <TextField
-                          disabled
                           InputLabelProps={{
                             shrink: true,
                           }}
                           variant="standard"
                           InputProps={{
+                            readOnly: true,
                             style: {
                               height: "50px",
                               fontSize: "15px",
@@ -1773,12 +1770,12 @@ export default function CustomerDetail(props) {
                       </Grid>
                       <Grid item xs={12} md={6}>
                         <TextField
-                          disabled
                           InputLabelProps={{
                             shrink: true,
                           }}
                           variant="standard"
                           InputProps={{
+                            readOnly: true,
                             style: {
                               height: "50px",
                               fontSize: "15px",
@@ -1794,12 +1791,12 @@ export default function CustomerDetail(props) {
                       </Grid>
                       <Grid item xs={12} md={6}>
                         <TextField
-                          disabled
                           InputLabelProps={{
                             shrink: true,
                           }}
                           variant="standard"
                           InputProps={{
+                            readOnly: true,
                             style: {
                               height: "50px",
                               fontSize: "15px",
@@ -1815,12 +1812,12 @@ export default function CustomerDetail(props) {
                       </Grid>
                       <Grid item xs={12} md={6}>
                         <TextField
-                          disabled
                           InputLabelProps={{
                             shrink: true,
                           }}
                           variant="standard"
                           InputProps={{
+                            readOnly: true,
                             style: {
                               height: "50px",
                               fontSize: "15px",
@@ -1836,12 +1833,12 @@ export default function CustomerDetail(props) {
                       </Grid>
                       <Grid item xs={12} md={6}>
                         <TextField
-                          disabled
                           InputLabelProps={{
                             shrink: true,
                           }}
                           variant="standard"
                           InputProps={{
+                            readOnly: true,
                             style: {
                               height: "50px",
                               fontSize: "15px",
@@ -1872,12 +1869,12 @@ export default function CustomerDetail(props) {
                     <>
                       <Grid item xs={12} md={6}>
                         <TextField
-                          disabled
                           InputLabelProps={{
                             shrink: true,
                           }}
                           variant="standard"
                           InputProps={{
+                            readOnly: true,
                             style: {
                               height: "50px",
                               fontSize: "15px",
@@ -1893,12 +1890,12 @@ export default function CustomerDetail(props) {
                       </Grid>
                       <Grid item xs={12} md={6}>
                         <TextField
-                          disabled
                           InputLabelProps={{
                             shrink: true,
                           }}
                           variant="standard"
                           InputProps={{
+                            readOnly: true,
                             style: {
                               height: "50px",
                               fontSize: "15px",
@@ -1927,12 +1924,12 @@ export default function CustomerDetail(props) {
                   {formik.values.Q1Yes ? (
                     <Grid item xs={12} md={6}>
                       <TextField
-                        disabled
                         InputLabelProps={{
                           shrink: true,
                         }}
                         variant="standard"
                         InputProps={{
+                          readOnly: true,
                           style: {
                             height: "50px",
                             fontSize: "15px",
@@ -1960,12 +1957,12 @@ export default function CustomerDetail(props) {
                   {formik.values.Q2Yes ? (
                     <Grid item xs={12} md={6}>
                       <TextField
-                        disabled
                         InputLabelProps={{
                           shrink: true,
                         }}
                         variant="standard"
                         InputProps={{
+                          readOnly: true,
                           style: {
                             height: "50px",
                             fontSize: "15px",
@@ -1994,12 +1991,12 @@ export default function CustomerDetail(props) {
                   {formik.values.Q3Yes ? (
                     <Grid item xs={12} md={6}>
                       <TextField
-                        disabled
                         InputLabelProps={{
                           shrink: true,
                         }}
                         variant="standard"
                         InputProps={{
+                          readOnly: true,
                           style: {
                             height: "50px",
                             fontSize: "15px",
@@ -2027,12 +2024,12 @@ export default function CustomerDetail(props) {
                   {formik.values.Q4Yes ? (
                     <Grid item xs={12} md={6}>
                       <TextField
-                        disabled
                         InputLabelProps={{
                           shrink: true,
                         }}
                         variant="standard"
                         InputProps={{
+                          readOnly: true,
                           style: {
                             height: "50px",
                             fontSize: "15px",
@@ -2061,12 +2058,12 @@ export default function CustomerDetail(props) {
                   {formik.values.Q5Yes ? (
                     <Grid item xs={12} md={6}>
                       <TextField
-                        disabled
                         InputLabelProps={{
                           shrink: true,
                         }}
                         variant="standard"
                         InputProps={{
+                          readOnly: true,
                           style: {
                             height: "50px",
                             fontSize: "15px",
@@ -2092,12 +2089,12 @@ export default function CustomerDetail(props) {
                   {formik.values.Q6Yes ? (
                     <Grid item xs={12} md={6}>
                       <TextField
-                        disabled
                         InputLabelProps={{
                           shrink: true,
                         }}
                         variant="standard"
                         InputProps={{
+                          readOnly: true,
                           style: {
                             height: "50px",
                             fontSize: "15px",
