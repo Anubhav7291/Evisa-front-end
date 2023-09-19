@@ -136,13 +136,13 @@ export default function CustomerDetail(props) {
 
   const downloadFile = () => {
     const input = pdfRef.current;
-    const zoomFactor = 4; 
+    const zoomFactor = 2; 
     const fontSize = 16; // Ad
     const contentStyles = {
       fontSize: `${fontSize}px`,
     };
-    input.style.fontSize = `${fontSize}px`;
-    html2canvas(input, { scale: zoomFactor, width: input.offsetWidth, height: input.offsetHeight, style: contentStyles }).then((canvas) => {
+     input.style.fontSize = `${fontSize}px`;
+    html2canvas(input, { scale: zoomFactor }).then((canvas) => {
       const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF('p', 'mm', 'a4');
       pdf.addImage(imgData, 'PNG', 10, 10, pdf.internal.pageSize.getWidth(), pdf.internal.pageSize.getHeight());
@@ -161,10 +161,13 @@ export default function CustomerDetail(props) {
         <h3 style={{ textAlign: "center" }}>
           Application Number ({id}) Complete Details
         </h3>
-        <div style={{ textAlign: "right", marginRight:"10px" }}>
-        <Button variant="contained"  onClick={downloadFile}>Download PDF</Button>
-        </div>
-        
+        <div style={{textAlign:"right", marginRight:"10px"}}>
+        {localStorage.getItem("downloadButton") === "true" ? (
+            <Button variant="contained" onClick={downloadFile}>
+              Download PDF
+            </Button>
+          ) : null}
+          </div>
         <div style={{ marginLeft: "23%" }}>
           {ApplicantImageUrl.split(",")[1] && (
             <img src={ApplicantImageUrl} height={"300px"} width={"300px"} />
