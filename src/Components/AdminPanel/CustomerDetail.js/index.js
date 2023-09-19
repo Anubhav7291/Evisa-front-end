@@ -1,16 +1,17 @@
-import { Button, Container, Grid, MenuItem, TextField } from "@mui/material";
+import { Button, Container, Grid, TextField } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import axios from "axios";
-import { Field, FormikProvider, useFormik } from "formik";
+import { FormikProvider, useFormik } from "formik";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import CardHeader from "react-bootstrap/esm/CardHeader";
+import { useLocation } from "react-router-dom";
 import "../../../style.css";
-import { COUNTRIES } from "../../../utils/Countries";
 import { MonthMap } from "../../../utils/MonthMap";
 import Spinner from "../../../utils/Spinner";
-import { useLocation } from "react-router-dom";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
 export default function CustomerDetail(props) {
   const [loader, setLoader] = React.useState(false);
@@ -18,8 +19,9 @@ export default function CustomerDetail(props) {
   const [PassportImageUrl, setPassportImageUrl] = useState("");
   const [result, setResult] = useState([]);
   const location = useLocation();
-  console.log(props, location)
-  const id = localStorage.getItem('id')
+  const id = localStorage.getItem("id");
+
+  const pdfRef = React.useRef();
 
   useEffect(() => {
     const fetchApi = async () => {
@@ -132,15 +134,37 @@ export default function CustomerDetail(props) {
     //validationSchema: validationSchema,
   });
 
-  console.log(PassportImageUrl);
+  const downloadFile = () => {
+    const input = pdfRef.current;
+    const zoomFactor = 4; 
+    const fontSize = 16; // Ad
+    const contentStyles = {
+      fontSize: `${fontSize}px`,
+    };
+    input.style.fontSize = `${fontSize}px`;
+    html2canvas(input, { scale: zoomFactor, width: input.offsetWidth, height: input.offsetHeight, style: contentStyles }).then((canvas) => {
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      pdf.addImage(imgData, 'PNG', 10, 10, pdf.internal.pageSize.getWidth(), pdf.internal.pageSize.getHeight());
+      pdf.save('downloaded-component.pdf');
+    });
+  
+  };
 
   return (
     <Container
+    
       fixed
       style={{ fontFamily: "sans-serif", marginTop: "17px", fontSize: "14px" }}
     >
-      <Card>
-        <h3 style={{textAlign:"center"}}>Application Number ({id}) Complete Details</h3>
+      <Card   ref={pdfRef}>
+        <h3 style={{ textAlign: "center" }}>
+          Application Number ({id}) Complete Details
+        </h3>
+        <div style={{ textAlign: "right", marginRight:"10px" }}>
+        <Button variant="contained"  onClick={downloadFile}>Download PDF</Button>
+        </div>
+        
         <div style={{ marginLeft: "23%" }}>
           {ApplicantImageUrl.split(",")[1] && (
             <img src={ApplicantImageUrl} height={"300px"} width={"300px"} />

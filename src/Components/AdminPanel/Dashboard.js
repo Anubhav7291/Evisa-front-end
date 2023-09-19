@@ -116,7 +116,7 @@ const Dashboard = (props) => {
     },
   ];
 
-  const handleLinkClick = (event,id) => {
+  const handleLinkClick = (event,id,downloadButton) => {
     // Prevent the default navigation behavior
     event.preventDefault();
     
@@ -125,6 +125,7 @@ const Dashboard = (props) => {
     
     // Post the data to the new tab\
     newTab.localStorage.setItem('id',id)
+    newTab.localStorage.setItem('downloadButton',downloadButton)
   };
 
   useEffect(() => {
@@ -176,10 +177,12 @@ const Dashboard = (props) => {
             "NA",
             "NA",
             "NA",
-            <Link to="/customerDetail"  onClick={(e) => handleLinkClick(e,val.TempId)} >
+            <Link to="/customerDetail"  onClick={(e) => handleLinkClick(e,val.TempId,false)} >
               Form link
             </Link>,
-            <Link to={"/"}>Download</Link>,
+            <Link to="/customerDetail"  onClick={(e) => handleLinkClick(e,val.TempId,true)} >
+            Download
+          </Link>,
           ];
         })}
         columns={columns}
