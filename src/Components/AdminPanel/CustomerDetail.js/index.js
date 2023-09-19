@@ -12,8 +12,10 @@ import { MonthMap } from "../../../utils/MonthMap";
 import Spinner from "../../../utils/Spinner";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import generatePDF from 'react-to-pdf';
 
 export default function CustomerDetail(props) {
+
   const [loader, setLoader] = React.useState(false);
   const [ApplicantImageUrl, setApplicantImageUrl] = useState("");
   const [PassportImageUrl, setPassportImageUrl] = useState("");
@@ -145,7 +147,7 @@ export default function CustomerDetail(props) {
     html2canvas(input, { scale: zoomFactor }).then((canvas) => {
       const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF('p', 'mm', 'a4');
-      pdf.addImage(imgData, 'PNG', 10, 10, pdf.internal.pageSize.getWidth(), pdf.internal.pageSize.getHeight());
+      pdf.addImage(imgData, 'PNG', 0, 0, pdf.internal.pageSize.getWidth(),300);
       pdf.save('downloaded-component.pdf');
     });
   
@@ -163,7 +165,7 @@ export default function CustomerDetail(props) {
         </h3>
         <div style={{textAlign:"right", marginRight:"10px"}}>
         {localStorage.getItem("downloadButton") === "true" ? (
-            <Button variant="contained" onClick={downloadFile}>
+            <Button variant="contained" onClick={() => generatePDF(pdfRef, {filename: 'page.pdf'})}>
               Download PDF
             </Button>
           ) : null}
