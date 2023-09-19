@@ -9,6 +9,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
+import { MonthMap } from "../../utils/MonthMap";
 
 const Dashboard = (props) => {
   const [data, setData] = useState([]);
@@ -162,7 +163,11 @@ const Dashboard = (props) => {
             val.TempId,
             val.email,
             val.firstName,
-            val.dob,
+            new Date(val.dob).getDate() +
+            "-" +
+            MonthMap[new Date(val.dob).getMonth()] +
+            "-" +
+            new Date(val.dob).getFullYear(),
             val.country,
             val.paymentStatus ? (
               <Button variant="contained" size="small" color="success">
