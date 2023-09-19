@@ -8,6 +8,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const Dashboard = (props) => {
   const [data, setData] = useState([]);
@@ -18,56 +19,56 @@ const Dashboard = (props) => {
 
   const columns = [
     {
-      name: "firstName",
-      label: "Name",
+      name: "applicationNumber",
+      label: "Application Number",
       options: {
         filter: true,
         sort: true,
       },
     },
     {
-      name: "TempId",
-      label: "Temporary Id",
-      options: {
-        filter: true,
-        sort: false,
-      },
-    },
-    {
-      name: "citizenship",
-      label: "Citizenship",
-      options: {
-        filter: true,
-        sort: false,
-      },
-    },
-    {
-      name: "portOfArrival",
-      label: "Port Of Arrival",
-      options: {
-        filter: true,
-        sort: false,
-      },
-    },
-    {
       name: "email",
-      label: "Email",
+      label: "Email Address",
       options: {
         filter: true,
         sort: false,
       },
     },
     {
-      name: "city",
-      label: "City",
+      name: "firstName",
+      label: "First/Given Names",
       options: {
         filter: true,
         sort: false,
       },
     },
     {
-      name: "phoneNumber",
-      label: "Phone Number",
+      name: "DOB",
+      label: "Date of Birth",
+      options: {
+        filter: true,
+        sort: false,
+      },
+    },
+    {
+      name: "country",
+      label: "Country (Nationality)",
+      options: {
+        filter: true,
+        sort: false,
+      },
+    },
+    {
+      name: "PaymentStatus",
+      label: "Payment Status",
+      options: {
+        filter: true,
+        sort: false,
+      },
+    },
+    {
+      name: "appStatus",
+      label: "Application Status",
       options: {
         filter: true,
         sort: false,
@@ -82,40 +83,32 @@ const Dashboard = (props) => {
       },
     },
     {
-      name: "visaOptions",
-      label: "Visa Option",
+      name: "IPaddress",
+      label: "IP Address",
       options: {
         filter: true,
         sort: false,
       },
     },
     {
-      name: "passportNumber",
-      label: "Passport Number",
+      name: "Date/Time",
+      label: "Date/Time",
       options: {
         filter: true,
         sort: false,
       },
     },
     {
-      name: "paymentStatus",
-      label: "Payment Status",
+      name: "action",
+      label: "Action",
       options: {
         filter: true,
         sort: false,
       },
     },
     {
-      name: "qualification",
-      label: "Qualification",
-      options: {
-        filter: true,
-        sort: false,
-      },
-    },
-    {
-      name: "religion",
-      label: "Religion",
+      name: "declaration",
+      label: "Declaration",
       options: {
         filter: true,
         sort: false,
@@ -123,9 +116,22 @@ const Dashboard = (props) => {
     },
   ];
 
+  const handleLinkClick = (event,id) => {
+    // Prevent the default navigation behavior
+    event.preventDefault();
+    
+    // Open a new tab
+    const newTab = window.open(event.target.href, '_blank');
+    
+    // Post the data to the new tab\
+    newTab.localStorage.setItem('id',id)
+  };
+
   useEffect(() => {
     const fetch = async () => {
-      const response = await axios.get(process.env.REACT_APP_BASE_URL+"/getLeads");
+      const response = await axios.get(
+        process.env.REACT_APP_BASE_URL + "/getLeads"
+      );
       console.log(response);
       if (response.data.Status === "Success") {
         setData(response.data.result);
@@ -138,9 +144,7 @@ const Dashboard = (props) => {
     filter: false,
     search: true,
     tableBodyHeight: "500px",
-    onRowClick: (rowData) => {
-      navigate("/customerDetail", { state: { tempId: rowData[1] } });
-    },
+
     // Fixed select column (if you have one)
     selectableRows: "none", // 'none' or 'single' or 'multiple'
     pagination: false,
@@ -154,16 +158,11 @@ const Dashboard = (props) => {
         title={"Leads"}
         data={data.map((val) => {
           return [
-            val.firstName,
             val.TempId,
-            val.citizenship,
-            val.portOfArrival,
             val.email,
-            val.city,
-            val.phoneNumber,
-            val.visaService,
-            val.visaOptions,
-            val.passportNumber,
+            val.firstName,
+            val.dob,
+            val.country,
             val.paymentStatus ? (
               <Button variant="contained" size="small" color="success">
                 Payment done
@@ -173,8 +172,14 @@ const Dashboard = (props) => {
                 Payment pending
               </Button>
             ),
-            val.qualification,
-            val.religion,
+            "PENDING",
+            "NA",
+            "NA",
+            "NA",
+            <Link to="/customerDetail"  onClick={(e) => handleLinkClick(e,val.TempId)} >
+              Form link
+            </Link>,
+            <Link to={"/"}>Download</Link>,
           ];
         })}
         columns={columns}

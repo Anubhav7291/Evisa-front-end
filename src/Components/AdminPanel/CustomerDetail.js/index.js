@@ -18,7 +18,8 @@ export default function CustomerDetail(props) {
   const [PassportImageUrl, setPassportImageUrl] = useState("");
   const [result, setResult] = useState([]);
   const location = useLocation();
-  const id = location?.state?.tempId;
+  console.log(props, location)
+  const id = localStorage.getItem('id')
 
   useEffect(() => {
     const fetchApi = async () => {
