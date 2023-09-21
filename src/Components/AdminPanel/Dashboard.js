@@ -14,6 +14,7 @@ import { MonthMap } from "../../utils/MonthMap";
 const Dashboard = (props) => {
   const [data, setData] = useState([]);
   const [width, setWidth] = useState("lg");
+  const [page, setPage] = useState(10);
   const navigate = useNavigate();
   const { open } = props;
   console.log(props);
@@ -145,11 +146,16 @@ const Dashboard = (props) => {
   const options = {
     filter: false,
     search: true,
-    tableBodyHeight: "500px",
+    tableBodyHeight: "400px",
 
     // Fixed select column (if you have one)
     selectableRows: "none", // 'none' or 'single' or 'multiple'
-    pagination: false,
+    pagination: true,
+    rowsPerPage: page,
+    rowsPerPageOptions:[10,25,50,100],
+    onChangeRowsPerPage:(page) => {
+      setPage(page)
+    },
     resizableColumns: false,
     overflow: true,
     showResponsive: true,
