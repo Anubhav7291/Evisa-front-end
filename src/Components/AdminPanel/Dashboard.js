@@ -90,7 +90,7 @@ const Dashboard = (props) => {
       options: {
         filter: true,
         sort: false,
-        width: '50px'
+        width: "50px",
       },
     },
     {
@@ -148,11 +148,15 @@ const Dashboard = (props) => {
     filter: false,
     search: true,
     tableBodyHeight: "470px",
-    // customSearch: (searchQuery, rowData, columnMeta) => {
-    //   console.log(searchQuery, rowData, columnMeta.columnIndex)
-    //   const columnData = rowData[columnMeta.columnIndex];
-    //   return columnData.includes(searchQuery);
-    // },
+    customSearch: (searchQuery, rowData, columnMeta) => {
+      console.log(searchQuery, rowData, columnMeta.columnIndex);
+      const columnData = rowData[columnMeta.columnIndex];
+      return (
+        rowData[0].props.children.includes(searchQuery) ||
+        rowData[1].props.children.includes(searchQuery) ||
+        rowData[2].props.children.includes(searchQuery)
+      );
+    },
 
     // Fixed select column (if you have one)
     selectableRows: "none", // 'none' or 'single' or 'multiple'
@@ -165,10 +169,8 @@ const Dashboard = (props) => {
     resizableColumns: false,
     overflow: true,
     showResponsive: true,
-  
   };
   return (
-    
     <Container
       style={{
         padding: 0,
@@ -217,8 +219,13 @@ const Dashboard = (props) => {
             ),
             "PENDING",
             val.visaService,
-            val.ip.split(":").map(val=> val).join(":\r\n"),
-            val.CREATION_TIME?.split('T')[0]+" " +(val?.CREATION_TIME?.split('T')[1]?.slice(0,8) || ""),
+            val.ip
+              .split(":")
+              .map((val) => val)
+              .join(":\r\n"),
+            val.CREATION_TIME?.split("T")[0] +
+              " " +
+              (val?.CREATION_TIME?.split("T")[1]?.slice(0, 8) || ""),
             <Link
               to="/customerDetail"
               onClick={(e) => handleLinkClick(e, val.TempId, false)}
