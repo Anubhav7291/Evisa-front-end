@@ -121,7 +121,7 @@ export default function Sidebar({onLogin}) {
             Dashboard
           </Typography>
 
-          <Button onClick ={() => onLogin(false)}style={{ color: "white", position: "absolute", right: 5 }}>
+          <Button onClick ={() => onLogin(false)}style={{ color: "white", position: "absolute", right: 2 }}>
             Logout
           </Button>
         </Toolbar>
@@ -164,7 +164,7 @@ export default function Sidebar({onLogin}) {
         </List>
       </Drawer>
 
-      <DrawerHeader />
+     
       <Dashboard open={open} />
     </Box>
   );

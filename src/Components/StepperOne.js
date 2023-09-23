@@ -65,6 +65,7 @@ export default function StepperOne() {
     name: false,
     firstName: false,
   });
+  const [ip, setIp] = React.useState();
 
   const [formValues, setFormValues] = React.useState();
 
@@ -78,7 +79,19 @@ export default function StepperOne() {
   const { id } = useParams();
 
   React.useEffect(() => {
+    getIP();
     fetch();
+
+    async function getIP(){
+      try{
+       const response = await axios.get('https://api64.ipify.org?format=json')
+       console.log(response.data.ip)
+        setIp(response.data.ip)
+      }
+      catch(Err){
+        console.log(Err)
+      }
+    }
 
     async function fetch() {
       try {
@@ -141,10 +154,11 @@ export default function StepperOne() {
     enableReinitialize: true,
     onSubmit: async (values) => {
       setLoader(true);
+      console.log( {...values, ip:ip})
       try {
         const response = await axios.post(
           process.env.REACT_APP_BASE_URL+"/create",
-          values
+          {...values, ip:ip}
         );
         if (response.data.message === "Success") {
           setHideButton(true);
@@ -171,6 +185,8 @@ export default function StepperOne() {
   const currentDate = new Date();
   const minDate = new Date(currentDate);
   minDate.setDate(currentDate.getDate() + 3);
+
+  
 
   return (
     <>

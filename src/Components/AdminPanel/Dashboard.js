@@ -161,7 +161,7 @@ const Dashboard = (props) => {
     showResponsive: true,
   };
   return (
-    <Container style={{ padding: 0, margin: 0, marginLeft: open? "5%":"" ,maxWidth:open ? "90%" : "100%" }} maxWidth={false}>
+    <Container style={{ padding: 0, margin: 0,maxWidth:open ? "90%" : "100%" }} maxWidth={false}>
       <MUIDataTable
         title={"Leads"}
         data={data.map((val) => {
