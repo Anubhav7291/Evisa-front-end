@@ -20,6 +20,7 @@ import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import Dashboard from "./AdminPanel/Dashboard";
 import { Button } from "@mui/material";
+import ImageSide from "../assets/evisa.png"
 
 const drawerWidth = 240;
 
@@ -90,7 +91,7 @@ const Drawer = styled(MuiDrawer, {
 
 export default function Sidebar({onLogin}) {
   const theme = useTheme();
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -105,6 +106,7 @@ export default function Sidebar({onLogin}) {
       <CssBaseline />
       <AppBar position="fixed" open={open}>
         <Toolbar>
+          
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -128,7 +130,8 @@ export default function Sidebar({onLogin}) {
       </AppBar>
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
-          <IconButton style={{ color: "white" }} onClick={handleDrawerClose}>
+        <img src={ImageSide} height="55px" width="250px"/>
+          <IconButton  onClick={handleDrawerClose}>
             {theme.direction === "rtl" ? (
               <ChevronRightIcon />
             ) : (
@@ -137,8 +140,8 @@ export default function Sidebar({onLogin}) {
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <List style={{ color: "white" }}>
-          {["Leads"].map((text, index) => (
+        <List >
+          {["Application"].map((text, index) => (
             <ListItem key={text} disablePadding sx={{ display: "block" }}>
               <ListItemButton
                 sx={{
@@ -152,7 +155,7 @@ export default function Sidebar({onLogin}) {
                     minWidth: 0,
                     mr: open ? 3 : "auto",
                     justifyContent: "center",
-                    color: "white",
+                  
                   }}
                 >
                   {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}

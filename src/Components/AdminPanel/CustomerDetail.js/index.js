@@ -132,6 +132,7 @@ export default function CustomerDetail(props) {
       Q6Detail: result.Q6Detail,
       applicantFile: result.applicantFile,
       passportFile: result.passportFile,
+      ip: result.ip
     },
     enableReinitialize: true,
     //validationSchema: validationSchema,
@@ -2176,14 +2177,14 @@ export default function CustomerDetail(props) {
                     style={{ marginTop: "3%", fontWeight: "bold" }}
                     item
                     xs={12}
-                    md={8}
+                    md={7}
                   >
                     <span>
                       I have read and agree to the Privacy Policy, Term and
                       conditions & Refund Policy
                     </span>
                   </Grid>
-                  <Grid style={{ marginTop: "3%" }} item xs={12} md={4}>
+                  <Grid style={{ marginTop: "3%" }} item xs={12} md={5}>
                     <div
                       style={{
                         display: "flex",
@@ -2193,7 +2194,7 @@ export default function CustomerDetail(props) {
                       }}
                     >
                       <Done style={{ color: "green" }} />
-                      <span>Agreed!</span>
+                      <span>Agreed|{formik.values.ip}</span>
                     </div>
                   </Grid>
                 </Grid>

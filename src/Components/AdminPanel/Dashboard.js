@@ -118,16 +118,16 @@ const Dashboard = (props) => {
     },
   ];
 
-  const handleLinkClick = (event,id,downloadButton) => {
+  const handleLinkClick = (event, id, downloadButton) => {
     // Prevent the default navigation behavior
     event.preventDefault();
-    
+
     // Open a new tab
-    const newTab = window.open(event.target.href, '_blank');
-    
+    const newTab = window.open(event.target.href, "_blank");
+
     // Post the data to the new tab\
-    newTab.localStorage.setItem('id',id)
-    newTab.localStorage.setItem('downloadButton',downloadButton)
+    newTab.localStorage.setItem("id", id);
+    newTab.localStorage.setItem("downloadButton", downloadButton);
   };
 
   useEffect(() => {
@@ -146,40 +146,57 @@ const Dashboard = (props) => {
   const options = {
     filter: false,
     search: true,
-    tableBodyHeight: "400px",
+    tableBodyHeight: "470px",
 
     // Fixed select column (if you have one)
     selectableRows: "none", // 'none' or 'single' or 'multiple'
     pagination: true,
     rowsPerPage: page,
-    rowsPerPageOptions:[10,25,50,100],
-    onChangeRowsPerPage:(page) => {
-      setPage(page)
+    rowsPerPageOptions: [10, 25, 50, 100],
+    onChangeRowsPerPage: (page) => {
+      setPage(page);
     },
     resizableColumns: false,
     overflow: true,
     showResponsive: true,
   };
   return (
-    <Container style={{ padding: 0, margin: 0,maxWidth:open ? "90%" : "100%" }} maxWidth={false}>
+    <Container
+      style={{
+        padding: 0,
+        margin: 0,
+        marginLeft: open ? "5%" : "",
+        maxWidth: open ? "90%" : "100%",
+      }}
+      maxWidth={false}
+    >
       <MUIDataTable
         title={"Leads"}
         data={data.map((val) => {
           return [
-            <Link to="/customerDetail"  onClick={(e) => handleLinkClick(e,val.TempId,false)} >
-            {val.TempId}
-          </Link>,
-            <Link to="/customerDetail"  onClick={(e) => handleLinkClick(e,val.TempId,false)} >
-            {val.email}
-          </Link>,
-            <Link to="/customerDetail"  onClick={(e) => handleLinkClick(e,val.TempId,false)} >
-            {val.firstName}
-          </Link>,
+            <Link
+              to="/customerDetail"
+              onClick={(e) => handleLinkClick(e, val.TempId, false)}
+            >
+              {val.TempId}
+            </Link>,
+            <Link
+              to="/customerDetail"
+              onClick={(e) => handleLinkClick(e, val.TempId, false)}
+            >
+              {val.email}
+            </Link>,
+            <Link
+              to="/customerDetail"
+              onClick={(e) => handleLinkClick(e, val.TempId, false)}
+            >
+              {val.firstName}
+            </Link>,
             new Date(val.dob).getDate() +
-            "-" +
-            MonthMap[new Date(val.dob).getMonth()] +
-            "-" +
-            new Date(val.dob).getFullYear(),
+              "-" +
+              MonthMap[new Date(val.dob).getMonth()] +
+              "-" +
+              new Date(val.dob).getFullYear(),
             val.country,
             val.paymentStatus ? (
               <Button variant="contained" size="small" color="success">
@@ -194,12 +211,18 @@ const Dashboard = (props) => {
             "NA",
             "NA",
             "NA",
-            <Link to="/customerDetail"  onClick={(e) => handleLinkClick(e,val.TempId,false)} >
+            <Link
+              to="/customerDetail"
+              onClick={(e) => handleLinkClick(e, val.TempId, false)}
+            >
               Form link
             </Link>,
-            <Link to="/customerDetail"  onClick={(e) => handleLinkClick(e,val.TempId,true)} >
-            Download
-          </Link>,
+            <Link
+              to="/customerDetail"
+              onClick={(e) => handleLinkClick(e, val.TempId, true)}
+            >
+              Download
+            </Link>,
           ];
         })}
         columns={columns}
