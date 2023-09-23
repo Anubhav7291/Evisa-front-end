@@ -12,10 +12,11 @@ import { MonthMap } from "../../../utils/MonthMap";
 import Spinner from "../../../utils/Spinner";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-import generatePDF from 'react-to-pdf';
+import generatePDF from "react-to-pdf";
+import { Done } from "@mui/icons-material";
+import { Link } from "react-router-dom";
 
 export default function CustomerDetail(props) {
-
   const [loader, setLoader] = React.useState(false);
   const [ApplicantImageUrl, setApplicantImageUrl] = useState("");
   const [PassportImageUrl, setPassportImageUrl] = useState("");
@@ -138,46 +139,77 @@ export default function CustomerDetail(props) {
 
   const downloadFile = () => {
     const input = pdfRef.current;
-    const zoomFactor = 2; 
+    const zoomFactor = 2;
     const fontSize = 16; // Ad
     const contentStyles = {
       fontSize: `${fontSize}px`,
     };
-     input.style.fontSize = `${fontSize}px`;
+    input.style.fontSize = `${fontSize}px`;
     html2canvas(input, { scale: zoomFactor }).then((canvas) => {
-      const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF('p', 'mm', 'a4');
-      pdf.addImage(imgData, 'PNG', 0, 0, pdf.internal.pageSize.getWidth(),300);
-      pdf.save('downloaded-component.pdf');
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF("p", "mm", "a4");
+      pdf.addImage(imgData, "PNG", 0, 0, pdf.internal.pageSize.getWidth(), 300);
+      pdf.save("downloaded-component.pdf");
     });
-  
+  };
+
+  const handleLinkClick = (event, id, downloadButton) => {
+    // Prevent the default navigation behavior
+    event.preventDefault();
+
+    // Open a new tab
+    const newTab = window.open(event.target.href, "_blank");
+
+    newTab.document.write("<html><head><title>Image</title></head><body>");
+    newTab.document.write('<img src="' + id + '" alt="Image">');
+    newTab.document.write("</body></html>");
   };
 
   return (
     <Container
-    
       fixed
       style={{ fontFamily: "sans-serif", marginTop: "17px", fontSize: "14px" }}
     >
-      <Card   ref={pdfRef}>
+      <Card ref={pdfRef}>
         <h3 style={{ textAlign: "center" }}>
           Application Number ({id}) Complete Details
         </h3>
-        <div style={{textAlign:"right", marginRight:"10px"}}>
-        {localStorage.getItem("downloadButton") === "true" ? (
-            <Button variant="contained" onClick={() => generatePDF(pdfRef, {filename: 'page.pdf'})}>
+        <div style={{ textAlign: "right", marginRight: "10px" }}>
+          {localStorage.getItem("downloadButton") === "true" ? (
+            <Button
+              variant="contained"
+              onClick={() => generatePDF(pdfRef, { filename: "page.pdf" })}
+            >
               Download PDF
             </Button>
           ) : null}
-          </div>
-        <div style={{ marginLeft: "23%" }}>
+        </div>
+        <div style={{ marginLeft: "23%",textAlign:"justify"}}>
           {ApplicantImageUrl.split(",")[1] && (
-            <img src={ApplicantImageUrl} height={"300px"} width={"300px"} />
+            <>
+              <img src={ApplicantImageUrl} height={"300px"} width={"300px"} />
+              <Link
+                to="/customerDetail"
+                onClick={(e) => handleLinkClick(e, ApplicantImageUrl)}
+              >
+                Photo
+              </Link>
+            </>
           )}
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           {PassportImageUrl.split(",")[1] && (
-            <img src={PassportImageUrl} height={"300px"} width={"300px"} />
+            <>
+              <img src={PassportImageUrl} height={"300px"} width={"300px"} />
+              <Link
+                style={{ textAlign: "center", left:0}}
+                to="/customerDetail"
+                onClick={(e) => handleLinkClick(e, PassportImageUrl)}
+              >
+                Passport
+              </Link>
+            </>
           )}
+          <span style={{ left: 0 }}></span>
         </div>
         <CardHeader
           style={{
@@ -2139,6 +2171,31 @@ export default function CustomerDetail(props) {
                       />
                     </Grid>
                   ) : null}
+                  <Grid
+                    container
+                    style={{ marginTop: "3%", fontWeight: "bold" }}
+                    item
+                    xs={12}
+                    md={8}
+                  >
+                    <span>
+                      I have read and agree to the Privacy Policy, Term and
+                      conditions & Refund Policy
+                    </span>
+                  </Grid>
+                  <Grid style={{ marginTop: "3%" }} item xs={12} md={4}>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        flexWrap: "wrap",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      <Done style={{ color: "green" }} />
+                      <span>Agreed!</span>
+                    </div>
+                  </Grid>
                 </Grid>
               </CardContent>
             </form>

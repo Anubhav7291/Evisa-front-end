@@ -14,7 +14,7 @@ const LoginPage = () => {
   return (
     <div className="login-page">
       {loggedInUser ? (
-        <Sidebar/>
+        <Sidebar onLogin={handleLogin}/>
       ) : (
         <Login onLogin={handleLogin} />
       )}

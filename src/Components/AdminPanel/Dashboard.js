@@ -161,14 +161,20 @@ const Dashboard = (props) => {
     showResponsive: true,
   };
   return (
-    <Container style={{ padding: 0, margin: 0 }} maxWidth={open ? "md" : "lg"}>
+    <Container style={{ padding: 0, margin: 0, marginLeft: open? "5%":"" ,maxWidth:open ? "90%" : "100%" }} maxWidth={false}>
       <MUIDataTable
         title={"Leads"}
         data={data.map((val) => {
           return [
-            val.TempId,
-            val.email,
-            val.firstName,
+            <Link to="/customerDetail"  onClick={(e) => handleLinkClick(e,val.TempId,false)} >
+            {val.TempId}
+          </Link>,
+            <Link to="/customerDetail"  onClick={(e) => handleLinkClick(e,val.TempId,false)} >
+            {val.email}
+          </Link>,
+            <Link to="/customerDetail"  onClick={(e) => handleLinkClick(e,val.TempId,false)} >
+            {val.firstName}
+          </Link>,
             new Date(val.dob).getDate() +
             "-" +
             MonthMap[new Date(val.dob).getMonth()] +
