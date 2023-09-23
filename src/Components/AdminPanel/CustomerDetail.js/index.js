@@ -2194,7 +2194,7 @@ export default function CustomerDetail(props) {
                       }}
                     >
                       <Done style={{ color: "green" }} />
-                      <span>Agreed|{formik.values.ip}</span>
+                      <span>Agreed IP:- {formik.values.ip}</span>
                     </div>
                   </Grid>
                 </Grid>
