@@ -7,7 +7,7 @@ import CardContent from "@mui/material/CardContent";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { Grid, IconButton, MenuItem } from "@mui/material";
-import { TextField } from "@mui/material";
+import { TextField, Checkbox } from "@mui/material";
 import { InputAdornment } from "@mui/material";
 import Question from "@mui/icons-material/QuestionMarkRounded";
 import { Button } from "@mui/material";
@@ -15,7 +15,7 @@ import { Info } from "@mui/icons-material";
 import axios from "axios";
 import Spinner from "../utils/Spinner";
 import Notification from "../utils/Notification";
-import { COUNTRIES , MOBILE_CODES} from "../utils/Countries";
+import { COUNTRIES, MOBILE_CODES } from "../utils/Countries";
 import Captcha from "./Captcha";
 import { MonthMap } from "../utils/MonthMap";
 import { AIRPORTS } from "../utils/Countries";
@@ -31,8 +31,7 @@ const validationSchema = yup.object({
     .string("Enter your email")
     .email("Should match the email")
     .required("Email is required"),
-  name: yup
-    .string("Enter your Family name"),
+  name: yup.string("Enter your Family name"),
   firstName: yup
     .string("Enter your FirstName")
     .required("First name is required"),
@@ -58,6 +57,7 @@ const validationSchema = yup.object({
     .string("Enter your Visa service")
     .required("Visa service is required"),
   visaOptions: yup.string("Enter your Visa Option"),
+ 
 });
 
 export default function StepperOne() {
@@ -66,7 +66,8 @@ export default function StepperOne() {
     firstName: false,
   });
   const [ip, setIp] = React.useState();
-
+  const [agree, setAgree] = React.useState(false);
+  const [error, setError] = React.useState(false);
   const [formValues, setFormValues] = React.useState();
 
   const [loader, setLoader] = React.useState(false);
@@ -82,21 +83,20 @@ export default function StepperOne() {
     getIP();
     fetch();
 
-    async function getIP(){
-      try{
-       const response = await axios.get('https://api64.ipify.org?format=json')
-       console.log(response.data.ip)
-        setIp(response.data.ip)
-      }
-      catch(Err){
-        console.log(Err)
+    async function getIP() {
+      try {
+        const response = await axios.get("https://api64.ipify.org?format=json");
+        console.log(response.data.ip);
+        setIp(response.data.ip);
+      } catch (Err) {
+        console.log(Err);
       }
     }
 
     async function fetch() {
       try {
         const response = await axios.get(
-          process.env.REACT_APP_BASE_URL+`/tempId/${id}`
+          process.env.REACT_APP_BASE_URL + `/tempId/${id}`
         );
         console.log("responsee", response.data.Result);
         if (response.data.Result?.length >= 1) {
@@ -149,24 +149,30 @@ export default function StepperOne() {
       visaService: formValues?.visaService || "",
       visaOptions: formValues?.visaOptions || "",
       mobileCode: formValues?.mobileCode || "",
+      agree: formValues?.agree || "",
     },
     validationSchema: validationSchema,
     enableReinitialize: true,
     onSubmit: async (values) => {
       setLoader(true);
-      console.log( {...values, ip:ip})
-      try {
-        const response = await axios.post(
-          process.env.REACT_APP_BASE_URL+"/create",
-          {...values, ip:ip}
-        );
-        if (response.data.message === "Success") {
-          setHideButton(true);
-          setTempId(response.data.tempId);
+      if (agree) {
+        try {
+          const response = await axios.post(
+            process.env.REACT_APP_BASE_URL + "/create",
+            { ...values, ip: ip }
+          );
+          if (response.data.message === "Success") {
+            setHideButton(true);
+            setTempId(response.data.tempId);
+           
+          }
+        } catch (error) {
+          setLoader(false);
+          setNotification({ ...notification, open: true, content: "Error!" });
         }
-      } catch (error) {
-        setLoader(false);
-        setNotification({ ...notification, open: true, content: "Error!" });
+      }else{
+        console.log(agree)
+        setError(true)
       }
       setLoader(false);
     },
@@ -186,7 +192,8 @@ export default function StepperOne() {
   const minDate = new Date(currentDate);
   minDate.setDate(currentDate.getDate() + 3);
 
-  
+  const dobDate = new Date(currentDate);
+  dobDate.setDate(currentDate.getDate());
 
   return (
     <>
@@ -216,7 +223,7 @@ export default function StepperOne() {
                 <TextField
                   fullWidth
                   InputProps={{
-                  style: {
+                    style: {
                       height: "50px",
                       fontSize: "15px",
                     },
@@ -269,7 +276,7 @@ export default function StepperOne() {
                 <TextField
                   fullWidth
                   InputProps={{
-                  style: {
+                    style: {
                       height: "50px",
                       fontSize: "15px",
                     },
@@ -317,7 +324,7 @@ export default function StepperOne() {
               <Grid item xs={12} md={6}>
                 <TextField
                   InputProps={{
-                  style: {
+                    style: {
                       height: "50px",
                       fontSize: "15px",
                     },
@@ -351,7 +358,7 @@ export default function StepperOne() {
               <Grid item xs={12} md={6}>
                 <TextField
                   InputProps={{
-                  style: {
+                    style: {
                       height: "50px",
                       fontSize: "15px",
                     },
@@ -392,10 +399,12 @@ export default function StepperOne() {
                     style: {
                       height: "50px",
                       fontSize: "15px",
-                     
                     },
                   }}
-                 
+                  inputProps={{
+                    // only needs the first 16 characters in the date string
+                    max: dobDate.toISOString().slice(0, 10),
+                  }}
                   fullWidth
                   id="dob"
                   name="dob"
@@ -428,7 +437,7 @@ export default function StepperOne() {
               <Grid item xs={12} md={6}>
                 <TextField
                   InputProps={{
-                  style: {
+                    style: {
                       height: "50px",
                       fontSize: "15px",
                     },
@@ -448,7 +457,7 @@ export default function StepperOne() {
               <Grid item xs={12} md={6}>
                 <TextField
                   InputProps={{
-                  style: {
+                    style: {
                       height: "50px",
                       fontSize: "15px",
                     },
@@ -476,7 +485,7 @@ export default function StepperOne() {
               <Grid container item xs={4} md={2}>
                 <TextField
                   InputProps={{
-                  style: {
+                    style: {
                       height: "50px",
                       fontSize: "15px",
                     },
@@ -512,7 +521,7 @@ export default function StepperOne() {
               <Grid container item xs={8} md={4} columnSpacing={6}>
                 <TextField
                   InputProps={{
-                  style: {
+                    style: {
                       height: "50px",
                       fontSize: "15px",
                     },
@@ -538,7 +547,7 @@ export default function StepperOne() {
               <Grid item xs={12} md={6}>
                 <TextField
                   InputProps={{
-                  style: {
+                    style: {
                       height: "50px",
                       fontSize: "15px",
                     },
@@ -579,7 +588,7 @@ export default function StepperOne() {
               <Grid item xs={12} md={6}>
                 <TextField
                   InputProps={{
-                  style: {
+                    style: {
                       height: "50px",
                       fontSize: "15px",
                     },
@@ -647,9 +656,36 @@ export default function StepperOne() {
                   </TextField>
                 </Grid>
               ) : null}
+
+              {!hideButton ? 
               <Grid item xs={12} md={12}>
-                <Captcha />
-              </Grid>
+                <Checkbox
+                  inputProps={{ "aria-label": "primary checkbox" }}
+                  checked={agree}
+                  onBlur={formik.handleBlur}
+                  error={
+                    formik.touched.visaOptions &&
+                    Boolean(formik.errors.visaOptions)
+                  }
+                  onChange={() => {
+                    if (agree) {
+                      setAgree(false);
+                    } else {
+                      setAgree(true);
+                      setError(false)
+                    }
+                  }}
+                />
+                I have read and agree to the Privacy Policy, Term and conditions
+                & Refund Policy.
+              </Grid> : null}
+              {error ? (
+                <div style={{ color: "red", marginLeft: "6%" }}>
+                Please check this box if you want to proceed
+              </div>
+              ) : (
+                ""
+              )}
             </Grid>
             {!hideButton ? (
               <div className="next-button">
