@@ -2,6 +2,7 @@ import * as React from "react";
 import { useTheme } from "@mui/material/styles";
 import { useRef } from "react";
 import Card from "@mui/material/Card";
+import {  Container,} from "@mui/material";
 import CardHeader from "react-bootstrap/esm/CardHeader";
 import CardContent from "@mui/material/CardContent";
 import { useFormik } from "formik";
@@ -21,6 +22,13 @@ import { MonthMap } from "../utils/MonthMap";
 import { AIRPORTS } from "../utils/Countries";
 import { useParams } from "react-router-dom";
 import PassportDetails from "./Steppers/StepOne/PassportDetails";
+import SSLIMAGE from "../assets/seal-secured-ssl.png"
+import VisaImage from "../assets/visapic.svg"
+import AMEXImage from "../assets/american_express.svg"
+import JCBImage from "../assets/jcb.svg"
+import MAESTROImage from "../assets/maestro.svg"
+import MCImage from "../assets/mastercard.svg"
+import UPAY from "../assets/union-pay.svg"
 
 const validationSchema = yup.object({
   email: yup
@@ -57,6 +65,7 @@ const validationSchema = yup.object({
     .string("Enter your Visa service")
     .required("Visa service is required"),
   visaOptions: yup.string("Enter your Visa Option"),
+  eTourist: yup.string("Enter your Visa Option")
  
 });
 
@@ -110,6 +119,32 @@ export default function StepperOne() {
   }, []);
   console.log("form", formValues);
 
+  let eTouristMap ={
+    "eTourist Visa(for 30 Days)" :  [
+      "TOURISM",
+      "RECREATION",
+      "SIGHT-SEEING",
+      "MEETING FRIENDS/RELATIVES",
+      "SHORT TERM YOGA PROGRAMME",
+      "SHORT TERM COURSES ON LOCAL LANGUAGES, MUSIC, DANCE, ARTS & CRAFTS, COOKING, MEDICINE ETC. WHICH SHOULD NOT BE A FORMAL OR STRUCTURED COURSE/PROGRAMME (COURSES NOT EXCEEDING 6 MONTHS DURATION AND NOT ISSUED WITH A QUALIFYING CERTIFICATE/ DIPLOMA ETC).",
+      "VOLUNTARY WORK OF SHORT DURATION (FOR A MAXIMUM PERIOD OF ONE MONTH, WHICH DO NOT INVOLVE ANY MONETARY PAYMENT OR CONSIDERATION OF ANY KIND IN RETURN)"
+    ],
+    "eTourist Visa(for 1 Year)" :  [
+      "RECREATION/SIGHT-SEEING",
+      "MEETING FRIENDS/RELATIVES",
+      "SHORT TERM YOGA PROGRAMME",
+      "SHORT TERM COURSES ON LOCAL LANGUAGES, MUSIC, DANCE, ARTS & CRAFTS, COOKING, MEDICINE ETC. WHICH SHOULD NOT BE A FORMAL OR STRUCTURED COURSE/PROGRAMME (COURSES NOT EXCEEDING 6 MONTHS DURATION AND NOT ISSUED WITH A QUALIFYING CERTIFICATE/ DIPLOMA ETC.)",
+      "VOLUNTARY WORK OF SHORT DURATION (FOR A MAXIMUM PERIOD OF ONE MONTH, WHICH DO NOT INVOLVE ANY MONETARY PAYMENT OR CONSIDERATION OF ANY KIND IN RETURN)"
+    ],
+    "eTourist Visa(for 5 Years)":   [
+      "RECREATION/SIGHT-SEEING",
+      "MEETING FRIENDS/RELATIVES",
+      "SHORT TERM YOGA PROGRAMME",
+      "SHORT TERM COURSES ON LOCAL LANGUAGES, MUSIC, DANCE, ARTS & CRAFTS, COOKING, MEDICINE ETC. WHICH SHOULD NOT BE A FORMAL OR STRUCTURED COURSE/PROGRAMME (COURSES NOT EXCEEDING 6 MONTHS DURATION AND NOT ISSUED WITH A QUALIFYING CERTIFICATE/ DIPLOMA ETC.)",
+      "VOLUNTARY WORK OF SHORT DURATION (FOR A MAXIMUM PERIOD OF ONE MONTH, WHICH DO NOT INVOLVE ANY MONETARY PAYMENT OR CONSIDERATION OF ANY KIND IN RETURN)"
+    ]
+  }
+
   const map = {
     "eTOURIST VISA": [
       "eTourist Visa(for 30 Days)",
@@ -150,6 +185,7 @@ export default function StepperOne() {
       visaOptions: formValues?.visaOptions || "",
       mobileCode: formValues?.mobileCode || "",
       agree: formValues?.agree || "",
+      eTourist:formValues?.eTourist || ""
     },
     validationSchema: validationSchema,
     enableReinitialize: true,
@@ -197,6 +233,7 @@ export default function StepperOne() {
 
   return (
     <>
+      <Container fixed style={{ fontFamily:"sans-serif",  fontSize: "14px"}}>
       <Card>
         <CardHeader
           style={{
@@ -657,6 +694,43 @@ export default function StepperOne() {
                 </Grid>
               ) : null}
 
+{eTouristMap[formik.values.visaOptions] &&
+              eTouristMap[formik.values.visaOptions].length !== 0 ? (
+                <Grid item xs={12} md={6}>
+                  <TextField
+                    InputProps={{
+                      style: {
+                        height: "50px",
+                        fontSize: "12px",
+                      },
+                    }}
+                    fullWidth
+                    id="eTourist"
+                    name="eTourist"
+                   
+                    onChange={formik.handleChange}
+                    select
+                    value={formik.values.eTourist}
+                    onBlur={formik.handleBlur}
+                    error={
+                      formik.touched.eTourist &&
+                      Boolean(formik.errors.eTourist)
+                    }
+                    helperText={
+                      formik.touched.eTourist && formik.errors.eTourist
+                    }
+                  >
+                    {eTouristMap[formik.values.visaOptions].map((val) => {
+                      return (
+                        <MenuItem key={val} value={val}>
+                          {val}
+                        </MenuItem>
+                      );
+                    })}
+                  </TextField>
+                </Grid>
+              ) : null}
+
               {!hideButton ? 
               <Grid item xs={12} md={12}>
                 <Checkbox
@@ -698,9 +772,31 @@ export default function StepperOne() {
           {loader && <Spinner></Spinner>}
         </CardContent>
       </Card>
+     
       {hideButton ? (
         <PassportDetails tempId={tempId} formValue={formik.values} />
       ) : null}
+       </Container>
+     
+       <div style={{ backgroundColor:"#e6f9ff"}}>
+     <div style={{ paddingTop:"10px",display:"flex"}}>
+      
+
+     <div style={{float:"left", marginLeft:"7%"}}>
+       <img src={SSLIMAGE} height="50px" width="100px"/>
+       <p>Your personal information is securely encrypted by Secure Sockets Layer (SSL) software</p>
+       </div>
+     
+     <div style={{float:"right", marginLeft:"30px"}}>
+       <img src={VisaImage} alt="Visa Logo" style={{marginLeft:"12px"}} height="35px" width="40px"/>
+       <img src={MCImage} alt="MasterCard Logo" style={{marginLeft:"12px"}} height="35px" width="40px" />
+       <img src={AMEXImage} alt="American Express Logo" style={{marginLeft:"12px"}} height="35px" width="40px" />
+       <img src={MAESTROImage} alt="American Express Logo" style={{marginLeft:"12px"}} height="35px" width="40px" />
+       <img src={UPAY} alt="American Express Logo" style={{marginLeft:"12px"}} height="35px" width="40px" />
+       <img src={JCBImage} alt="American Express Logo" style={{marginLeft:"12px"}} height="35px" width="40px" />
+     </div>
+   </div>
+   </div>
     </>
   );
 }

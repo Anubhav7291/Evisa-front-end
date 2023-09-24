@@ -8,10 +8,10 @@ import StepperOne from "./StepperOne";
 
 function App() {
   return (
-  <Container fixed style={{ fontFamily:"sans-serif",  fontSize: "14px"}}>
+<>
         <br/>
         <StepperOne/>
-    </Container>
+        </>
   
   );
 }

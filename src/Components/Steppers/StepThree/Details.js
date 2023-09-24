@@ -13,7 +13,13 @@ import Notification from "../../../utils/Notification";
 import Spinner from "../../../utils/Spinner";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-
+import SSLIMAGE from "../../../assets/seal-secured-ssl.png"
+import VisaImage from "../../../assets/visapic.svg"
+import AMEXImage from "../../../assets/american_express.svg"
+import JCBImage from "../../../assets/jcb.svg"
+import MAESTROImage from "../../../assets/maestro.svg"
+import MCImage from "../../../assets/mastercard.svg"
+import UPAY from "../../../assets/union-pay.svg"
 // const validationSchema = yup.object({
 //   city: yup.string("Enter your city"),
 //   country: yup.string("Enter your country"),
@@ -203,6 +209,7 @@ export default function Details(props) {
   });
 
   return (
+    <>
     <Container
       fixed
       style={{ fontFamily: "sans-serif", marginTop: "17px", fontSize: "14px" }}
@@ -1698,6 +1705,8 @@ export default function Details(props) {
                   <span>
                     Choose the Photo To Upload (Applicant's recent colored
                     photograph)
+                    <br></br>
+                    <b>*Please upload an image with a maximum file size of 5MB, in JPEG or PNG format</b>
                   </span>
                 </Grid>
                 <Grid item xs={12} md={4}>
@@ -1718,6 +1727,8 @@ export default function Details(props) {
                   <span>
                     Choose the Passport To Upload (Copy of Passport page
                     containing personal particulars)
+                    <br></br>
+                    <b>*Please upload an image with a maximum file size of 5MB, in JPEG or PNG format</b>
                   </span>
                 </Grid>
                 <Grid item xs={12} md={4}>
@@ -1746,6 +1757,27 @@ export default function Details(props) {
           </form>
         </FormikProvider>
       </Card>
+     
     </Container>
+    <div style={{ backgroundColor:"#e6f9ff"}}>
+     <div style={{ paddingTop:"10px",display:"flex"}}>
+      
+
+     <div style={{float:"left", marginLeft:"7%"}}>
+       <img src={SSLIMAGE} height="50px" width="100px"/>
+       <p>Your personal information is securely encrypted by Secure Sockets Layer (SSL) software</p>
+       </div>
+     
+     <div style={{float:"right", marginLeft:"30px"}}>
+       <img src={VisaImage} alt="Visa Logo" style={{marginLeft:"12px"}} height="35px" width="40px"/>
+       <img src={MCImage} alt="MasterCard Logo" style={{marginLeft:"12px"}} height="35px" width="40px" />
+       <img src={AMEXImage} alt="American Express Logo" style={{marginLeft:"12px"}} height="35px" width="40px" />
+       <img src={MAESTROImage} alt="American Express Logo" style={{marginLeft:"12px"}} height="35px" width="40px" />
+       <img src={UPAY} alt="American Express Logo" style={{marginLeft:"12px"}} height="35px" width="40px" />
+       <img src={JCBImage} alt="American Express Logo" style={{marginLeft:"12px"}} height="35px" width="40px" />
+     </div>
+   </div>
+   </div>
+ </>
   );
 }
