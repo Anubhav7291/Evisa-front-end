@@ -9,6 +9,7 @@ import CardHeader from "react-bootstrap/esm/CardHeader";
 import { useNavigate, useParams } from "react-router-dom";
 import "../../../style.css";
 import { COUNTRIES, EDUCATION, RELIGION } from "../../../utils/Countries";
+import { EMPLOYMENT } from "../../../utils/District";
 import Notification from "../../../utils/Notification";
 import Spinner from "../../../utils/Spinner";
 import { useEffect } from "react";
@@ -21,45 +22,26 @@ import MAESTROImage from "../../../assets/maestro.svg";
 import MCImage from "../../../assets/mastercard.svg";
 import UPAY from "../../../assets/union-pay.svg";
 import { Checkbox } from "@mui/material";
-// const validationSchema = yup.object({
-//   city: yup.string("Enter your city"),
-//   country: yup.string("Enter your country"),
-//   citizenship: yup.string("Enter your citizenship"),
-//   religion: yup
-//     .string("Enter your religion")
-//     .required("Religion name is required"),
-//   mark: yup
-//     .string("Enter your Verification mark")
-//     .required("Verification mark is required"),
-//   qualification: yup
-//     .string("Enter your Port of qualification")
-//     .required("Qualification is required"),
-//   passportNumber: yup
-//     .string("Enter your Passport Number")
-//     .required("Passport Number is required"),
-//   issueDate: yup
-//     .string("Enter your Issue Date")
-//     .required("Issue Date is required"),
-//   expiryDate: yup
-//     .string("Enter your expected Expiry Date")
-//     .required("Expiry Date is required"),
-//   IssueCountry: yup.string("Enter your Issue Country"),
-//   otherPassportNumber: yup.string("Enter your Passport Number"),
+import * as yup from "yup";
 
-//   otherDateOfIssue: yup.string("Enter your Date Of Issue"),
-//   otherPlaceIssue: yup.string("Enter your Place Issue"),
-//   otherNationality: yup.string("Enter your Nationality"),
-// });
+const validationSchema = yup.object({
+  passportFile: yup
+    .string("Please upload passportFile")
+    .required("Religion name is required"),
+  applicantFile: yup
+    .string("Enter your Verification mark")
+    .required("Verification mark is required"),
+});
 
 export default function Details(props) {
   const theme = useTheme();
   const location = useLocation();
   const tempId = location?.state?.tempId;
-  console.log(location?.state)
+  console.log(location?.state);
   const navigate = useNavigate();
 
   const [loader, setLoader] = React.useState(false);
-  const [agree, setAgree] =  React.useState(false);
+  const [result, setResult] = React.useState([]);
   const [notification, setNotification] = React.useState({
     open: false,
     content: "",
@@ -138,8 +120,27 @@ export default function Details(props) {
       Q7Detail: "",
       applicantFile: "",
       passportFile: "",
+      Aoccupation: "",
+      employerAddress: "",
+      employerName: "",
+      FI_address: "",
+      FI_phone: "",
+      FI_referencename: "",
+      FO_address: "",
+      FO_phone: "",
+      FO_referencename: "",
+      AB_address: "",
+      AB_name: "",
+      AB_phone: "",
+      AB_website: "",
+      IB_address: "",
+      IB_name: "",
+      IB_phone: "",
+      IB_website: "",
+      businessFile: "",
     },
-    //validationSchema: validationSchema,
+    validationSchema: validationSchema,
+    enableReinitialize: true,
     onSubmit: async (values) => {
       // Initialize an empty FormData object
       const formData = new FormData();
@@ -188,10 +189,28 @@ export default function Details(props) {
       formData.append("Q5Detail", values.Q5Detail);
       formData.append("Q6Detail", values.Q6Detail);
       formData.append("applicantFile", values.applicantFile); // You can append files here if needed
-      formData.append("passportFile", values.passportFile); // You can append files here if needed
+      formData.append("passportFile", values.passportFile);
+      formData.append("Aoccupation", values.Aoccupation);
+      formData.append("Q7Detail", values.Q7Detail);
+      formData.append("employerAddress",values.employerAddress);
+      formData.append("employerName", values.employerName);
+      formData.append("FI_address",values.FI_address);
+      formData.append("FI_phone",values.FI_phone);
+      formData.append("FI_referencename",values.FI_referencename);
+      formData.append("FO_address",values.FO_address);
+      formData.append("FO_phone",values.FO_phone);
+      formData.append("FO_referencename",values.FO_referencename);
+      formData.append("AB_address",values.AB_address);
+      formData.append("AB_name",values.AB_name);
+      formData.append("AB_phone",values.AB_phone);
+      formData.append("AB_website",values.AB_website);
+      formData.append("IB_address",values.IB_address);
+      formData.append("IB_name",values.IB_name);
+      formData.append("IB_phone",values.IB_phone);
+      formData.append("IB_website",values.IB_website);
+      formData.append("businessFile",values.businessFile); // You can append files here if needed
 
-      // Now you can use this formData object to send data in a POST request or perform any other desired actions.
-      console.log(formData.get("applicantFile"));
+      
       setLoader(true);
       try {
         const response = await axios.put(
@@ -199,7 +218,7 @@ export default function Details(props) {
           formData
         );
         if (response.data.message === "Success") {
-          navigate("/finalStep",{ state: {tempId:tempId} });
+          navigate("/finalStep", { state: { tempId: tempId } });
         }
       } catch (error) {}
       setLoader(false);
@@ -220,7 +239,16 @@ export default function Details(props) {
     const navdom2 = document.querySelector("#Step-details");
     navdom2.style.backgroundColor = "#1a75ff";
     navdom2.style.color = "white";
-  });
+    const fetchApi = async () => {
+      const res = await axios.get(
+        process.env.REACT_APP_BASE_URL + `/getLeadbyId/${tempId}`
+      );
+      if (res.data.message === "Success") {
+        setResult(res.data.data[0]);
+      }
+    };
+    fetchApi();
+  }, []);
 
   return (
     <>
@@ -245,16 +273,16 @@ export default function Details(props) {
             Applicant's Address
           </CardHeader>
           <CardHeader
-                style={{
-                  color: "black",
-                  fontWeight: "bold",
-                  fontSize: "16px",
-                  marginLeft: "30px",
-                  marginTop: "10px",
-                }}
-              >
-                Present Address
-              </CardHeader>
+            style={{
+              color: "black",
+              fontWeight: "bold",
+              fontSize: "16px",
+              marginLeft: "30px",
+              marginTop: "10px",
+            }}
+          >
+            Present Address
+          </CardHeader>
           {
             <Notification
               open={notification.open}
@@ -392,174 +420,6 @@ export default function Details(props) {
                         formik.touched.postal && Boolean(formik.errors.postal)
                       }
                       helperText={formik.touched.postal && formik.errors.postal}
-                    />
-                  </Grid>
-                </Grid>
-                Click here for same address 
-                <Checkbox
-                  inputProps={{ "aria-label": "primary checkbox" }}
-                  checked={agree}
-                  onBlur={formik.handleBlur}
-                  error={
-                    formik.touched.visaOptions &&
-                    Boolean(formik.errors.visaOptions)
-                  }
-                  onChange={() => {
-                    if (agree) {
-                      setAgree(false);
-                      formik.setFieldValue("street2", "");
-                      formik.setFieldValue("village2", "");
-                      formik.setFieldValue("addresscountry2", "");
-                      formik.setFieldValue("state2", "");
-                      formik.setFieldValue("postal2", "");
-                    } else {
-                      setAgree(true);
-                      formik.setFieldValue("street2", formik.values.street);
-                      formik.setFieldValue("village2", formik.values.village);
-                      formik.setFieldValue("addresscountry2", formik.values.addresscountry);
-                      formik.setFieldValue("state2", formik.values.state);
-                      formik.setFieldValue("postal2", formik.values.postal);
-                    
-                    }
-                  }}
-                />
-                <CardHeader
-                style={{
-                  color: "black",
-                  fontWeight: "bold",
-                  fontSize: "16px",
-                 
-                  marginTop: "10px",
-                  marginBottom: "20px",
-                }}
-              >
-                Permanent Address
-              </CardHeader>
-
-                <Grid container columnSpacing={8} rowSpacing={4}>
-                  <Grid item xs={12} md={6}>
-                    <TextField
-                      InputProps={{
-                        style: {
-                          height: "50px",
-                          fontSize: "15px",
-                        },
-                      }}
-                      fullWidth
-                      id="street"
-                      name="street"
-                      label="House No./Street"
-                      onChange={formik.handleChange}
-                      value={formik.values.street2}
-                      onBlur={formik.handleBlur}
-                      error={
-                        formik.touched.street2 && Boolean(formik.errors.street2)
-                      }
-                      helperText={formik.touched.street2 && formik.errors.street2}
-                    />
-                  </Grid>
-
-                  <Grid item xs={12} md={6}>
-                    <TextField
-                      InputProps={{
-                        style: {
-                          height: "50px",
-                          fontSize: "15px",
-                        },
-                      }}
-                      fullWidth
-                      id="village"
-                      name="village"
-                      label="Village/Town/City"
-                      onChange={formik.handleChange}
-                      value={formik.values.village2}
-                      onBlur={formik.handleBlur}
-                      error={
-                        formik.touched.village2 && Boolean(formik.errors.village2)
-                      }
-                      helperText={
-                        formik.touched.village2 && formik.errors.village2
-                      }
-                    />
-                  </Grid>
-
-                  <Grid item xs={12} md={6}>
-                    <TextField
-                      InputProps={{
-                        style: {
-                          height: "50px",
-                          fontSize: "15px",
-                        },
-                      }}
-                      fullWidth
-                      select
-                      id="addresscountry"
-                      name="addresscountry"
-                      label="Country"
-                      type="religion"
-                      onChange={formik.handleChange}
-                      value={formik.values.addresscountry2}
-                      onBlur={formik.handleBlur}
-                      error={
-                        formik.touched.addresscountry2 &&
-                        Boolean(formik.errors.addresscountry2)
-                      }
-                      helperText={
-                        formik.touched.addresscountry2 &&
-                        formik.errors.addresscountry2
-                      }
-                    >
-                      {COUNTRIES.map((val) => {
-                        return (
-                          <MenuItem key={val.name} value={val.name}>
-                            {val.name}
-                          </MenuItem>
-                        );
-                      })}
-                    </TextField>
-                  </Grid>
-
-                  <Grid item xs={12} md={6}>
-                    <TextField
-                      InputProps={{
-                        style: {
-                          height: "50px",
-                          fontSize: "15px",
-                        },
-                      }}
-                      fullWidth
-                      id="state"
-                      name="state"
-                      label="State/Province/District"
-                      onChange={formik.handleChange}
-                      value={formik.values.state2}
-                      onBlur={formik.handleBlur}
-                      error={
-                        formik.touched.state2 && Boolean(formik.errors.state2)
-                      }
-                      helperText={formik.touched.state2 && formik.errors.state2}
-                    />
-                  </Grid>
-
-                  <Grid item xs={12} md={6}>
-                    <TextField
-                      InputProps={{
-                        style: {
-                          height: "50px",
-                          fontSize: "15px",
-                        },
-                      }}
-                      fullWidth
-                      id="postal"
-                      name="postal"
-                      label="Postal/Zip Code"
-                      onChange={formik.handleChange}
-                      value={formik.values.postal2}
-                      onBlur={formik.handleBlur}
-                      error={
-                        formik.touched.postal2 && Boolean(formik.errors.postal2)
-                      }
-                      helperText={formik.touched.postal2 && formik.errors.postal2}
                     />
                   </Grid>
                 </Grid>
@@ -705,37 +565,6 @@ export default function Details(props) {
                       })}
                     </TextField>
                   </Grid>
-
-                  <Grid item xs={12} md={6}>
-                    <TextField
-                      InputProps={{
-                        style: {
-                          height: "50px",
-                          fontSize: "15px",
-                        },
-                      }}
-                      select
-                      fullWidth
-                      id="fatherPrevCountry"
-                      name="fatherPrevCountry"
-                      label="Previous Nationality/Region"
-                      onChange={formik.handleChange}
-                      value={formik.values.fatherPrevCountry}
-                      onBlur={formik.handleBlur}
-                      error={
-                        formik.touched.fatherPrevCountry &&
-                        Boolean(formik.errors.fatherPrevCountry)
-                      }
-                      helperText={
-                        formik.touched.fatherPrevCountry &&
-                        formik.errors.fatherPrevCountry
-                      }
-                    >
-                      {COUNTRIES.map((val) => {
-                        return <MenuItem value={val.name}>{val.name}</MenuItem>;
-                      })}
-                    </TextField>
-                  </Grid>
                 </Grid>
               </CardContent>
 
@@ -868,36 +697,6 @@ export default function Details(props) {
                       })}
                     </TextField>
                   </Grid>
-                  <Grid item xs={12} md={6}>
-                    <TextField
-                      InputProps={{
-                        style: {
-                          height: "50px",
-                          fontSize: "15px",
-                        },
-                      }}
-                      select
-                      fullWidth
-                      id="motherPrevCountry"
-                      name="motherPrevCountry"
-                      label="Previous Nationality/Region"
-                      onChange={formik.handleChange}
-                      value={formik.values.motherPrevCountry}
-                      onBlur={formik.handleBlur}
-                      error={
-                        formik.touched.motherPrevCountry &&
-                        Boolean(formik.errors.motherPrevCountry)
-                      }
-                      helperText={
-                        formik.touched.motherPrevCountry &&
-                        formik.errors.motherPrevCountry
-                      }
-                    >
-                      {COUNTRIES.map((val) => {
-                        return <MenuItem value={val.name}>{val.name}</MenuItem>;
-                      })}
-                    </TextField>
-                  </Grid>
                 </Grid>
               </CardContent>
 
@@ -1020,38 +819,6 @@ export default function Details(props) {
                             },
                           }}
                           fullWidth
-                          select
-                          id="spousePrevNation"
-                          name="spousePrevNation"
-                          label="Spouse's Previous Nationality"
-                          onChange={formik.handleChange}
-                          value={formik.values.spousePrevNation}
-                          onBlur={formik.handleBlur}
-                          error={
-                            formik.touched.spousePrevNation &&
-                            Boolean(formik.errors.spousePrevNation)
-                          }
-                          helperText={
-                            formik.touched.spousePrevNation &&
-                            formik.errors.spousePrevNation
-                          }
-                        >
-                          {COUNTRIES.map((val) => {
-                            return (
-                              <MenuItem value={val.name}>{val.name}</MenuItem>
-                            );
-                          })}
-                        </TextField>
-                      </Grid>
-                      <Grid item xs={12} md={6}>
-                        <TextField
-                          InputProps={{
-                            style: {
-                              height: "50px",
-                              fontSize: "15px",
-                            },
-                          }}
-                          fullWidth
                           id="spousePlace"
                           name="spousePlace"
                           label="Spouse's place of birth"
@@ -1100,31 +867,7 @@ export default function Details(props) {
                           })}
                         </TextField>
                       </Grid>
-                      <Grid item xs={12} md={6}>
-                        <TextField
-                          InputProps={{
-                            style: {
-                              height: "50px",
-                              fontSize: "15px",
-                            },
-                          }}
-                          fullWidth
-                          id="spouseOccupation"
-                          name="spouseOccupation"
-                          label="Spouse Occupation"
-                          onChange={formik.handleChange}
-                          value={formik.values.spouseOccupation}
-                          onBlur={formik.handleBlur}
-                          error={
-                            formik.touched.spouseOccupation &&
-                            Boolean(formik.errors.spouseOccupation)
-                          }
-                          helperText={
-                            formik.touched.spouseOccupation &&
-                            formik.errors.spouseOccupation
-                          }
-                        />
-                      </Grid>
+
                       <Grid item xs={12} md={6}>
                         <TextField
                           InputProps={{
@@ -1146,6 +889,360 @@ export default function Details(props) {
                           helperText={formik.touched.mark && formik.errors.mark}
                         />
                       </Grid>
+                    </>
+                  ) : null}
+                </Grid>
+              </CardContent>
+
+              <CardHeader
+                style={{
+                  backgroundColor: "#1a75ff",
+                  color: "white",
+                  fontWeight: "bold",
+                  fontSize: "16px",
+                  padding: "6px",
+                }}
+              >
+                Applicant's Occupation
+              </CardHeader>
+              <CardContent
+                sx={{ flex: "1 0 auto" }}
+                style={{ padding: "30px" }}
+              >
+                <Grid container columnSpacing={8} rowSpacing={4}>
+                  <Grid item xs={12} md={6}>
+                    <TextField
+                      InputProps={{
+                        style: {
+                          height: "50px",
+                          fontSize: "15px",
+                        },
+                      }}
+                      select
+                      fullWidth
+                      id="Aoccupation"
+                      name="Aoccupation"
+                      label="Occupation"
+                      onChange={formik.handleChange}
+                      value={formik.values.Aoccupation}
+                      onBlur={formik.handleBlur}
+                      error={
+                        formik.touched.Aoccupation &&
+                        Boolean(formik.errors.Aoccupation)
+                      }
+                      helperText={
+                        formik.touched.Aoccupation && formik.errors.Aoccupation
+                      }
+                    >
+                      {EMPLOYMENT.map((val) => {
+                        return (
+                          <MenuItem value={val} key={val}>
+                            {val}
+                          </MenuItem>
+                        );
+                      })}
+                    </TextField>
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <TextField
+                      InputProps={{
+                        style: {
+                          height: "50px",
+                          fontSize: "15px",
+                        },
+                      }}
+                      fullWidth
+                      id="employerName"
+                      name="employerName"
+                      label="Employer Name"
+                      onChange={formik.handleChange}
+                      value={formik.values.employerName}
+                      onBlur={formik.handleBlur}
+                      error={
+                        formik.touched.employerName &&
+                        Boolean(formik.errors.employerName)
+                      }
+                      helperText={
+                        formik.touched.employerName &&
+                        formik.errors.employerName
+                      }
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <TextField
+                      InputProps={{
+                        style: {
+                          height: "50px",
+                          fontSize: "15px",
+                        },
+                      }}
+                      fullWidth
+                      id="employerAddress"
+                      name="employerAddress"
+                      label="Employer Address"
+                      onChange={formik.handleChange}
+                      value={formik.values.employerAddress}
+                      onBlur={formik.handleBlur}
+                      error={
+                        formik.touched.employerAddress &&
+                        Boolean(formik.errors.employerAddress)
+                      }
+                      helperText={
+                        formik.touched.employerAddress &&
+                        formik.errors.employerAddress
+                      }
+                    />
+                  </Grid>
+                </Grid>
+              </CardContent>
+              <CardHeader
+                style={{
+                  backgroundColor: "#1a75ff",
+                  color: "white",
+                  fontWeight: "bold",
+                  fontSize: "16px",
+                  padding: "6px",
+                }}
+              >
+                Details of Visa Sought
+              </CardHeader>
+              <CardContent
+                sx={{ flex: "1 0 auto" }}
+                style={{ padding: "30px" }}
+              >
+                <Grid container columnSpacing={8} rowSpacing={4}>
+                  <Grid item xs={12} md={6}>
+                    <TextField
+                      InputProps={{
+                        style: {
+                          height: "50px",
+                          fontSize: "15px",
+                        },
+                      }}
+                      fullWidth
+                      id="F_placetoVisited"
+                      name="F_placetoVisited"
+                      label="Places to be visited"
+                      onChange={formik.handleChange}
+                      value={formik.values.F_placetoVisited}
+                      onBlur={formik.handleBlur}
+                      error={
+                        formik.touched.F_placetoVisited &&
+                        Boolean(formik.errors.F_placetoVisited)
+                      }
+                      helperText={
+                        formik.touched.F_placetoVisited &&
+                        formik.errors.F_placetoVisited
+                      }
+                    />
+                  </Grid>
+                </Grid>
+              </CardContent>
+
+              <CardHeader
+                style={{
+                  backgroundColor: "#1a75ff",
+                  color: "white",
+                  fontWeight: "bold",
+                  fontSize: "16px",
+                  padding: "6px",
+                }}
+              >
+                Reference in India
+              </CardHeader>
+              <CardContent
+                sx={{ flex: "1 0 auto" }}
+                style={{ padding: "30px" }}
+              >
+                <Grid container columnSpacing={8} rowSpacing={4}>
+                  <Grid item xs={12} md={6}>
+                    <TextField
+                      InputProps={{
+                        style: {
+                          height: "50px",
+                          fontSize: "15px",
+                        },
+                      }}
+                      fullWidth
+                      id="FI_referencename"
+                      name="FI_referencename"
+                      label="Name"
+                      onChange={formik.handleChange}
+                      value={formik.values.FI_referencename}
+                      onBlur={formik.handleBlur}
+                      error={
+                        formik.touched.FI_referencename &&
+                        Boolean(formik.errors.FI_referencename)
+                      }
+                      helperText={
+                        formik.touched.FI_referencename &&
+                        formik.errors.FI_referencename
+                      }
+                    ></TextField>
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <TextField
+                      InputProps={{
+                        style: {
+                          height: "50px",
+                          fontSize: "15px",
+                        },
+                      }}
+                      fullWidth
+                      id="FI_address"
+                      name="FI_address"
+                      label="Address"
+                      onChange={formik.handleChange}
+                      value={formik.values.FI_address}
+                      onBlur={formik.handleBlur}
+                      error={
+                        formik.touched.FI_address &&
+                        Boolean(formik.errors.FI_address)
+                      }
+                      helperText={
+                        formik.touched.FI_address && formik.errors.FI_address
+                      }
+                    ></TextField>
+                  </Grid>
+
+                  <Grid item xs={12} md={6}>
+                    <TextField
+                      InputProps={{
+                        style: {
+                          height: "50px",
+                          fontSize: "15px",
+                        },
+                      }}
+                      fullWidth
+                      id="FI_phone"
+                      name="FI_phone"
+                      label="Phone"
+                      onChange={formik.handleChange}
+                      value={formik.values.FI_phone}
+                      onBlur={formik.handleBlur}
+                      error={
+                        formik.touched.FI_phone &&
+                        Boolean(formik.errors.FI_phone)
+                      }
+                      helperText={
+                        formik.touched.FI_phone && formik.errors.FI_phone
+                      }
+                    ></TextField>
+                  </Grid>
+                </Grid>
+              </CardContent>
+
+              <CardHeader
+                style={{
+                  backgroundColor: "#1a75ff",
+                  color: "white",
+                  fontWeight: "bold",
+                  fontSize: "16px",
+                  padding: "6px",
+                }}
+              >
+                Reference in {result?.nationality}
+              </CardHeader>
+              <CardContent
+                sx={{ flex: "1 0 auto" }}
+                style={{ padding: "30px" }}
+              >
+                <Grid container columnSpacing={8} rowSpacing={4}>
+                  <Grid item xs={12} md={6}>
+                    <TextField
+                      InputProps={{
+                        style: {
+                          height: "50px",
+                          fontSize: "15px",
+                        },
+                      }}
+                      fullWidth
+                      id="FO_referencename"
+                      name="FO_referencename"
+                      label="Name"
+                      onChange={formik.handleChange}
+                      value={formik.values.FO_referencename}
+                      onBlur={formik.handleBlur}
+                      error={
+                        formik.touched.FO_referencename &&
+                        Boolean(formik.errors.FO_referencename)
+                      }
+                      helperText={
+                        formik.touched.FO_referencename &&
+                        formik.errors.FO_referencename
+                      }
+                    ></TextField>
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <TextField
+                      InputProps={{
+                        style: {
+                          height: "50px",
+                          fontSize: "15px",
+                        },
+                      }}
+                      fullWidth
+                      id="FO_address"
+                      name="FO_address"
+                      label="Address"
+                      onChange={formik.handleChange}
+                      value={formik.values.FO_address}
+                      onBlur={formik.handleBlur}
+                      error={
+                        formik.touched.FO_address &&
+                        Boolean(formik.errors.FO_address)
+                      }
+                      helperText={
+                        formik.touched.FO_address && formik.errors.FO_address
+                      }
+                    ></TextField>
+                  </Grid>
+
+                  <Grid item xs={12} md={6}>
+                    <TextField
+                      InputProps={{
+                        style: {
+                          height: "50px",
+                          fontSize: "15px",
+                        },
+                      }}
+                      fullWidth
+                      id="FO_phone"
+                      name="FO_phone"
+                      label="Phone"
+                      onChange={formik.handleChange}
+                      value={formik.values.FO_phone}
+                      onBlur={formik.handleBlur}
+                      error={
+                        formik.touched.FO_phone &&
+                        Boolean(formik.errors.FO_phone)
+                      }
+                      helperText={
+                        formik.touched.FO_phone && formik.errors.FO_phone
+                      }
+                    ></TextField>
+                  </Grid>
+                </Grid>
+              </CardContent>
+
+              {result?.visaService === "eBUSINESS VISA" ? (
+                <>
+                  <CardHeader
+                    style={{
+                      backgroundColor: "#1a75ff",
+                      color: "white",
+                      fontWeight: "bold",
+                      fontSize: "16px",
+                      padding: "6px",
+                    }}
+                  >
+                    Details of Applicant Business
+                  </CardHeader>
+                  <CardContent
+                    sx={{ flex: "1 0 auto" }}
+                    style={{ padding: "30px" }}
+                  >
+                    <Grid container columnSpacing={8} rowSpacing={4}>
                       <Grid item xs={12} md={6}>
                         <TextField
                           InputProps={{
@@ -1155,25 +1252,232 @@ export default function Details(props) {
                             },
                           }}
                           fullWidth
-                          id="spousePhone"
-                          name="spousePhone"
-                          label="Spouse Phone number"
+                          id="AB_name"
+                          name="AB_name"
+                          label="Name"
                           onChange={formik.handleChange}
-                          value={formik.values.spousePhone}
+                          value={formik.values.AB_name}
                           onBlur={formik.handleBlur}
                           error={
-                            formik.touched.spousePhone &&
-                            Boolean(formik.errors.spousePhone)
+                            formik.touched.AB_name &&
+                            Boolean(formik.errors.AB_name)
                           }
                           helperText={
-                            formik.touched.spousePhone &&
-                            formik.errors.spousePhone
+                            formik.touched.FO_referencename &&
+                            formik.errors.FO_referencename
                           }
-                        />
+                        ></TextField>
                       </Grid>
-                    </>
-                  ) : null}
+                      <Grid item xs={12} md={6}>
+                        <TextField
+                          InputProps={{
+                            style: {
+                              height: "50px",
+                              fontSize: "15px",
+                            },
+                          }}
+                          fullWidth
+                          id="AB_address"
+                          name="AB_address"
+                          label="Address"
+                          onChange={formik.handleChange}
+                          value={formik.values.AB_address}
+                          onBlur={formik.handleBlur}
+                          error={
+                            formik.touched.AB_address &&
+                            Boolean(formik.errors.AB_address)
+                          }
+                          helperText={
+                            formik.touched.AB_address &&
+                            formik.errors.AB_address
+                          }
+                        ></TextField>
+                      </Grid>
 
+                      <Grid item xs={12} md={6}>
+                        <TextField
+                          InputProps={{
+                            style: {
+                              height: "50px",
+                              fontSize: "15px",
+                            },
+                          }}
+                          fullWidth
+                          id="AB_phone"
+                          name="AB_phone"
+                          label="Phone"
+                          onChange={formik.handleChange}
+                          value={formik.values.AB_phone}
+                          onBlur={formik.handleBlur}
+                          error={
+                            formik.touched.AB_phone &&
+                            Boolean(formik.errors.AB_phone)
+                          }
+                          helperText={
+                            formik.touched.AB_phone && formik.errors.AB_phone
+                          }
+                        ></TextField>
+                      </Grid>
+
+                      <Grid item xs={12} md={6}>
+                        <TextField
+                          InputProps={{
+                            style: {
+                              height: "50px",
+                              fontSize: "15px",
+                            },
+                          }}
+                          fullWidth
+                          id="AB_website"
+                          name="AB_website"
+                          label="Website"
+                          onChange={formik.handleChange}
+                          value={formik.values.AB_website}
+                          onBlur={formik.handleBlur}
+                          error={
+                            formik.touched.AB_website &&
+                            Boolean(formik.errors.AB_website)
+                          }
+                          helperText={
+                            formik.touched.AB_website &&
+                            formik.errors.AB_website
+                          }
+                        ></TextField>
+                      </Grid>
+                    </Grid>
+                  </CardContent>
+                </>
+              ) : null}
+
+              {result?.visaService === "eBUSINESS VISA" &&
+              result?.visaOptions === "ATTEND TECHNICAL/BUSINESS MEETINGS" ? (
+                <>
+                  <CardHeader
+                    style={{
+                      backgroundColor: "#1a75ff",
+                      color: "white",
+                      fontWeight: "bold",
+                      fontSize: "16px",
+                      padding: "6px",
+                    }}
+                  >
+                    Detail of Indian Company
+                  </CardHeader>
+                  <CardContent
+                    sx={{ flex: "1 0 auto" }}
+                    style={{ padding: "30px" }}
+                  >
+                    <Grid container columnSpacing={8} rowSpacing={4}>
+                      <Grid item xs={12} md={6}>
+                        <TextField
+                          InputProps={{
+                            style: {
+                              height: "50px",
+                              fontSize: "15px",
+                            },
+                          }}
+                          fullWidth
+                          id="IB_Name"
+                          name="IB_Name"
+                          label="Name"
+                          onChange={formik.handleChange}
+                          value={formik.values.IB_Name}
+                          onBlur={formik.handleBlur}
+                          error={
+                            formik.touched.IB_Name &&
+                            Boolean(formik.errors.IB_Name)
+                          }
+                          helperText={
+                            formik.touched.IB_Name && formik.errors.IB_Name
+                          }
+                        ></TextField>
+                      </Grid>
+                      <Grid item xs={12} md={6}>
+                        <TextField
+                          InputProps={{
+                            style: {
+                              height: "50px",
+                              fontSize: "15px",
+                            },
+                          }}
+                          fullWidth
+                          id="IB_address"
+                          name="IB_address"
+                          label="Address"
+                          onChange={formik.handleChange}
+                          value={formik.values.IB_address}
+                          onBlur={formik.handleBlur}
+                          error={
+                            formik.touched.IB_address &&
+                            Boolean(formik.errors.IB_address)
+                          }
+                          helperText={
+                            formik.touched.IB_address &&
+                            formik.errors.IB_address
+                          }
+                        ></TextField>
+                      </Grid>
+
+                      <Grid item xs={12} md={6}>
+                        <TextField
+                          InputProps={{
+                            style: {
+                              height: "50px",
+                              fontSize: "15px",
+                            },
+                          }}
+                          fullWidth
+                          id="IB_phone"
+                          name="IB_phone"
+                          label="Phone"
+                          onChange={formik.handleChange}
+                          value={formik.values.IB_phone}
+                          onBlur={formik.handleBlur}
+                          error={
+                            formik.touched.IB_phone &&
+                            Boolean(formik.errors.IB_phone)
+                          }
+                          helperText={
+                            formik.touched.IB_phone && formik.errors.IB_phone
+                          }
+                        ></TextField>
+                      </Grid>
+
+                      <Grid item xs={12} md={6}>
+                        <TextField
+                          InputProps={{
+                            style: {
+                              height: "50px",
+                              fontSize: "15px",
+                            },
+                          }}
+                          fullWidth
+                          id="IB_website"
+                          name="IB_website"
+                          label="Website"
+                          onChange={formik.handleChange}
+                          value={formik.values.IB_website}
+                          onBlur={formik.handleBlur}
+                          error={
+                            formik.touched.IB_website &&
+                            Boolean(formik.errors.IB_website)
+                          }
+                          helperText={
+                            formik.touched.IB_website &&
+                            formik.errors.IB_website
+                          }
+                        ></TextField>
+                      </Grid>
+                    </Grid>
+                  </CardContent>
+                </>
+              ) : null}
+
+              <CardContent
+                sx={{ flex: "1 0 auto" }}
+                style={{ padding: "30px" }}
+              >
+                <Grid container columnSpacing={8} rowSpacing={4}>
                   <Grid container item xs={12} md={8}>
                     <span>
                       Are/were you in a Military/Semi-Military/Police/Security.
@@ -1975,9 +2279,10 @@ export default function Details(props) {
                     </Grid>
                   ) : null}
 
-<Grid container item xs={12} md={8}>
+                  <Grid container item xs={12} md={8}>
                     <span>
-                     Were your Parents/Grandparents (paternal/maternal) Pakistan Nationals or Belong to Pakistan held area.
+                      Were your Parents/Grandparents (paternal/maternal)
+                      Pakistan Nationals or Belong to Pakistan held area.
                     </span>
                   </Grid>
                   <Grid item xs={12} md={4}>
@@ -2156,6 +2461,34 @@ export default function Details(props) {
                       }}
                     />
                   </Grid>
+
+                  {result?.visaService === "eBUSINESS VISA" ? (
+                    <>
+                      <Grid container item xs={12} md={8}>
+                        <span>
+                          Choose the Business Card To Upload
+                          <br></br>
+                          <b>
+                            *Please upload an image with a maximum file size of
+                            5MB, in JPEG or PNG format
+                          </b>
+                        </span>
+                      </Grid>
+                      <Grid item xs={12} md={4}>
+                        <input
+                          id="businessFile"
+                          name="businessFile"
+                          type="file"
+                          onChange={(event) => {
+                            formik.setFieldValue(
+                              "businessFile",
+                              event.currentTarget.files[0]
+                            );
+                          }}
+                        />
+                      </Grid>
+                    </>
+                  ) : null}
                 </Grid>
               </CardContent>
               <div

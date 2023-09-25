@@ -34,5 +34,46 @@ export const indianStates = [
     "Delhi",
     "Puducherry"
   ];
+
+  export const EMPLOYMENT = [
+    "AIR FORCE",
+    "BUSINESS PERSON",
+    "CAMERAMAN",
+    "CHARITY/SOCIAL WORKER",
+    "CHARTED ACCOUNTANT",
+    'COLLEGE/UNIVERSITY TEACHER',
+    "DIPLOMAT",
+    "DOCTOR",
+    "ENGINEER",
+    "FILM PRODUCER",
+    "GOVERNMENT SERVICE",
+    "HOUSE WIFE",
+    "JOURNALIST",
+    "LABOUR",
+    "LAWYER",
+    "MEDIA",
+    "MILITARY",
+    "NAVY",
+    "NEWS BROADCASTER",
+    "OFFICIAL",
+    "OTHERS",
+    "POLICE",
+    "PRESS",
+    "PRIVATE SERVICE",
+    "PUBLISHER",
+    "REPORTER",
+    "RESEARCHER",
+    "RETIRED",
+    "SEA MAN",
+    "SELF EMPLOYED/ FREELANCER",
+    "STUDENT",
+    "TRADER",
+    "TV PRODUCER",
+    "UN-EMPLOYED",
+    "UN OFFICIAL",
+    "WORKER",
+    "WRITER"
+
+  ]
   
  
