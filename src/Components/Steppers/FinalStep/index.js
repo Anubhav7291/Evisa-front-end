@@ -60,6 +60,7 @@ export default function FinalStep(props) {
       yesBooked:false,
       noBooked:true,
       noSAARC:true,
+      isBusiness: result.visaService === "eBUSINESS VISA" ? true : false,
       yesSAARC:false,
       SAARCDetails:"",
       tourAddress:"",
@@ -491,6 +492,9 @@ export default function FinalStep(props) {
                           fontSize: "15px",
                         },
                       }}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
                       fullWidth
                       id="POA"
                       name="POA"
@@ -901,6 +905,9 @@ export default function FinalStep(props) {
                   </Grid> */}
                 </Grid>
               </CardContent>
+
+              {formik.values.isBusiness ? 
+              <>
                  <CardHeader
                 style={{
                   backgroundColor: "#1a75ff",
@@ -1049,6 +1056,8 @@ export default function FinalStep(props) {
                
                 </Grid>
               </CardContent>
+              </>
+              :null}
               <div
                 className="next-button"
                 style={{ marginBottom: "10px", marginRight: "10px" }}

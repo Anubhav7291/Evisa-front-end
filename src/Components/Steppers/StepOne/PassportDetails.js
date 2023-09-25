@@ -107,7 +107,7 @@ export default function PassportDetails({ formValue, tempId }) {
   dobDate.setDate(currentDate.getDate() - 1);
 
   const expiry = new Date(currentDate);
-  expiry.setDate(currentDate.getDate() - 180);
+  expiry.setDate(currentDate.getDate() + 180);
 
 
   const setOpen = () => {
@@ -400,7 +400,7 @@ export default function PassportDetails({ formValue, tempId }) {
                   }}
                   inputProps={{
                     // only needs the first 16 characters in the date string
-                    max: expiry.toISOString().slice(0, 10),
+                    min: expiry.toISOString().slice(0, 10),
                   }}
                   inputRef={inputRef}
                   onClick={() => {

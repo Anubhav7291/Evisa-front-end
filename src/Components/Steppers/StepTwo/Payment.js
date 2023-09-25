@@ -69,7 +69,7 @@ function Payment(props) {
     (_, index) => 1970 + index
   );
 
-  const dates = Array.from({ length: 31 }, (_, index) => index + 1);
+  const dates = Array.from({ length: 12 }, (_, index) => index + 1);
 
   const handleClick = () => {
     navigate("/details", { state: { tempId: tempId } });
@@ -146,7 +146,7 @@ function Payment(props) {
                     <Grid container item xs={12} sm={4} md={3}>
                       <TextField
                         select
-                        label="Expiration Date"
+                        label="Expiration Month"
                         name="expirationDate"
                         value={formData.expirationDate}
                         fullWidth
