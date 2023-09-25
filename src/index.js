@@ -10,6 +10,7 @@ import Header from "./Components/Header";
 import StepperNav from "./Components/StepperNav";
 import { Container } from "@mui/material";
 import CustomerDetail from "./Components/AdminPanel/CustomerDetail.js/index.js";
+import FinalStep from "./Components/Steppers/FinalStep/index.js";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 console.log(window.location.pathname);
@@ -36,6 +37,7 @@ root.render(
         <Route path="/customerDetail" element={<CustomerDetail />}></Route>
         <Route path="/payment" element={<Payment />}></Route>
         <Route path="/details" element={<Details />}></Route>
+        <Route path="/finalStep" element={<FinalStep />}></Route>
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

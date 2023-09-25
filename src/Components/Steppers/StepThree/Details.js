@@ -132,6 +132,9 @@ export default function Details(props) {
       Q6No: true,
       Q6Yes: "",
       Q6Detail: "",
+      Q7No: true,
+      Q7Yes: "",
+      Q7Detail: "",
       applicantFile: "",
       passportFile: "",
     },
@@ -195,7 +198,7 @@ export default function Details(props) {
           formData
         );
         if (response.data.message === "Success") {
-          navigate("/payment");
+          navigate("/finalStep",{ state: {tempId:tempId} });
         }
       } catch (error) {}
       setLoader(false);
@@ -1966,6 +1969,72 @@ export default function Details(props) {
                         }
                         helperText={
                           formik.touched.Q5Detail && formik.errors.Q5Detail
+                        }
+                      />
+                    </Grid>
+                  ) : null}
+
+<Grid container item xs={12} md={8}>
+                    <span>
+                     Were your Parents/Grandparents (paternal/maternal) Pakistan Nationals or Belong to Pakistan held area.
+                    </span>
+                  </Grid>
+                  <Grid item xs={12} md={4}>
+                    <label>
+                      <Field
+                        type="checkbox"
+                        name="Q7yes"
+                        id="Q5"
+                        label="Check the mark"
+                        onChange={() => {
+                          if (formik.values.Q7No && !formik.values.Q7yes) {
+                            formik.setFieldValue("Q7No", false);
+                            formik.setFieldValue("Q7yes", true);
+                          }
+                        }}
+                      />
+                      Yes
+                    </label>
+                    &nbsp; &nbsp; &nbsp;
+                    <label>
+                      <Field
+                        type="checkbox"
+                        name="Q7No"
+                        id="check"
+                        label="Check the mark"
+                        onChange={() => {
+                          if (formik.values.Q7yes && !formik.values.Q7No) {
+                            formik.setFieldValue("Q7No", true);
+                            formik.setFieldValue("Q7yes", false);
+                            formik.setFieldValue("Q7Detail", "");
+                          }
+                        }}
+                      />
+                      No
+                    </label>
+                  </Grid>
+                  {formik.values.Q7yes ? (
+                    <Grid item xs={12} md={6}>
+                      <TextField
+                        InputProps={{
+                          style: {
+                            height: "50px",
+                            fontSize: "15px",
+                          },
+                        }}
+                        fullWidth
+                        id="Q7Detail"
+                        name="Q7Detail"
+                        label="Please enter details"
+                        onChange={formik.handleChange}
+                        value={formik.values.Q7Detail}
+                        onBlur={formik.handleBlur}
+                        error={
+                          formik.touched.Q7Detail &&
+                          Boolean(formik.errors.Q7Detail)
+                        }
+                        helperText={
+                          formik.touched.Q7Detail && formik.errors.Q7Detail
                         }
                       />
                     </Grid>

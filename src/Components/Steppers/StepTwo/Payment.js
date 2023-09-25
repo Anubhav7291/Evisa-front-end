@@ -199,6 +199,7 @@ function Payment(props) {
                     color="success"
                     fullWidth
                     style={{ marginTop: "20px" }}
+                    onClick={() => handleClick}
                   >
                     Pay Now
                   </Button>

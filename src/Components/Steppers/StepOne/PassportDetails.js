@@ -102,7 +102,9 @@ export default function PassportDetails({ formValue, tempId }) {
       console.log("claal");
     },
   });
-
+  const currentDate = new Date();
+  const dobDate = new Date(currentDate);
+  dobDate.setDate(currentDate.getDate());
   const setOpen = () => {
     setNotification({ ...notification, open: false, content: "" });
   };
@@ -512,6 +514,10 @@ export default function PassportDetails({ formValue, tempId }) {
                           fontSize: "12px",
                         },
                       }}
+                        inputProps={{
+                    // only needs the first 16 characters in the date string
+                    max: dobDate.toISOString().slice(0, 10),
+                  }}
                       fullWidth
                       id="otherDateOfIssue"
                       name="otherDateOfIssue"
