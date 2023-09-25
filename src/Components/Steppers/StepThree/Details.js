@@ -55,6 +55,7 @@ export default function Details(props) {
   const theme = useTheme();
   const location = useLocation();
   const tempId = location?.state?.tempId;
+  console.log(location?.state)
   const navigate = useNavigate();
 
   const [loader, setLoader] = React.useState(false);

@@ -89,11 +89,11 @@ export default function PassportDetails({ formValue, tempId }) {
           paramId = id;
         }
         const response = await axios.put(
-          process.env.REACT_APP_BASE_URL+`/update/${paramId}`,
+          process.env.REACT_APP_BASE_URL + `/update/${paramId}`,
           formValue
         );
-        if(response.data.message === "Success"){
-            navigate('/payment',{ state: {tempId:paramId} })
+        if (response.data.message === "Success") {
+          navigate("/payment", { state: { tempId: paramId } });
         }
       } catch (error) {}
       setLoader(false);
@@ -104,10 +104,16 @@ export default function PassportDetails({ formValue, tempId }) {
   });
   const currentDate = new Date();
   const dobDate = new Date(currentDate);
-  dobDate.setDate(currentDate.getDate());
+  dobDate.setDate(currentDate.getDate() - 1);
+
+  const expiry = new Date(currentDate);
+  expiry.setDate(currentDate.getDate() - 180);
+
+
   const setOpen = () => {
     setNotification({ ...notification, open: false, content: "" });
   };
+
 
   const handleCP = (e) => {
     e.preventDefault();
@@ -143,10 +149,10 @@ export default function PassportDetails({ formValue, tempId }) {
               <Grid item xs={12} md={6}>
                 <TextField
                   InputProps={{
-                  style: {
+                    style: {
                       height: "50px",
                       fontSize: "15px",
-                    }
+                    },
                   }}
                   fullWidth
                   id="city"
@@ -163,10 +169,10 @@ export default function PassportDetails({ formValue, tempId }) {
               <Grid item xs={12} md={6}>
                 <TextField
                   InputProps={{
-                  style: {
+                    style: {
                       height: "50px",
                       fontSize: "15px",
-                    }
+                    },
                   }}
                   fullWidth
                   select
@@ -214,10 +220,10 @@ export default function PassportDetails({ formValue, tempId }) {
               <Grid item xs={12} md={6}>
                 <TextField
                   InputProps={{
-                  style: {
+                    style: {
                       height: "50px",
                       fontSize: "15px",
-                    }
+                    },
                   }}
                   fullWidth
                   select
@@ -270,10 +276,10 @@ export default function PassportDetails({ formValue, tempId }) {
               <Grid item xs={12} md={6}>
                 <TextField
                   InputProps={{
-                  style: {
+                    style: {
                       height: "50px",
                       fontSize: "15px",
-                    }
+                    },
                   }}
                   fullWidth
                   select
@@ -304,10 +310,10 @@ export default function PassportDetails({ formValue, tempId }) {
               <Grid item xs={12} md={6}>
                 <TextField
                   InputProps={{
-                  style: {
+                    style: {
                       height: "50px",
                       fontSize: "15px",
-                    }
+                    },
                   }}
                   fullWidth
                   id="passportNumber"
@@ -334,10 +340,10 @@ export default function PassportDetails({ formValue, tempId }) {
               <Grid item xs={12} md={6}>
                 <TextField
                   InputProps={{
-                  style: {
+                    style: {
                       height: "50px",
                       fontSize: "15px",
-                    }
+                    },
                   }}
                   fullWidth
                   id="issueDate"
@@ -346,6 +352,10 @@ export default function PassportDetails({ formValue, tempId }) {
                   type="date"
                   InputLabelProps={{
                     shrink: true,
+                  }}
+                  inputProps={{
+                    // only needs the first 16 characters in the date string
+                    max: dobDate.toISOString().slice(0, 10),
                   }}
                   onChange={formik.handleChange}
                   value={formik.values.issueDate}
@@ -375,10 +385,10 @@ export default function PassportDetails({ formValue, tempId }) {
               <Grid item xs={12} md={6}>
                 <TextField
                   InputProps={{
-                  style: {
+                    style: {
                       height: "50px",
                       fontSize: "15px",
-                    }
+                    },
                   }}
                   fullWidth
                   id="expiryDate"
@@ -387,6 +397,10 @@ export default function PassportDetails({ formValue, tempId }) {
                   type="date"
                   InputLabelProps={{
                     shrink: true,
+                  }}
+                  inputProps={{
+                    // only needs the first 16 characters in the date string
+                    max: expiry.toISOString().slice(0, 10),
                   }}
                   inputRef={inputRef}
                   onClick={() => {
@@ -514,10 +528,6 @@ export default function PassportDetails({ formValue, tempId }) {
                           fontSize: "12px",
                         },
                       }}
-                        inputProps={{
-                    // only needs the first 16 characters in the date string
-                    max: dobDate.toISOString().slice(0, 10),
-                  }}
                       fullWidth
                       id="otherDateOfIssue"
                       name="otherDateOfIssue"
@@ -591,7 +601,7 @@ export default function PassportDetails({ formValue, tempId }) {
                 </>
               ) : null}
             </Grid>
-            <div className="next-button" >
+            <div className="next-button">
               <Button type="submit" variant="contained" color="success">
                 Continue
               </Button>
