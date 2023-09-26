@@ -210,6 +210,8 @@ export default function Details(props) {
       formData.append("IB_website",values.IB_website);
       formData.append("businessFile",values.businessFile); 
       formData.append("email", result?.email);
+      formData.append("email", result?.name);
+      formData.append("email", result?.firstName);
       
       setLoader(true);
       try {
