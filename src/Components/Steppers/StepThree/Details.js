@@ -208,8 +208,8 @@ export default function Details(props) {
       formData.append("IB_name",values.IB_name);
       formData.append("IB_phone",values.IB_phone);
       formData.append("IB_website",values.IB_website);
-      formData.append("businessFile",values.businessFile); // You can append files here if needed
-
+      formData.append("businessFile",values.businessFile); 
+      formData.append("email", result?.email);
       
       setLoader(true);
       try {
