@@ -117,3 +117,9 @@
   text-align: center;
 }
 
+.react-pdf__Page__canvas {
+
+  width: 60% !important;
+  height: 80% !important;
+}
+

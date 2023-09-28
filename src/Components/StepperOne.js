@@ -16,7 +16,7 @@ import { Info } from "@mui/icons-material";
 import axios from "axios";
 import Spinner from "../utils/Spinner";
 import Notification from "../utils/Notification";
-import { COUNTRIES, MOBILE_CODES } from "../utils/Countries";
+import { COUNTRIES, MOBILE_CODES,NATIONALITY } from "../utils/Countries";
 import Captcha from "./Captcha";
 import { MonthMap } from "../utils/MonthMap";
 import { AIRPORTS } from "../utils/Countries";
@@ -380,7 +380,7 @@ export default function StepperOne() {
                     formik.touched.nationality && formik.errors.nationality
                   }
                 >
-                  {COUNTRIES.map((val) => {
+                  {NATIONALITY.map((val) => {
                     return (
                       <MenuItem value={val.name} key={val.name}>
                         {val.name}

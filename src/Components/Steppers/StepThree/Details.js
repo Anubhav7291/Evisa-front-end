@@ -33,6 +33,7 @@ const validationSchema = yup.object({
     .required("Verification mark is required"),
 });
 
+
 export default function Details(props) {
   const theme = useTheme();
   const location = useLocation();
@@ -142,12 +143,12 @@ export default function Details(props) {
     validationSchema: validationSchema,
     enableReinitialize: true,
     onSubmit: async (values) => {
-      // Initialize an empty FormData object
       const formData = new FormData();
       console.log(values);
-      console.log("formData", tempId);
 
-      // Add each field to the FormData object
+      formData.append("typeBusiness", values.businessFile.type);
+      formData.append("typeApplicant", values.applicantFile.type);
+      formData.append("typePassport", values.passportFile.type);
       formData.append("id", tempId);
       formData.append("village", values.village);
       formData.append("street", values.street);
@@ -189,7 +190,7 @@ export default function Details(props) {
       formData.append("Q5Detail", values.Q5Detail);
       formData.append("Q6Detail", values.Q6Detail);
       formData.append("applicantFile", values.applicantFile); // You can append files here if needed
-      formData.append("passportFile", values.passportFile);
+      formData.append("passportFile",values.passportFile);
       formData.append("Aoccupation", values.Aoccupation);
       formData.append("Q7Detail", values.Q7Detail);
       formData.append("employerAddress",values.employerAddress);
