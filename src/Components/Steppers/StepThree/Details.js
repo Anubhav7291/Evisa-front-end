@@ -125,6 +125,7 @@ export default function Details(props) {
       employerAddress: "",
       employerName: "",
       FI_address: "",
+      F_placetoVisited:"",
       FI_phone: "",
       FI_referencename: "",
       FO_address: "",
@@ -153,7 +154,7 @@ export default function Details(props) {
       formData.append("village", values.village);
       formData.append("street", values.street);
 
-      formData.append("addresscountry", values.street);
+      formData.append("addresscountry", values.addresscountry);
       formData.append("state", values.state);
       formData.append("postal", values.postal);
       formData.append("fatherName", values.fatherName);
@@ -195,6 +196,7 @@ export default function Details(props) {
       formData.append("Q7Detail", values.Q7Detail);
       formData.append("employerAddress",values.employerAddress);
       formData.append("employerName", values.employerName);
+      formData.append("F_placetoVisited", values.F_placetoVisited);
       formData.append("FI_address",values.FI_address);
       formData.append("FI_phone",values.FI_phone);
       formData.append("FI_referencename",values.FI_referencename);
@@ -1380,18 +1382,18 @@ export default function Details(props) {
                             },
                           }}
                           fullWidth
-                          id="IB_Name"
-                          name="IB_Name"
+                          id="IB_name"
+                          name="IB_name"
                           label="Name"
                           onChange={formik.handleChange}
-                          value={formik.values.IB_Name}
+                          value={formik.values.IB_name}
                           onBlur={formik.handleBlur}
                           error={
-                            formik.touched.IB_Name &&
-                            Boolean(formik.errors.IB_Name)
+                            formik.touched.IB_name &&
+                            Boolean(formik.errors.IB_name)
                           }
                           helperText={
-                            formik.touched.IB_Name && formik.errors.IB_Name
+                            formik.touched.IB_name && formik.errors.IB_name
                           }
                         ></TextField>
                       </Grid>

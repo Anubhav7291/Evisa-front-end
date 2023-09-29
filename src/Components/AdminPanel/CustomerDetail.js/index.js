@@ -90,7 +90,7 @@ export default function CustomerDetail(props) {
       passportNumber: result.passportNumber,
       issueDate: result.issueDate,
       expiryDate: result.expiryDate,
-      IssueCountry: result.IssueCountry,
+      issueCountry: result.issueCountry,
       otherPassportNumber: result.otherPassportNumber,
       otherDateOfIssue: result.otherDateOfIssue,
       otherPlaceIssue: result.otherPlaceIssue,
@@ -172,6 +172,7 @@ export default function CustomerDetail(props) {
       IB_phone: result?.IB_phone,
       IB_website: result?.IB_website,
       businessFile: result?.businessFile,
+      F_placetoVisited: result?.F_placetoVisited
     },
     enableReinitialize: true,
     //validationSchema: validationSchema,
@@ -956,19 +957,19 @@ export default function CustomerDetail(props) {
                     },
                   }}
                   fullWidth
-                  id="IssueCountry"
-                  name="IssueCountry"
+                  id="issueCountry"
+                  name="issueCountry"
                   label="Country Issue"
-                  type="IssueCountry"
+                  type="issueCountry"
                   onChange={formik.handleChange}
-                  value={formik.values.IssueCountry}
+                  value={formik.values.issueCountry}
                   onBlur={formik.handleBlur}
                   error={
-                    formik.touched.IssueCountry &&
-                    Boolean(formik.errors.IssueCountry)
+                    formik.touched.issueCountry &&
+                    Boolean(formik.errors.issueCountry)
                   }
                   helperText={
-                    formik.touched.IssueCountry && formik.errors.IssueCountry
+                    formik.touched.issueCountry && formik.errors.issueCountry
                   }
                 />
               </Grid>
@@ -2337,92 +2338,7 @@ export default function CustomerDetail(props) {
                         }
                       />
                     </Grid>
-                    <Grid item xs={12} md={6}>
-                      <TextField
-                        InputLabelProps={{
-                          shrink: true,
-                        }}
-                        variant="standard"
-                        InputProps={{
-                          readOnly: true,
-                          style: {
-                            height: "50px",
-                            fontSize: "15px",
-                          },
-                        }}
-                        fullWidth
-                        id="spouseOccupation"
-                        name="spouseOccupation"
-                        label="Spouse Occupation"
-                        onChange={formik.handleChange}
-                        value={formik.values.spouseOccupation}
-                        onBlur={formik.handleBlur}
-                        error={
-                          formik.touched.spouseOccupation &&
-                          Boolean(formik.errors.spouseOccupation)
-                        }
-                        helperText={
-                          formik.touched.spouseOccupation &&
-                          formik.errors.spouseOccupation
-                        }
-                      />
-                    </Grid>
-                    <Grid item xs={12} md={6}>
-                      <TextField
-                        InputLabelProps={{
-                          shrink: true,
-                        }}
-                        variant="standard"
-                        InputProps={{
-                          readOnly: true,
-                          style: {
-                            height: "50px",
-                            fontSize: "15px",
-                          },
-                        }}
-                        fullWidth
-                        id="spouseAddress"
-                        name="spouseAddress"
-                        label="Spouse Address"
-                        onChange={formik.handleChange}
-                        value={formik.values.mark}
-                        onBlur={formik.handleBlur}
-                        error={
-                          formik.touched.mark && Boolean(formik.errors.mark)
-                        }
-                        helperText={formik.touched.mark && formik.errors.mark}
-                      />
-                    </Grid>
-                    <Grid item xs={12} md={6}>
-                      <TextField
-                        InputLabelProps={{
-                          shrink: true,
-                        }}
-                        variant="standard"
-                        InputProps={{
-                          readOnly: true,
-                          style: {
-                            height: "50px",
-                            fontSize: "15px",
-                          },
-                        }}
-                        fullWidth
-                        id="spousePhone"
-                        name="spousePhone"
-                        label="Spouse Phone number"
-                        onChange={formik.handleChange}
-                        value={formik.values.spousePhone}
-                        onBlur={formik.handleBlur}
-                        error={
-                          formik.touched.spousePhone &&
-                          Boolean(formik.errors.spousePhone)
-                        }
-                        helperText={
-                          formik.touched.spousePhone &&
-                          formik.errors.spousePhone
-                        }
-                      />
-                    </Grid>
+                  
                   </>
 
                   <Grid container item xs={12} md={8}>

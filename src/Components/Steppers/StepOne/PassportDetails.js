@@ -38,7 +38,7 @@ const validationSchema = yup.object({
   expiryDate: yup
     .string("Enter your expected Expiry Date")
     .required("Expiry Date is required"),
-  IssueCountry: yup.string("Enter your Issue Country"),
+  issueCountry: yup.string("Enter your Issue Country"),
   otherPassportNumber: yup.string("Enter your Passport Number"),
 
   otherDateOfIssue: yup.string("Enter your Date Of Issue"),
@@ -71,7 +71,7 @@ export default function PassportDetails({ formValue, tempId }) {
       passportNumber: "",
       issueDate: "",
       expiryDate: "",
-      IssueCountry: "",
+      issueCountry: "",
       otherPassportNumber: "",
       otherDateOfIssue: "",
       otherPlaceIssue: "",
@@ -477,20 +477,20 @@ export default function PassportDetails({ formValue, tempId }) {
                         },
                       }}
                       fullWidth
-                      id="IssueCountry"
-                      name="IssueCountry"
+                      id="issueCountry"
+                      name="issueCountry"
                       label="Country Issue"
-                      type="IssueCountry"
+                      type="issueCountry"
                       onChange={formik.handleChange}
-                      value={formik.values.IssueCountry}
+                      value={formik.values.issueCountry}
                       onBlur={formik.handleBlur}
                       error={
-                        formik.touched.IssueCountry &&
-                        Boolean(formik.errors.IssueCountry)
+                        formik.touched.issueCountry &&
+                        Boolean(formik.errors.issueCountry)
                       }
                       helperText={
-                        formik.touched.IssueCountry &&
-                        formik.errors.IssueCountry
+                        formik.touched.issueCountry &&
+                        formik.errors.issueCountry
                       }
                     />
                   </Grid>
