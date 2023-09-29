@@ -12,7 +12,7 @@ import { MonthMap } from "../../../utils/MonthMap";
 import Spinner from "../../../utils/Spinner";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-import { Document, Page, pdfjs } from "react-pdf";
+import { Document, Page, pdfjs, Thumbnail } from "react-pdf";
 import generatePDF from "react-to-pdf";
 import { Done } from "@mui/icons-material";
 import { Link } from "react-router-dom";
@@ -172,7 +172,7 @@ export default function CustomerDetail(props) {
       IB_phone: result?.IB_phone,
       IB_website: result?.IB_website,
       businessFile: result?.businessFile,
-      F_placetoVisited: result?.F_placetoVisited
+      F_placetoVisited: result?.F_placetoVisited,
     },
     enableReinitialize: true,
     //validationSchema: validationSchema,
@@ -206,6 +206,8 @@ export default function CustomerDetail(props) {
     newTab.document.write("</body></html>");
   };
 
+
+
   return (
     <Container
       fixed
@@ -232,22 +234,36 @@ export default function CustomerDetail(props) {
               <img src={ApplicantImageUrl} height={"300px"} width={"300px"} />
             </>
           ) : (
-            result.typeApplicant === "application/pdf" &&
-            <Document file={ApplicantImageUrl}>
-              <Page
-                renderTextLayer={false}
-                renderAnnotationLayer={false}
-                customTextRenderer={false}
-                pageNumber={1}
-              />
-            </Document>
+            result.typeApplicant === "application/pdf" && (
+              <Document file={ApplicantImageUrl}>
+                <Page
+                  renderTextLayer={false}
+                  renderAnnotationLayer={false}
+                  customTextRenderer={false}
+                  pageNumber={1}
+                />
+              </Document>
+            )
           )}
-          <Link
-            to="/customerDetail"
-            onClick={(e) => handleLinkClick(e, ApplicantImageUrl)}
-          >
-            Photo
-          </Link>
+         {result.typeApplicant === "application/pdf" ? (
+            <Link
+              to="/showImage"
+              onClick={() =>
+                localStorage.setItem("image", ApplicantImageUrl)
+              }
+              target="_blank"
+            >
+              Photo
+            </Link>
+          ) : (
+            <Link
+              style={{ textAlign: "center", left: 0 }}
+              to="/customerDetail"
+              onClick={(e) => handleLinkClick(e, ApplicantImageUrl)}
+            >
+              Photo
+            </Link>
+          )}
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           {PassportImageUrl.split(",")[1] &&
           result.typePassport !== "application/pdf" ? (
@@ -255,46 +271,75 @@ export default function CustomerDetail(props) {
               <img src={PassportImageUrl} height={"300px"} width={"300px"} />
             </>
           ) : (
-            result.typePassport === "application/pdf" &&
-            <Document file={PassportImageUrl}>
-              <Page
-                renderTextLayer={false}
-                renderAnnotationLayer={false}
-                customTextRenderer={false}
-                pageNumber={1}
-              />{" "}
-            </Document>
+            result.typePassport === "application/pdf" && (
+              <Document file={PassportImageUrl}>
+                <Page
+                  renderTextLayer={false}
+                  renderAnnotationLayer={false}
+                  customTextRenderer={false}
+                  pageNumber={1}
+                />{" "}
+              </Document>
+            )
           )}
-          <Link
-            style={{ textAlign: "center", left: 0 }}
-            to="/customerDetail"
-            onClick={(e) => handleLinkClick(e, PassportImageUrl)}
-          >
-            Passport
-          </Link>
-          {businessUrl.split(",")[1] &&
-          result.typeBussiness !== "application/pdf" ? (
+          {result.typePassport === "application/pdf" ? (
+            <Link
+              to="/showImage"
+              onClick={() =>
+                localStorage.setItem("image", PassportImageUrl)
+              }
+              target="_blank"
+            >
+              Passport
+            </Link>
+          ) : (
+            <Link
+              style={{ textAlign: "center", left: 0 }}
+              to="/customerDetail"
+              onClick={(e) => handleLinkClick(e, PassportImageUrl)}
+            >
+              Passport
+            </Link>
+          )}
+          {(businessUrl.split(",")[1] &&
+          result.typeBusiness !== "application/pdf") ?  (
             <>
+           
               <img src={businessUrl} height={"300px"} width={"300px"} />
             </>
           ) : (
-            result.typeBussiness === "application/pdf" &&
-            <Document file={businessUrl}>
-              <Page
-                renderTextLayer={false}
-                renderAnnotationLayer={false}
-                customTextRenderer={false}
-                pageNumber={1}
-              />{" "}
-            </Document>
+            result.typeBusiness === "application/pdf" && (
+              <Document file={businessUrl}>
+                <Page
+                  renderTextLayer={false}
+                  renderAnnotationLayer={false}
+                  customTextRenderer={false}
+                  pageNumber={1}
+                />{" "}
+              </Document>
+            )
           )}
-          <Link
-            style={{ textAlign: "center", left: 0 }}
-            to="/customerDetail"
-            onClick={(e) => handleLinkClick(e, businessUrl)}
-          >
-            Business card
-          </Link>
+          {result?.typeBusiness !== "undefined" && (
+          result.typeBusiness === "application/pdf" ? (
+            <Link
+              to="/showImage"
+              onClick={() =>
+                localStorage.setItem("image", businessUrl)
+              }
+              target="_blank"
+            >
+              Business card
+            </Link>
+          ) : (
+            <Link
+              style={{ textAlign: "center", left: 0 }}
+              to="/customerDetail"
+              onClick={(e) => handleLinkClick(e, businessUrl)}
+            >
+                Business card
+            </Link>)
+          )}
+          
           <span style={{ left: 0 }}></span>
         </div>
         <CardHeader
@@ -2070,18 +2115,18 @@ export default function CustomerDetail(props) {
                             },
                           }}
                           fullWidth
-                          id="IB_Name"
-                          name="IB_Name"
+                          id="IB_name"
+                          name="IB_name"
                           label="Name"
                           onChange={formik.handleChange}
-                          value={formik.values.IB_Name}
+                          value={formik.values.IB_name}
                           onBlur={formik.handleBlur}
                           error={
-                            formik.touched.IB_Name &&
-                            Boolean(formik.errors.IB_Name)
+                            formik.touched.IB_name &&
+                            Boolean(formik.errors.IB_name)
                           }
                           helperText={
-                            formik.touched.IB_Name && formik.errors.IB_Name
+                            formik.touched.IB_name && formik.errors.IB_name
                           }
                         ></TextField>
                       </Grid>
@@ -2338,7 +2383,6 @@ export default function CustomerDetail(props) {
                         }
                       />
                     </Grid>
-                  
                   </>
 
                   <Grid container item xs={12} md={8}>

@@ -11,6 +11,7 @@ import StepperNav from "./Components/StepperNav";
 import { Container } from "@mui/material";
 import CustomerDetail from "./Components/AdminPanel/CustomerDetail.js/index.js";
 import FinalStep from "./Components/Steppers/FinalStep/index.js";
+import DisplayImage from "./Components/AdminPanel/CustomerDetail.js/DisplayImage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 console.log(window.location.pathname);
@@ -19,14 +20,16 @@ root.render(
     <BrowserRouter>
       <Container fixed style={{ fontFamily: "sans-serif", fontSize: "14px" }}>
         {window.location.pathname === "/login" ||
-        window.location.pathname === "/customerDetail" ? null : (
+        window.location.pathname === "/customerDetail" ||
+        window.location.pathname === "/showImage" ? null : (
           <Header />
         )}
 
         <br />
         <br />
         {window.location.pathname === "/login" ||
-        window.location.pathname === "/customerDetail" ? null : (
+        window.location.pathname === "/customerDetail" ||
+        window.location.pathname === "/showImage" ? null : (
           <StepperNav />
         )}
       </Container>
@@ -38,6 +41,7 @@ root.render(
         <Route path="/payment" element={<Payment />}></Route>
         <Route path="/details" element={<Details />}></Route>
         <Route path="/finalStep" element={<FinalStep />}></Route>
+        <Route path="/showImage" element={<DisplayImage/>}></Route>
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
