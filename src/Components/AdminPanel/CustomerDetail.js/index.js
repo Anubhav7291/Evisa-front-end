@@ -47,6 +47,7 @@ export default function CustomerDetail(props) {
           res.data.data[0].applicantFile?.data
         );
         const dataUrl = `data:image/jpeg;base64,${base64String}`;
+
         setApplicantImageUrl(dataUrl);
 
         const base64String1 = arrayBufferToBase64(
@@ -230,6 +231,7 @@ export default function CustomerDetail(props) {
               <img src={ApplicantImageUrl} height={"300px"} width={"300px"} />
             </>
           ) : (
+            result.typeApplicant === "application/pdf" &&
             <Document file={ApplicantImageUrl}>
               <Page
                 renderTextLayer={false}
@@ -252,7 +254,8 @@ export default function CustomerDetail(props) {
               <img src={PassportImageUrl} height={"300px"} width={"300px"} />
             </>
           ) : (
-            <Document file={ApplicantImageUrl}>
+            result.typePassport === "application/pdf" &&
+            <Document file={PassportImageUrl}>
               <Page
                 renderTextLayer={false}
                 renderAnnotationLayer={false}
@@ -274,6 +277,7 @@ export default function CustomerDetail(props) {
               <img src={businessUrl} height={"300px"} width={"300px"} />
             </>
           ) : (
+            result.typeBussiness === "application/pdf" &&
             <Document file={businessUrl}>
               <Page
                 renderTextLayer={false}
