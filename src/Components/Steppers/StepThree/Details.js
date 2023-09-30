@@ -872,28 +872,6 @@ export default function Details(props) {
                           })}
                         </TextField>
                       </Grid>
-
-                      <Grid item xs={12} md={6}>
-                        <TextField
-                          InputProps={{
-                            style: {
-                              height: "50px",
-                              fontSize: "15px",
-                            },
-                          }}
-                          fullWidth
-                          id="spouseAddress"
-                          name="spouseAddress"
-                          label="Spouse Address"
-                          onChange={formik.handleChange}
-                          value={formik.values.mark}
-                          onBlur={formik.handleBlur}
-                          error={
-                            formik.touched.mark && Boolean(formik.errors.mark)
-                          }
-                          helperText={formik.touched.mark && formik.errors.mark}
-                        />
-                      </Grid>
                     </>
                   ) : null}
                 </Grid>
