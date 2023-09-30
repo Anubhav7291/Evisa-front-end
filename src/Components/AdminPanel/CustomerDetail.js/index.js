@@ -206,8 +206,6 @@ export default function CustomerDetail(props) {
     newTab.document.write("</body></html>");
   };
 
-
-
   return (
     <Container
       fixed
@@ -245,12 +243,10 @@ export default function CustomerDetail(props) {
               </Document>
             )
           )}
-         {result.typeApplicant === "application/pdf" ? (
+          {result.typeApplicant === "application/pdf" ? (
             <Link
               to="/showImage"
-              onClick={() =>
-                localStorage.setItem("image", ApplicantImageUrl)
-              }
+              onClick={() => localStorage.setItem("image", ApplicantImageUrl)}
               target="_blank"
             >
               Photo
@@ -285,9 +281,7 @@ export default function CustomerDetail(props) {
           {result.typePassport === "application/pdf" ? (
             <Link
               to="/showImage"
-              onClick={() =>
-                localStorage.setItem("image", PassportImageUrl)
-              }
+              onClick={() => localStorage.setItem("image", PassportImageUrl)}
               target="_blank"
             >
               Passport
@@ -301,10 +295,9 @@ export default function CustomerDetail(props) {
               Passport
             </Link>
           )}
-          {(businessUrl.split(",")[1] &&
-          result.typeBusiness !== "application/pdf") ?  (
+          {businessUrl.split(",")[1] &&
+          result.typeBusiness !== "application/pdf" ? (
             <>
-           
               <img src={businessUrl} height={"300px"} width={"300px"} />
             </>
           ) : (
@@ -319,27 +312,24 @@ export default function CustomerDetail(props) {
               </Document>
             )
           )}
-          {result?.typeBusiness !== "undefined" && (
-          result.typeBusiness === "application/pdf" ? (
-            <Link
-              to="/showImage"
-              onClick={() =>
-                localStorage.setItem("image", businessUrl)
-              }
-              target="_blank"
-            >
-              Business card
-            </Link>
-          ) : (
-            <Link
-              style={{ textAlign: "center", left: 0 }}
-              to="/customerDetail"
-              onClick={(e) => handleLinkClick(e, businessUrl)}
-            >
+          {result?.typeBusiness !== "undefined" &&
+            (result.typeBusiness === "application/pdf" ? (
+              <Link
+                to="/showImage"
+                onClick={() => localStorage.setItem("image", businessUrl)}
+                target="_blank"
+              >
                 Business card
-            </Link>)
-          )}
-          
+              </Link>
+            ) : (
+              <Link
+                style={{ textAlign: "center", left: 0 }}
+                to="/customerDetail"
+                onClick={(e) => handleLinkClick(e, businessUrl)}
+              >
+                Business card
+              </Link>
+            ))}
           <span style={{ left: 0 }}></span>
         </div>
         <CardHeader
@@ -1974,6 +1964,9 @@ export default function CustomerDetail(props) {
                     <Grid container columnSpacing={8} rowSpacing={4}>
                       <Grid item xs={12} md={6}>
                         <TextField
+                          InputLabelProps={{
+                            shrink: true,
+                          }}
                           InputProps={{
                             readOnly: true,
                             style: {
@@ -2001,6 +1994,9 @@ export default function CustomerDetail(props) {
                       </Grid>
                       <Grid item xs={12} md={6}>
                         <TextField
+                          InputLabelProps={{
+                            shrink: true,
+                          }}
                           variant="standard"
                           InputProps={{
                             readOnly: true,
@@ -2029,6 +2025,9 @@ export default function CustomerDetail(props) {
 
                       <Grid item xs={12} md={6}>
                         <TextField
+                          InputLabelProps={{
+                            shrink: true,
+                          }}
                           variant="standard"
                           InputProps={{
                             readOnly: true,
@@ -2056,6 +2055,9 @@ export default function CustomerDetail(props) {
 
                       <Grid item xs={12} md={6}>
                         <TextField
+                          InputLabelProps={{
+                            shrink: true,
+                          }}
                           variant="standard"
                           InputProps={{
                             readOnly: true,
@@ -2106,6 +2108,9 @@ export default function CustomerDetail(props) {
                     <Grid container columnSpacing={8} rowSpacing={4}>
                       <Grid item xs={12} md={6}>
                         <TextField
+                          InputLabelProps={{
+                            shrink: true,
+                          }}
                           variant="standard"
                           InputProps={{
                             readOnly: true,
@@ -2132,6 +2137,9 @@ export default function CustomerDetail(props) {
                       </Grid>
                       <Grid item xs={12} md={6}>
                         <TextField
+                          InputLabelProps={{
+                            shrink: true,
+                          }}
                           variant="standard"
                           InputProps={{
                             readOnly: true,
@@ -2160,6 +2168,9 @@ export default function CustomerDetail(props) {
 
                       <Grid item xs={12} md={6}>
                         <TextField
+                          InputLabelProps={{
+                            shrink: true,
+                          }}
                           variant="standard"
                           InputProps={{
                             style: {
@@ -2187,6 +2198,9 @@ export default function CustomerDetail(props) {
 
                       <Grid item xs={12} md={6}>
                         <TextField
+                          InputLabelProps={{
+                            shrink: true,
+                          }}
                           variant="standard"
                           InputProps={{
                             readOnly: true,
