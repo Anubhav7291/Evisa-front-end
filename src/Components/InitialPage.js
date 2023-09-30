@@ -28,7 +28,7 @@ const styles = {
     backgroundSize: "cover",
     backgroundPosition: "center",
     // Keep the background fixed
-    height: "100vh", // Set the height to the viewport height
+    padding:"20px", // Set the height to the viewport height
     display: "flex",
     alignItems: "center",
     filter: "brightness(100%)",
