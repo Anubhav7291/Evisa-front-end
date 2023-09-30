@@ -54,7 +54,7 @@ export default function CustomerDetail(props) {
           res.data.data[0].passportFile?.data
         );
         const dataUrl1 = `data:image/jpeg;base64,${base64String1}`;
-        console.log(dataUrl1);
+
         setPassportImageUrl(dataUrl1);
 
         const base64String2 = arrayBufferToBase64(
@@ -66,7 +66,7 @@ export default function CustomerDetail(props) {
     };
     fetchApi();
   }, []);
-  console.log("res", businessUrl);
+
   const formik = useFormik({
     initialValues: {
       firstName: result.firstName,
@@ -244,13 +244,9 @@ export default function CustomerDetail(props) {
             )
           )}
           {result.typeApplicant === "application/pdf" ? (
-            <Link
-              to="/showImage"
-              onClick={() => localStorage.setItem("image", ApplicantImageUrl)}
-              target="_blank"
-            >
+            <a href={ApplicantImageUrl} download={"page.pdf"}>
               Photo
-            </Link>
+            </a>
           ) : (
             <Link
               style={{ textAlign: "center", left: 0 }}
@@ -279,13 +275,9 @@ export default function CustomerDetail(props) {
             )
           )}
           {result.typePassport === "application/pdf" ? (
-            <Link
-              to="/showImage"
-              onClick={() => localStorage.setItem("image", PassportImageUrl)}
-              target="_blank"
-            >
+            <a href={PassportImageUrl} download={"page.pdf"}>
               Passport
-            </Link>
+            </a>
           ) : (
             <Link
               style={{ textAlign: "center", left: 0 }}
@@ -314,13 +306,9 @@ export default function CustomerDetail(props) {
           )}
           {result?.typeBusiness !== "undefined" &&
             (result.typeBusiness === "application/pdf" ? (
-              <Link
-                to="/showImage"
-                onClick={() => localStorage.setItem("image", businessUrl)}
-                target="_blank"
-              >
+              <a href={businessUrl} download={"page.pdf"}>
                 Business card
-              </Link>
+              </a>
             ) : (
               <Link
                 style={{ textAlign: "center", left: 0 }}

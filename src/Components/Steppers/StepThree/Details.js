@@ -1237,7 +1237,7 @@ export default function Details(props) {
                           fullWidth
                           id="AB_name"
                           name="AB_name"
-                          label="Name"
+                          label="Company Name"
                           onChange={formik.handleChange}
                           value={formik.values.AB_name}
                           onBlur={formik.handleBlur}
@@ -2402,7 +2402,7 @@ export default function Details(props) {
                       <br></br>
                       <b>
                         *Please upload an image with a maximum file size of 5MB,
-                        in JPEG or PNG format
+                        in JPEG, PNG or PDF format
                       </b>
                     </span>
                   </Grid>
@@ -2427,7 +2427,7 @@ export default function Details(props) {
                       <br></br>
                       <b>
                         *Please upload an image with a maximum file size of 5MB,
-                        in JPEG or PNG format
+                        in JPEG, PNG or PDF format
                       </b>
                     </span>
                   </Grid>
@@ -2453,7 +2453,7 @@ export default function Details(props) {
                           <br></br>
                           <b>
                             *Please upload an image with a maximum file size of
-                            5MB, in JPEG or PNG format
+                            5MB, in JPEG, PNG or PDF format
                           </b>
                         </span>
                       </Grid>
