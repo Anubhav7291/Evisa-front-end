@@ -54,6 +54,12 @@ const styles = {
     color: "white",
     textAlign: "center",
   },
+  "@media (max-width: 600px)": {
+    footer: {
+      // Modify styles for screens <= 600px here
+      backgroundColor: "white",// For example, reduce padding
+    },
+  },
 };
 
 const InitialPage = () => {
@@ -140,13 +146,15 @@ const InitialPage = () => {
 
       {/* Footer */}
       <Paper style={styles.footer}>
-        <span style={{ fontSize: "20px", fontWeight: "50px" }}>
+      <div className="footerI">
+        <div style={{ fontSize: "20px", fontWeight: "50px" }}>
           Privacy & Policy{" "}
-        </span>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <span style={{ fontSize: "20px", fontWeight: "50px" }}>
+        </div>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <div style={{ fontSize: "20px", fontWeight: "50px" }}>
           Terms & Conditions
-        </span>
+        </div>
+        </div>
         <br />
         <br />
         

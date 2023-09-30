@@ -123,3 +123,13 @@
   height: 80% !important;
 }
 
+.footerI{
+  display: flex;
+  margin-left:"37%";
+ 
+}
+@media  screen and (max-width: 600px) {
+    .footerI {
+      display: block;
+    }
+  }
