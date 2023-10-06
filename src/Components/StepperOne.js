@@ -469,7 +469,7 @@ const handleDateChange1 = (date) => {
                             helperText={formik.touched.dob && formik.errors.dob}
                           />
                           }
-                          minDate={new Date() - 1}
+                          maxDate={dobDate}
                           name="dob"
                           selected={formik.values.dob}
                           onChange={handleDateChange} 
