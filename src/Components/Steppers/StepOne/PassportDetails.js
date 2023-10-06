@@ -15,6 +15,8 @@ import Notification from "../../../utils/Notification";
 import Spinner from "../../../utils/Spinner";
 import "../../../style.css";
 import { useNavigate } from "react-router-dom";
+import Datepicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const validationSchema = yup.object({
   city: yup.string("Enter your city"),
@@ -102,6 +104,8 @@ export default function PassportDetails({ formValue, tempId }) {
       console.log("claal");
     },
   });
+
+  
   const currentDate = new Date();
   const dobDate = new Date(currentDate);
   dobDate.setDate(currentDate.getDate() - 1);
@@ -120,7 +124,14 @@ export default function PassportDetails({ formValue, tempId }) {
   };
 
   const inputRef = useRef();
-  const inputRef2 = useRef();
+  const handleDateChange = (date) => {
+  
+    formik.setFieldValue("issueDate", date )
+  }
+
+  const handleDateChange1 = (date) => {
+    formik.setFieldValue("expiryDate", date )
+  }
 
   return (
     <Card>
@@ -337,41 +348,43 @@ export default function PassportDetails({ formValue, tempId }) {
                 />
               </Grid>
 
-              <Grid item xs={12} md={6}>
-                <TextField
-                  InputProps={{
-                    style: {
-                      height: "50px",
-                      fontSize: "15px",
-                    },
-                  }}
-                  fullWidth
-                  id="issueDate"
-                  name="issueDate"
-                  label="Date of Issue"
-                  type="date"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  inputProps={{
-                    // only needs the first 16 characters in the date string
-                    max: dobDate.toISOString().slice(0, 10),
-                  }}
-                  onChange={formik.handleChange}
-                  value={formik.values.issueDate}
-                  inputRef={inputRef2}
-                  onClick={() => {
-                    inputRef2.current.showPicker();
-                  }}
-                  onBlur={formik.handleBlur}
-                  error={
-                    formik.touched.issueDate && Boolean(formik.errors.issueDate)
-                  }
-                  helperText={
-                    formik.touched.issueDate && formik.errors.issueDate
-                  }
-                />
-                {new Date(formik.values.issueDate).getDate() ? (
+              <Grid  item xs={12} md={6}>
+                  <div className="customDatePickerWidth">
+                  
+                        <Datepicker
+                          customInput={
+                            <TextField
+                            InputProps={{
+                              style: {
+                                height: "50px",
+                                fontSize: "15px",
+                              },
+                            }}
+                            fullWidth
+                            id="issueDate"
+                            name="issueDate"
+                            label="Date of Issue"
+                           
+                            InputLabelProps={{
+                              shrink: true,
+                            }}
+                          
+                            error={formik.touched.issueDate && Boolean(formik.errors.issueDate)}
+                            helperText={formik.touched.issueDate && formik.errors.issueDate}
+                          />
+                          }
+                          minDate={new Date() - 1}
+                          name="issueDate"
+                          selected={formik.values.issueDate}
+                          onChange={handleDateChange} 
+                         
+                          peekNextMonth
+                          showMonthDropdown
+                          showYearDropdown
+                          dropdownMode="select"
+                    
+                  />
+                  {new Date(formik.values.issueDate).getDate() ? (
                   <div style={{ fontWeight: "bold", marginTop: "6px" }}>
                     {new Date(formik.values.issueDate).getDate() +
                       "-" +
@@ -380,44 +393,85 @@ export default function PassportDetails({ formValue, tempId }) {
                       new Date(formik.values.issueDate).getFullYear()}
                   </div>
                 ) : null}
-              </Grid>
 
-              <Grid item xs={12} md={6}>
-                <TextField
+                  {/* <TextField
                   InputProps={{
                     style: {
                       height: "50px",
                       fontSize: "15px",
                     },
                   }}
+                  inputProps={{
+                    // only needs the first 16 characters in the date string
+                    max: dobDate.toISOString().slice(0, 10),
+                  }}
                   fullWidth
-                  id="expiryDate"
-                  name="expiryDate"
-                  label="Date of Expiry"
+                  id="dob"
+                  name="dob"
+                  label="Date of Birth"
                   type="date"
                   InputLabelProps={{
                     shrink: true,
                   }}
-                  inputProps={{
-                    // only needs the first 16 characters in the date string
-                    min: expiry.toISOString().slice(0, 10),
-                  }}
+                  onChange={formik.handleChange}
+                  value={formik.values.dob}
                   inputRef={inputRef}
                   onClick={() => {
                     inputRef.current.showPicker();
                   }}
-                  onChange={formik.handleChange}
-                  value={formik.values.expiryDate}
                   onBlur={formik.handleBlur}
-                  error={
-                    formik.touched.expiryDate &&
-                    Boolean(formik.errors.expiryDate)
-                  }
-                  helperText={
-                    formik.touched.expiryDate && formik.errors.expiryDate
-                  }
+                  error={formik.touched.dob && Boolean(formik.errors.dob)}
+                  helperText={formik.touched.dob && formik.errors.dob}
                 />
-                {new Date(formik.values.expiryDate).getDate() ? (
+                {new Date(formik.values.dob).getDate() ? (
+                  <div style={{ fontWeight: "bold", marginTop: "6px" }}>
+                    {new Date(formik.values.dob).getDate() +
+                      "-" +
+                      MonthMap[new Date(formik.values.dob).getMonth()] +
+                      "-" +
+                      new Date(formik.values.dob).getFullYear()}
+                  </div>
+                ) : null} */}
+                </div>
+                </Grid>
+                <Grid  item xs={12} md={6}>
+                  <div className="customDatePickerWidth">
+                  
+                        <Datepicker
+                          customInput={
+                            <TextField
+                            InputProps={{
+                              style: {
+                                height: "50px",
+                                fontSize: "15px",
+                              },
+                            }}
+                            fullWidth
+                            id="expiryDate"
+                            name="expiryDate"
+                            label="Date of Expiry"
+                            
+                           
+                            InputLabelProps={{
+                              shrink: true,
+                            }}
+                          
+                            error={formik.touched.expiryDate && Boolean(formik.errors.expiryDate)}
+                            helperText={formik.touched.expiryDate && formik.errors.expiryDate}
+                          />
+                          }
+                          minDate={expiry}
+                          name="expiryDate"
+                          selected={formik.values.expiryDate}
+                          onChange={handleDateChange1} 
+                         
+                          peekNextMonth
+                          showMonthDropdown
+                          showYearDropdown
+                          dropdownMode="select"
+                    
+                  />
+                  {new Date(formik.values.expiryDate).getDate() ? (
                   <div style={{ fontWeight: "bold", marginTop: "6px" }}>
                     {new Date(formik.values.expiryDate).getDate() +
                       "-" +
@@ -426,7 +480,47 @@ export default function PassportDetails({ formValue, tempId }) {
                       new Date(formik.values.expiryDate).getFullYear()}
                   </div>
                 ) : null}
-              </Grid>
+
+                  {/* <TextField
+                  InputProps={{
+                    style: {
+                      height: "50px",
+                      fontSize: "15px",
+                    },
+                  }}
+                  inputProps={{
+                    // only needs the first 16 characters in the date string
+                    max: dobDate.toISOString().slice(0, 10),
+                  }}
+                  fullWidth
+                  id="dob"
+                  name="dob"
+                  label="Date of Birth"
+                  type="date"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  onChange={formik.handleChange}
+                  value={formik.values.dob}
+                  inputRef={inputRef}
+                  onClick={() => {
+                    inputRef.current.showPicker();
+                  }}
+                  onBlur={formik.handleBlur}
+                  error={formik.touched.dob && Boolean(formik.errors.dob)}
+                  helperText={formik.touched.dob && formik.errors.dob}
+                />
+                {new Date(formik.values.dob).getDate() ? (
+                  <div style={{ fontWeight: "bold", marginTop: "6px" }}>
+                    {new Date(formik.values.dob).getDate() +
+                      "-" +
+                      MonthMap[new Date(formik.values.dob).getMonth()] +
+                      "-" +
+                      new Date(formik.values.dob).getFullYear()}
+                  </div>
+                ) : null} */}
+                </div>
+                </Grid>
 
               <Grid container item xs={12} md={8}>
                 <span>
