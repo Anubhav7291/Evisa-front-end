@@ -110,6 +110,7 @@ function Payment(props) {
           amount: totalAmount * 100,
           id: id,
           name:formvalues.firstName,
+          sirName: formvalues.name,
           email:formvalues.email,
           tempId:tempId,
           ip:formvalues.ip
