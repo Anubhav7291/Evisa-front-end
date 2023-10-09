@@ -117,7 +117,7 @@ function Payment(props) {
         if (response.data.success) {
           setSuccess(true);
           setLoading(false)
-          navigate("/details/:id", { state: { tempId: tempId } });
+          navigate(`/details/${tempId}`, { state: { tempId: tempId } });
         }
       } catch (error) {
         setLoading(false)
