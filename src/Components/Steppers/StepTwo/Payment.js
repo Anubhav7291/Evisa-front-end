@@ -71,7 +71,7 @@ function Payment(props) {
     async function fetch() {
       try {
         const response = await axios.get(
-          process.env.REACT_APP_BASE_URL + `/getLeadbyId/${id}`
+          process.env.REACT_APP_BASE_URL + `/getLeadbyId/${tempId}`
         );
 
         if (response.data.data?.length >= 1) {
