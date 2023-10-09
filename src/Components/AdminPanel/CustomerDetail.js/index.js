@@ -269,7 +269,7 @@ export default function CustomerDetail(props) {
               Passport
             </a>
           )}
-          {result.typeBusiness !== "application/pdf" ? (
+          {result?.typeBusiness !== "undefined" && result.typeBusiness !== "application/pdf" ? (
             <>
               <img
                 src={formik.values.businessUrl}
