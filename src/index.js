@@ -13,6 +13,7 @@ import CustomerDetail from "./Components/AdminPanel/CustomerDetail.js/index.js";
 import FinalStep from "./Components/Steppers/FinalStep/index.js";
 import DisplayImage from "./Components/AdminPanel/CustomerDetail.js/DisplayImage";
 import InitialPage from "./Components/InitialPage";
+import StripeContainer from "./Components/Steppers/StepTwo/StripeContainer";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 console.log(window.location.pathname);
@@ -37,15 +38,15 @@ root.render(
         )}
       </Container>
       <Routes>
-        <Route path="/" element={<App />}></Route>
-        <Route path="/register/:id" element={<App />}></Route>
-        <Route path="/login" element={<LoginPage />}></Route>
-        <Route path="/customerDetail" element={<CustomerDetail />}></Route>
-        <Route path="/payment" element={<Payment />}></Route>
-        <Route path="/details" element={<Details />}></Route>
-        <Route path="/finalStep" element={<FinalStep />}></Route>
-        <Route path="/showImage" element={<DisplayImage/>}></Route>
-        <Route path="/e-visa" element={<InitialPage/>}></Route>
+        <Route exact path="/" element={<App />}></Route>
+        <Route exact path="/register/:id" element={<App />}></Route>
+        <Route exact path="/login" element={<LoginPage />}></Route>
+        <Route exact path="/customerDetail" element={<CustomerDetail />}></Route>
+        <Route exact path="/payment" element={<StripeContainer />}></Route>
+        <Route exact path="/details" element={<Details />}></Route>
+        <Route exact path="/finalStep" element={<FinalStep />}></Route>
+        <Route exact path="/showImage" element={<DisplayImage/>}></Route>
+        <Route exact path="/e-visa" element={<InitialPage/>}></Route>
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
