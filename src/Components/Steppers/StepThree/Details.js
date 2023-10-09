@@ -247,7 +247,7 @@ export default function Details(props) {
     navdom2.style.color = "white";
     const fetchApi = async () => {
       const res = await axios.get(
-        process.env.REACT_APP_BASE_URL + `/getLeadbyId/${tempId}`
+        process.env.REACT_APP_BASE_URL + `/getLeadbyId/${id}`
       );
       if (res.data.message === "Success") {
         setResult(res.data.data[0]);
