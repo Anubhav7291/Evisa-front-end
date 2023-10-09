@@ -43,25 +43,6 @@ export default function CustomerDetail(props) {
       );
       if (res.data.message === "Success") {
         setResult(res.data.data[0]);
-        const base64String = arrayBufferToBase64(
-          res.data.data[0].applicantFile?.data
-        );
-        const dataUrl = `data:image/jpeg;base64,${base64String}`;
-
-        setApplicantImageUrl(dataUrl);
-
-        const base64String1 = arrayBufferToBase64(
-          res.data.data[0].passportFile?.data
-        );
-        const dataUrl1 = `data:image/jpeg;base64,${base64String1}`;
-
-        setPassportImageUrl(dataUrl1);
-
-        const base64String2 = arrayBufferToBase64(
-          res.data.data[0].businessFile?.data
-        );
-        const dataUrl2 = `data:image/jpeg;base64,${base64String2}`;
-        setBusinessUrl(dataUrl2);
       }
     };
     fetchApi();
@@ -173,6 +154,9 @@ export default function CustomerDetail(props) {
       IB_website: result?.IB_website,
       businessFile: result?.businessFile,
       F_placetoVisited: result?.F_placetoVisited,
+      applicantUrl: result?.applicantUrl,
+      businessUrl: result?.businessUrl,
+      passportUrl: result?.passportUrl,
     },
     enableReinitialize: true,
     //validationSchema: validationSchema,
@@ -199,7 +183,7 @@ export default function CustomerDetail(props) {
     event.preventDefault();
 
     // Open a new tab
-    const newTab = window.open(event.target.href, "_blank");
+    const newTab = window.open(id, "_blank");
 
     newTab.document.write("<html><head><title>Image</title></head><body>");
     newTab.document.write('<img src="' + id + '" alt="Image">');
@@ -226,14 +210,17 @@ export default function CustomerDetail(props) {
           ) : null}
         </div>
         <div style={{ marginLeft: "23%", textAlign: "justify" }}>
-          {ApplicantImageUrl.split(",")[1] &&
-          result.typeApplicant !== "application/pdf" ? (
+          {result.typeApplicant !== "application/pdf" ? (
             <>
-              <img src={ApplicantImageUrl} height={"300px"} width={"300px"} />
+              <img
+                src={formik.values.applicantUrl}
+                height={"300px"}
+                width={"300px"}
+              />
             </>
           ) : (
             result.typeApplicant === "application/pdf" && (
-              <Document file={ApplicantImageUrl}>
+              <Document file={formik.values.applicantUrl}>
                 <Page
                   renderTextLayer={false}
                   renderAnnotationLayer={false}
@@ -244,27 +231,26 @@ export default function CustomerDetail(props) {
             )
           )}
           {result.typeApplicant === "application/pdf" ? (
-            <a href={ApplicantImageUrl} download={"page.pdf"}>
+            <a href={formik.values.applicantUrl} download={"page.pdf"}>
               Photo
             </a>
           ) : (
-            <Link
-              style={{ textAlign: "center", left: 0 }}
-              to="/customerDetail"
-              onClick={(e) => handleLinkClick(e, ApplicantImageUrl)}
-            >
+            <a href={formik.values.applicantUrl} target="_blank">
               Photo
-            </Link>
+            </a>
           )}
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          {PassportImageUrl.split(",")[1] &&
-          result.typePassport !== "application/pdf" ? (
+          {result.typePassport !== "application/pdf" ? (
             <>
-              <img src={PassportImageUrl} height={"300px"} width={"300px"} />
+              <img
+                src={formik.values.passportUrl}
+                height={"300px"}
+                width={"300px"}
+              />
             </>
           ) : (
             result.typePassport === "application/pdf" && (
-              <Document file={PassportImageUrl}>
+              <Document file={formik.values.passportUrl}>
                 <Page
                   renderTextLayer={false}
                   renderAnnotationLayer={false}
@@ -275,26 +261,25 @@ export default function CustomerDetail(props) {
             )
           )}
           {result.typePassport === "application/pdf" ? (
-            <a href={PassportImageUrl} download={"page.pdf"}>
+            <a href={formik.values.passportUrl} download={"page.pdf"}>
               Passport
             </a>
           ) : (
-            <Link
-              style={{ textAlign: "center", left: 0 }}
-              to="/customerDetail"
-              onClick={(e) => handleLinkClick(e, PassportImageUrl)}
-            >
+            <a href={formik.values.passportUrl} target="_blank">
               Passport
-            </Link>
+            </a>
           )}
-          {businessUrl.split(",")[1] &&
-          result.typeBusiness !== "application/pdf" ? (
+          {result.typeBusiness !== "application/pdf" ? (
             <>
-              <img src={businessUrl} height={"300px"} width={"300px"} />
+              <img
+                src={formik.values.businessUrl}
+                height={"300px"}
+                width={"300px"}
+              />
             </>
           ) : (
             result.typeBusiness === "application/pdf" && (
-              <Document file={businessUrl}>
+              <Document file={formik.values.businessUrl}>
                 <Page
                   renderTextLayer={false}
                   renderAnnotationLayer={false}
@@ -306,17 +291,13 @@ export default function CustomerDetail(props) {
           )}
           {result?.typeBusiness !== "undefined" &&
             (result.typeBusiness === "application/pdf" ? (
-              <a href={businessUrl} download={"page.pdf"}>
+              <a href={formik.values.businessUrl} download={"page.pdf"}>
                 Business card
               </a>
             ) : (
-              <Link
-                style={{ textAlign: "center", left: 0 }}
-                to="/customerDetail"
-                onClick={(e) => handleLinkClick(e, businessUrl)}
-              >
+              <a href={formik.values.businessUrl} target="_blank">
                 Business card
-              </Link>
+              </a>
             ))}
           <span style={{ left: 0 }}></span>
         </div>
