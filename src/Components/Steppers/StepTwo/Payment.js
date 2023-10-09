@@ -30,8 +30,12 @@ import JCBImage from "../../../assets/jcb.svg";
 import MAESTROImage from "../../../assets/maestro.svg";
 import MCImage from "../../../assets/mastercard.svg";
 import UPAY from "../../../assets/union-pay.svg";
+import { useParams } from "react-router-dom";
+
+
 
 function Payment(props) {
+  const { id } = useParams();
   const [formData, setFormData] = useState({
     cardName: "",
     cardNumber: "",
@@ -67,7 +71,7 @@ function Payment(props) {
     async function fetch() {
       try {
         const response = await axios.get(
-          process.env.REACT_APP_BASE_URL + `/getLeadbyId/${tempId}`
+          process.env.REACT_APP_BASE_URL + `/getLeadbyId/${id}`
         );
 
         if (response.data.data?.length >= 1) {
