@@ -11,6 +11,7 @@ import "../../../style.css";
 import { COUNTRIES, EDUCATION, RELIGION } from "../../../utils/Countries";
 import { EMPLOYMENT } from "../../../utils/District";
 import Notification from "../../../utils/Notification";
+
 import Spinner from "../../../utils/Spinner";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
@@ -150,7 +151,7 @@ export default function Details(props) {
       formData.append("typeBusiness", values.businessFile.type);
       formData.append("typeApplicant", values.applicantFile.type);
       formData.append("typePassport", values.passportFile.type);
-      formData.append("id", tempId);
+      formData.append("id", id);
       formData.append("village", values.village);
       formData.append("street", values.street);
 

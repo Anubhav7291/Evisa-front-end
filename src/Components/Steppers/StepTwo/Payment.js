@@ -11,6 +11,7 @@ import {
   Container,
   MenuItem,
 } from "@mui/material";
+import { useParams } from "react-router-dom";
 import {
   CardElement,
   CardNumberElement,
@@ -30,7 +31,6 @@ import JCBImage from "../../../assets/jcb.svg";
 import MAESTROImage from "../../../assets/maestro.svg";
 import MCImage from "../../../assets/mastercard.svg";
 import UPAY from "../../../assets/union-pay.svg";
-import { useParams } from "react-router-dom";
 
 
 
@@ -117,7 +117,7 @@ function Payment(props) {
         if (response.data.success) {
           setSuccess(true);
           setLoading(false)
-          navigate("/details", { state: { tempId: tempId } });
+          navigate("/details/:id", { state: { tempId: tempId } });
         }
       } catch (error) {
         setLoading(false)

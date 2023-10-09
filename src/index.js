@@ -42,8 +42,8 @@ root.render(
         <Route exact path="/register/:id" element={<App />}></Route>
         <Route exact path="/login" element={<LoginPage />}></Route>
         <Route exact path="/customerDetail" element={<CustomerDetail />}></Route>
-        <Route exact path="/payment/:id" element={<StripeContainer />}></Route>
-        <Route exact path="/details" element={<Details />}></Route>
+        <Route exact path="/payment" element={<StripeContainer />}></Route>
+        <Route exact path="/details/:id" element={<Details />}></Route>
         <Route exact path="/finalStep" element={<FinalStep />}></Route>
         <Route exact path="/showImage" element={<DisplayImage/>}></Route>
         <Route exact path="/e-visa" element={<InitialPage/>}></Route>

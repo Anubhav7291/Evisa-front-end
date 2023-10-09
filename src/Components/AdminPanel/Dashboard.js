@@ -217,7 +217,7 @@ const Dashboard = (props) => {
                 Payment pending
               </Button>
             ),
-            "PENDING",
+             val.applicantFile ? "Done" : "Pending",
             val.visaService,
             val.ip
               .split(":")
