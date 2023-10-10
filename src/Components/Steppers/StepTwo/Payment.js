@@ -327,7 +327,7 @@ function Payment(props) {
                 </div>
 
                 <p style={{ marginTop: "20px" }}>
-                  This Transaction will appear on your card statement as
+                  This Transaction will appear on your card statement as India Evisa Services
                 </p>
                 <Divider />
 
