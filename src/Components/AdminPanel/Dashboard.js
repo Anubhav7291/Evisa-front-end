@@ -182,64 +182,78 @@ const Dashboard = (props) => {
     >
       <MUIDataTable
         title={"Leads"}
-        data={data.map((val) => {
-          return [
-            <Link
-              to="/customerDetail"
-              onClick={(e) => handleLinkClick(e, val.TempId, false)}
-            >
-              {val.TempId}
-            </Link>,
-            <Link
-              to="/customerDetail"
-              onClick={(e) => handleLinkClick(e, val.TempId, false)}
-            >
-              {val.email}
-            </Link>,
-            <Link
-              to="/customerDetail"
-              onClick={(e) => handleLinkClick(e, val.TempId, false)}
-            >
-              {val.firstName}
-            </Link>,
-            new Date(val.dob).getDate() +
-              "-" +
-              MonthMap[new Date(val.dob).getMonth()] +
-              "-" +
-              new Date(val.dob).getFullYear(),
-            val.nationality,
-            val.paymentStatus ? (
-              <Button variant="contained" size="small" color="success">
-                Payment done
-              </Button>
-            ) : (
-              <Button variant="contained" size="small" color="error">
-                Payment pending
-              </Button>
-            ),
-             val.applicantFile ? "Done" : "Pending",
-            val.visaService,
-            val.ip
-              .split(":")
-              .map((val) => val)
-              .join(":\r\n"),
-            val.CREATION_TIME?.split("T")[0] +
-              " " +
-              (val?.CREATION_TIME?.split("T")[1]?.slice(0, 8) || ""),
-            <Link
-              to="/customerDetail"
-              onClick={(e) => handleLinkClick(e, val.TempId, false)}
-            >
-              Form link
-            </Link>,
-            <Link
-              to="/customerDetail"
-              onClick={(e) => handleLinkClick(e, val.TempId, true)}
-            >
-              Download
-            </Link>,
-          ];
-        })}
+        data={data
+          .sort((a, b) => {
+            const dateA = new Date(a.CREATION_TIME);
+            const dateB = new Date(b.CREATION_TIME);
+            return dateB - dateA;
+          })
+          .map((val) => {
+            return [
+              <Link
+                to="/customerDetail"
+                onClick={(e) => handleLinkClick(e, val.TempId, false)}
+              >
+                {val.TempId}
+              </Link>,
+              <Link
+                to="/customerDetail"
+                onClick={(e) => handleLinkClick(e, val.TempId, false)}
+              >
+                {val.email}
+              </Link>,
+              <Link
+                to="/customerDetail"
+                onClick={(e) => handleLinkClick(e, val.TempId, false)}
+              >
+                {val.firstName}
+              </Link>,
+              new Date(val.dob).getDate() +
+                "-" +
+                MonthMap[new Date(val.dob).getMonth()] +
+                "-" +
+                new Date(val.dob).getFullYear(),
+              val.nationality,
+              val.paymentStatus ? (
+                <Button variant="contained" size="small" color="success">
+                  Payment done
+                </Button>
+              ) : (
+                <Button variant="contained" size="small" color="error">
+                  Payment pending
+                </Button>
+              ),
+              val.applicantFile ? "Done" : "Pending",
+              val.visaService,
+              val.ip
+                .split(":")
+                .map((val) => val)
+                .join(":\r\n"),
+              new Date(val.CREATION_TIME).getDate() +
+                "-" +
+                parseInt(new Date(val.CREATION_TIME).getMonth() + 1)  +
+                "-" +
+                new Date(val.CREATION_TIME).getFullYear() +
+                " " +
+                new Date(val?.CREATION_TIME).getHours() +
+                ":" +
+                new Date(val?.CREATION_TIME).getMinutes() +
+                ":" +
+                new Date(val?.CREATION_TIME).getSeconds(),
+              <Link
+                to="/customerDetail"
+                onClick={(e) => handleLinkClick(e, val.TempId, false)}
+              >
+                Form link
+              </Link>,
+              <Link
+                to="/customerDetail"
+                onClick={(e) => handleLinkClick(e, val.TempId, true)}
+              >
+                Download
+              </Link>,
+            ];
+          })}
         columns={columns}
         options={options}
       />
