@@ -231,7 +231,7 @@ export default function CustomerDetail(props) {
             )
           )}
           {result.typeApplicant === "application/pdf" ? (
-            <a href={formik.values.applicantUrl} download={"page.pdf"}>
+            <a href={formik.values.applicantUrl} target="_blank" download={"page.pdf"}>
               Photo
             </a>
           ) : (
@@ -261,7 +261,7 @@ export default function CustomerDetail(props) {
             )
           )}
           {result.typePassport === "application/pdf" ? (
-            <a href={formik.values.passportUrl} download={"page.pdf"}>
+            <a href={formik.values.passportUrl} target="_blank" download={"page.pdf"}>
               Passport
             </a>
           ) : (
@@ -291,7 +291,7 @@ export default function CustomerDetail(props) {
           )}
           {result?.typeBusiness !== "undefined" &&
             (result.typeBusiness === "application/pdf" ? (
-              <a href={formik.values.businessUrl} download={"page.pdf"}>
+              <a href={formik.values.businessUrl} target="_blank" download={"page.pdf"}>
                 Business card
               </a>
             ) : (
