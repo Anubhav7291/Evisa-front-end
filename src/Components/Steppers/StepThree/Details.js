@@ -234,7 +234,7 @@ export default function Details(props) {
          formData.append('applicantFile', s3Urlapplicant.data.url.split('?')[0])  
         }
 
-        const s3Urlpassport = await axios.get('http://localhost:8081/s3Url')
+        const s3Urlpassport = await axios.get(process.env.REACT_APP_BASE_URL+'/s3Url')
         if(s3Urlpassport.data.url){
          const res =  await fetch(s3Urlpassport.data.url, {
             method:'PUT',
@@ -246,7 +246,7 @@ export default function Details(props) {
          formData.append('passportFile', s3Urlpassport.data.url.split('?')[0])  
         }
 
-        const s3business = await axios.get('http://localhost:8081/s3Url')
+        const s3business = await axios.get(process.env.REACT_APP_BASE_URL+'/s3Url')
         if(s3business.data.url && values.businessFile){
          const res =  await fetch(s3business.data.url, {
             method:'PUT',
