@@ -373,7 +373,7 @@ export default function PassportDetails({ formValue, tempId }) {
                             helperText={formik.touched.issueDate && formik.errors.issueDate}
                           />
                           }
-                          minDate={new Date() - 1}
+                          minDate={expiry}
                           name="issueDate"
                           selected={formik.values.issueDate}
                           onChange={handleDateChange} 
