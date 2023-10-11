@@ -44,6 +44,7 @@ export default function Details(props) {
 
   const [loader, setLoader] = React.useState(false);
   const [result, setResult] = React.useState([]);
+  const [image, setImage] =React.useState([]);
   const [notification, setNotification] = React.useState({
     open: false,
     content: "",
@@ -191,8 +192,8 @@ export default function Details(props) {
       formData.append("Q4Detail", values.Q4Detail);
       formData.append("Q5Detail", values.Q5Detail);
       formData.append("Q6Detail", values.Q6Detail);
-      formData.append("applicantFile", values.applicantFile); // You can append files here if needed
-      formData.append("passportFile",values.passportFile);
+      // formData.append("applicantFile", values.applicantFile); // You can append files here if needed
+      // formData.append("passportFile",values.passportFile);
       formData.append("Aoccupation", values.Aoccupation);
       formData.append("Q7Detail", values.Q7Detail);
       formData.append("employerAddress",values.employerAddress);
@@ -212,13 +213,51 @@ export default function Details(props) {
       formData.append("IB_name",values.IB_name);
       formData.append("IB_phone",values.IB_phone);
       formData.append("IB_website",values.IB_website);
-      formData.append("businessFile",values.businessFile); 
+     // formData.append("businessFile",values.businessFile); 
       formData.append("email", result?.email);
       formData.append("name", result?.name);
       formData.append("firstName", result?.firstName);
       
       setLoader(true);
+     
       try {
+        const s3Urlapplicant = await axios.get('http://localhost:8081/s3Url')
+      
+        if(s3Urlapplicant.data.url){
+         const res = await fetch(s3Urlapplicant.data.url, {
+            method:'PUT',
+            headers: {
+              "Content-Type": values.applicantFile.type
+            },
+            body: values.applicantFile
+          })
+         formData.append('applicantFile', s3Urlapplicant.data.url.split('?')[0])  
+        }
+
+        const s3Urlpassport = await axios.get('http://localhost:8081/s3Url')
+        if(s3Urlpassport.data.url){
+         const res =  await fetch(s3Urlpassport.data.url, {
+            method:'PUT',
+            headers: {
+              "Content-Type": values.passportFile.type
+            },
+            body: values.passportFile
+          })
+         formData.append('passportFile', s3Urlpassport.data.url.split('?')[0])  
+        }
+
+        const s3business = await axios.get('http://localhost:8081/s3Url')
+        if(s3business.data.url && values.businessFile){
+         const res =  await fetch(s3business.data.url, {
+            method:'PUT',
+            headers: {
+              "Content-Type": values.businessFile.type
+            },
+            body: values.businessFile
+          })
+         formData.append('businessFile', s3business.data.url.split('?')[0])  
+        }
+
         const response = await axios.put(
           process.env.REACT_APP_BASE_URL + `/otherDetails`,
           formData
@@ -266,6 +305,7 @@ export default function Details(props) {
           fontSize: "14px",
         }}
       >
+        <img src={image}/>
         <Card>
           <CardHeader
             style={{
@@ -2415,7 +2455,7 @@ export default function Details(props) {
                       onChange={(event) => {
                         formik.setFieldValue(
                           "applicantFile",
-                          event.currentTarget.files[0]
+                          event.target.files[0]
                         );
                       }}
                     />
