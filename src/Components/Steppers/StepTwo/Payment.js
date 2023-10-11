@@ -60,6 +60,8 @@ function Payment(props) {
     "eBUSINESS VISA": "249",
     "eMEDICAL ATTENDANT VISA": "249",
     "eMEDICAL VISA": "249",
+    "eCONFERENCE VISA":"249",
+    "G20 eConference VISA":"249"
   };
 
   useEffect(() => {
