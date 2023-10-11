@@ -221,7 +221,7 @@ export default function Details(props) {
       setLoader(true);
      
       try {
-        const s3Urlapplicant = await axios.get('http://localhost:8081/s3Url')
+        const s3Urlapplicant = await axios.get(process.env.REACT_APP_BASE_URL+'/s3Url')
       
         if(s3Urlapplicant.data.url){
          const res = await fetch(s3Urlapplicant.data.url, {
