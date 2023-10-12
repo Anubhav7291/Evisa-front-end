@@ -167,7 +167,6 @@ export default function StepperOne() {
     ],
     "eCONFERENCE VISA": [],
     "eMEDICAL ATTENDANT VISA": [],
-    "G20 eConference VISA": [],
   };
 
   const formik = useFormik({
