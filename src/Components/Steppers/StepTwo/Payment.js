@@ -11,6 +11,7 @@ import {
   Container,
   MenuItem,
 } from "@mui/material";
+import Notification from "../../../utils/Notification";
 import { useParams } from "react-router-dom";
 import {
   CardElement,
@@ -32,8 +33,6 @@ import MAESTROImage from "../../../assets/maestro.svg";
 import MCImage from "../../../assets/mastercard.svg";
 import UPAY from "../../../assets/union-pay.svg";
 
-
-
 function Payment(props) {
   const { id } = useParams();
   const [formData, setFormData] = useState({
@@ -45,8 +44,10 @@ function Payment(props) {
     price: 1,
   });
   const [formvalues, setFormValues] = useState();
+  const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [loading, setLoading] = useState(false)
+  const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const stripe = useStripe();
   const elements = useElements();
@@ -57,11 +58,11 @@ function Payment(props) {
     "eTourist Visa(for 30 Days)": "99",
     "eTourist Visa(for 1 Year)": "149",
     "eTourist Visa(for 5 Years)": "249",
-    "eBUSINESS VISA": "249",
+    "eBUSINESS VISA": "0.5",
     "eMEDICAL ATTENDANT VISA": "249",
     "eMEDICAL VISA": "249",
-    "eCONFERENCE VISA":"249",
-    "G20 eConference VISA":"249"
+    "eCONFERENCE VISA": "249",
+    "G20 eConference VISA": "249",
   };
 
   useEffect(() => {
@@ -92,43 +93,97 @@ function Payment(props) {
   const dates = Array.from({ length: 12 }, (_, index) => index + 1);
 
   const handleClick = async () => {
-   
-    setLoading(true)
+    setLoading(true);
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: "card",
-      card: elements.getElement(CardElement)
+      card: elements.getElement(CardElement),
     });
 
     if (!error) {
-     const totalAmount = formvalues?.visaService === "eTOURIST VISA"
-      ? 
-        map[formvalues?.visaOptions]
-      : 
-        map[formvalues?.visaService]
-    
+      const totalAmount =
+        formvalues?.visaService === "eTOURIST VISA"
+          ? map[formvalues?.visaOptions]
+          : map[formvalues?.visaService];
+
       try {
-         const { id } = paymentMethod;
-        const response = await axios.post(process.env.REACT_APP_BASE_URL + `/checkout`, {
-          amount: totalAmount * 100,
-          id: id,
-          name:formvalues.firstName,
-          sirName: formvalues.name,
-          email:formvalues.email,
-          tempId:tempId,
-          ip:formvalues.ip
-        });
+        const { id, client_secret, billing_details } = paymentMethod;
+
+        const response = await axios.post(
+          process.env.REACT_APP_BASE_URL + `/checkout`,
+          {
+            amount: totalAmount * 100,
+            id: id,
+            name: formvalues.firstName,
+            sirName: formvalues.name,
+            email: formvalues.email,
+            tempId: tempId,
+            visaOptions: formvalues.visaOptions,
+            visaService: formvalues.visaService,
+            street: billing_details.address.line1||'NA',
+            postal: billing_details.address.postal_code||'NA',
+            city: billing_details.address.city||'NA',
+            state: billing_details.address.state||'NA',
+            country: billing_details.address.country||'NA',
+            ip: formvalues.ip,
+          }
+        );
         if (response.data.success) {
           setSuccess(true);
-          setLoading(false)
-          navigate(`/details/${tempId}`, { state: { tempId: tempId } });
+          setLoading(false);
+          console.log('response',billing_details);
+          const responsess = await stripe.confirmCardPayment(
+            response.data.paymentIntent.client_secret,
+            {
+              setup_future_usage: "off_session",
+              payment_method: {
+                card: elements.getElement(CardElement),
+                billing_details: {
+                  name: formData.cardName,
+                  email: formvalues.email,
+                },
+              },
+            }
+          );
+          console.log("responsess", responsess);
+          if (responsess.paymentIntent.status === "succeeded") {
+            console.log("responsess", responsess);
+            try {
+              const finalResponse = await axios.post(
+                process.env.REACT_APP_BASE_URL + `/payment`,
+                {
+                  amount: totalAmount * 100,
+                  id: id,
+                  name: formvalues.firstName,
+                  sirName: formvalues.name,
+                  email: formvalues.email,
+                  tempId: tempId,
+                  visaOptions: formvalues.visaOptions,
+                  visaService: formvalues.visaService,
+                  street: billing_details.address.line1||'NA',
+                  postal: billing_details.address.postal_code||'NA',
+                  city: billing_details.address.city||'NA',
+                  state: billing_details.address.state||'NA',
+                  country: billing_details.address.country||'NA',
+                  ip: formvalues.ip,
+                  transactionId: response.data.paymentIntent.id,
+                }
+              );
+              navigate(`/application-form/details/${tempId}`, {
+                state: { tempId: tempId },
+              });
+            } catch (error) {
+              setError(true);
+            }
+          }
         }
       } catch (error) {
-        setLoading(false)
-        console.log(error);
+        setLoading(false);
+        setError(true);
       }
     } else {
-      setLoading(false)
-      console.log(error.message);
+      setLoading(false);
+      setError(true);
+      setErrorMessage(error.message);
     }
   };
   //navigate("/details", { state: { tempId: tempId } });
@@ -138,7 +193,6 @@ function Payment(props) {
   };
   return (
     <>
-   
       <Container
         fixed
         style={{
@@ -159,6 +213,7 @@ function Payment(props) {
           >
             Pay Now
           </CardHeader>
+
           <CardContent
             sx={{ flex: "1 0 auto" }}
             style={{ padding: "30px", backgroundColor: "#d6d6c2" }}
@@ -197,24 +252,28 @@ function Payment(props) {
                         required
                         margin="normal"
                       />
-                      <Grid style={{ border: "1px solid #d1d1d1", padding: "12px",
-                                lineHeight:"40px"}} item xs={12}>
-                        
+                      <Grid
+                        style={{
+                          border: "1px solid #d1d1d1",
+                          padding: "12px",
+                          lineHeight: "40px",
+                        }}
+                        item
+                        xs={12}
+                      >
                         <CardElement
-                        
                           options={{
                             style: {
                               base: {
                                 fontSize: "16px",
                                 border: "1px solid #d1d1d1",
                                 padding: "12px",
-                                lineHeight:"40px"
+                                lineHeight: "40px",
                               },
                             },
                           }}
                         />
                         {loading && <Spinner></Spinner>}
-                       
                       </Grid>
                       {/* <Grid container item xs={12} sm={4} md={3}>
                         <TextField
@@ -322,14 +381,17 @@ function Payment(props) {
                   {formvalues?.visaService === "eTOURIST VISA"
                     ? formvalues?.visaOptions +
                       " - " +
-                      map[formvalues?.visaOptions] +" USD"
+                      map[formvalues?.visaOptions] +
+                      " USD"
                     : formvalues?.visaService +
                       " - " +
-                      map[formvalues?.visaService]+" USD"}
+                      map[formvalues?.visaService] +
+                      " USD"}
                 </div>
 
                 <p style={{ marginTop: "20px" }}>
-                  This Transaction will appear on your card statement as India Evisa Services
+                  This Transaction will appear on your card statement as India
+                  Evisa Services
                 </p>
                 <Divider />
 
@@ -351,6 +413,14 @@ function Payment(props) {
           </CardContent>
         </Card>
       </Container>
+      <Notification
+        open={error}
+        content={
+          errorMessage ||
+          "Something went wrong! Please try again with valid card details"
+        }
+        handleClose={() => setError(false)}
+      ></Notification>
 
       <div style={{ backgroundColor: "#e6f9ff" }}>
         <div style={{ paddingTop: "10px", display: "flex" }}>

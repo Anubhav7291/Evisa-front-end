@@ -3,7 +3,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import { useTheme } from "@mui/material/styles";
 import axios from "axios";
-import { Field, FormikProvider, useFormik } from "formik";
+import { Field, FormikProvider, useFormik, ErrorMessage } from "formik";
 import * as React from "react";
 import CardHeader from "react-bootstrap/esm/CardHeader";
 import { useNavigate, useParams } from "react-router-dom";
@@ -27,13 +27,110 @@ import * as yup from "yup";
 
 const validationSchema = yup.object({
   passportFile: yup
-    .string("Please upload passportFile")
-    .required("Religion name is required"),
+    .string("Please upload Passport")
+    .required("Please upload Passport"),
   applicantFile: yup
+    .string("Please upload the photo")
+    .required("Please upload the photo"),
+  street: yup
+    .string("Enter your Street mark")
+    .required("Street mark is required"),
+  village: yup
+    .string("Enter your Village mark")
+    .required("Village mark is required"),
+  addresscountry: yup
+    .string("Enter your Country mark")
+    .required("Country mark is required"),
+  fatherBirth: yup
+    .string("Enter your Father birth mark")
+    .required("Father birth mark is required"),
+  fatherName: yup
+    .string("Enter your Father name mark")
+    .required("Father name mark is required"),
+  fatherCountry: yup
+    .string("Enter your Father country mark")
+    .required("Father country mark is required"),
+  fatherNation: yup
+    .string("Enter your Father nation mark")
+    .required("Father nation mark is required"),
+  motherBirth: yup
+    .string("Enter your Mother nation mark")
+    .required("Mother nation mark is required"),
+  motherCountry: yup
     .string("Enter your Verification mark")
     .required("Verification mark is required"),
+  motherName: yup
+    .string("Enter your Mother name mark")
+    .required("Mother name mark is required"),
+  motherNation: yup
+    .string("Enter your Mother nation mark")
+    .required("Mother nation mark is required"),
+  employerName: yup
+    .string("Enter your Emplyer Name mark")
+    .required("Emplyer Name mark is required"),
+  employerAddress: yup
+    .string("Enter your Employer address mark")
+    .required("Employer address mark is required"),
+  F_placetoVisited: yup
+    .string("Enter your Address mark")
+    .required("Address mark is required"),
+  FI_referencename: yup
+    .string("Enter your Reference Name mark")
+    .required("Reference Name mark is required"),
+  FI_address: yup
+    .string("Enter your Address mark")
+    .required("Address mark is required"),
+  FI_phone: yup
+    .string("Enter your Phone mark")
+    .required("Phone mark is required"),
+  FO_referencename: yup
+    .string("Enter your Name mark")
+    .required("Name mark is required"),
+  AB_address: yup
+    .string("Enter your Address mark")
+    .required("Address mark is required"),
+  AB_phone: yup
+    .string("Enter your Phone mark")
+    .required("Phone mark is required"),
+  AB_website: yup
+    .string("Enter your Website mark")
+    .required("Website mark is required"),
+  IB_name: yup.string("Enter your Name mark").required("Name mark is required"),
+  IB_address: yup
+    .string("Enter your Address mark")
+    .required("Address mark is required"),
+  IB_phone: yup
+    .string("Enter your Phone mark")
+    .required("Phone mark is required"),
+  IB_website: yup
+    .string("Enter your Website mark")
+    .required("Website mark is required"),
+  defenceOrganization: yup
+    .string("Enter your Organization mark")
+    .required("Organization mark is required"),
+  defenceDesignation: yup
+    .string("Enter your Designation mark")
+    .required("Designation mark is required"),
+  defenceRank: yup
+    .string("Enter your Rank mark")
+    .required("Rank mark is required"),
+  martialStatus: yup
+    .string("Enter your Martial Status mark")
+    .required("Martial Status mark is required"),
+  postal: yup
+    .string("Enter your Postal mark")
+    .required("Postal mark is required"),
+  state: yup.string("Enter your State mark").required("State mark is required"),
+  Aoccupation: yup
+    .string("Enter your Occupation mark")
+    .required("Occupation mark is required"),
+  FO_phone: yup
+    .string("Enter your Phone mark")
+    .required("Phone mark is required"),
+  FO_address: yup
+    .string("Enter your Address mark")
+    .required("Address mark is required"),
 });
-
 
 export default function Details(props) {
   const theme = useTheme();
@@ -44,7 +141,7 @@ export default function Details(props) {
 
   const [loader, setLoader] = React.useState(false);
   const [result, setResult] = React.useState([]);
-  const [image, setImage] =React.useState([]);
+  const [image, setImage] = React.useState([]);
   const [notification, setNotification] = React.useState({
     open: false,
     content: "",
@@ -127,7 +224,7 @@ export default function Details(props) {
       employerAddress: "",
       employerName: "",
       FI_address: "",
-      F_placetoVisited:"",
+      F_placetoVisited: "",
       FI_phone: "",
       FI_referencename: "",
       FO_address: "",
@@ -196,66 +293,75 @@ export default function Details(props) {
       // formData.append("passportFile",values.passportFile);
       formData.append("Aoccupation", values.Aoccupation);
       formData.append("Q7Detail", values.Q7Detail);
-      formData.append("employerAddress",values.employerAddress);
+      formData.append("employerAddress", values.employerAddress);
       formData.append("employerName", values.employerName);
       formData.append("F_placetoVisited", values.F_placetoVisited);
-      formData.append("FI_address",values.FI_address);
-      formData.append("FI_phone",values.FI_phone);
-      formData.append("FI_referencename",values.FI_referencename);
-      formData.append("FO_address",values.FO_address);
-      formData.append("FO_phone",values.FO_phone);
-      formData.append("FO_referencename",values.FO_referencename);
-      formData.append("AB_address",values.AB_address);
-      formData.append("AB_name",values.AB_name);
-      formData.append("AB_phone",values.AB_phone);
-      formData.append("AB_website",values.AB_website);
-      formData.append("IB_address",values.IB_address);
-      formData.append("IB_name",values.IB_name);
-      formData.append("IB_phone",values.IB_phone);
-      formData.append("IB_website",values.IB_website);
-     // formData.append("businessFile",values.businessFile); 
+      formData.append("FI_address", values.FI_address);
+      formData.append("FI_phone", values.FI_phone);
+      formData.append("FI_referencename", values.FI_referencename);
+      formData.append("FO_address", values.FO_address);
+      formData.append("FO_phone", values.FO_phone);
+      formData.append("FO_referencename", values.FO_referencename);
+      formData.append("AB_address", values.AB_address);
+      formData.append("AB_name", values.AB_name);
+      formData.append("AB_phone", values.AB_phone);
+      formData.append("AB_website", values.AB_website);
+      formData.append("IB_address", values.IB_address);
+      formData.append("IB_name", values.IB_name);
+      formData.append("IB_phone", values.IB_phone);
+      formData.append("IB_website", values.IB_website);
+      // formData.append("businessFile",values.businessFile);
       formData.append("email", result?.email);
       formData.append("name", result?.name);
       formData.append("firstName", result?.firstName);
-      
+
       setLoader(true);
-     
+
       try {
-        const s3Urlapplicant = await axios.get(process.env.REACT_APP_BASE_URL+'/s3Url')
-      
-        if(s3Urlapplicant.data.url){
-         const res = await fetch(s3Urlapplicant.data.url, {
-            method:'PUT',
+        const s3Urlapplicant = await axios.get(
+          process.env.REACT_APP_BASE_URL + "/s3Url"
+        );
+
+        if (s3Urlapplicant.data.url) {
+          const res = await fetch(s3Urlapplicant.data.url, {
+            method: "PUT",
             headers: {
-              "Content-Type": values.applicantFile.type
+              "Content-Type": values.applicantFile.type,
             },
-            body: values.applicantFile
-          })
-         formData.append('applicantFile', s3Urlapplicant.data.url.split('?')[0])  
+            body: values.applicantFile,
+          });
+          formData.append(
+            "applicantFile",
+            s3Urlapplicant.data.url.split("?")[0]
+          );
         }
 
-        const s3Urlpassport = await axios.get(process.env.REACT_APP_BASE_URL+'/s3Url')
-        if(s3Urlpassport.data.url){
-         const res =  await fetch(s3Urlpassport.data.url, {
-            method:'PUT',
+        const s3Urlpassport = await axios.get(
+          process.env.REACT_APP_BASE_URL + "/s3Url"
+        );
+        if (s3Urlpassport.data.url) {
+          const res = await fetch(s3Urlpassport.data.url, {
+            method: "PUT",
             headers: {
-              "Content-Type": values.passportFile.type
+              "Content-Type": values.passportFile.type,
             },
-            body: values.passportFile
-          })
-         formData.append('passportFile', s3Urlpassport.data.url.split('?')[0])  
+            body: values.passportFile,
+          });
+          formData.append("passportFile", s3Urlpassport.data.url.split("?")[0]);
         }
 
-        const s3business = await axios.get(process.env.REACT_APP_BASE_URL+'/s3Url')
-        if(s3business.data.url && values.businessFile){
-         const res =  await fetch(s3business.data.url, {
-            method:'PUT',
+        const s3business = await axios.get(
+          process.env.REACT_APP_BASE_URL + "/s3Url"
+        );
+        if (s3business.data.url && values.businessFile) {
+          const res = await fetch(s3business.data.url, {
+            method: "PUT",
             headers: {
-              "Content-Type": values.businessFile.type
+              "Content-Type": values.businessFile.type,
             },
-            body: values.businessFile
-          })
-         formData.append('businessFile', s3business.data.url.split('?')[0])  
+            body: values.businessFile,
+          });
+          formData.append("businessFile", s3business.data.url.split("?")[0]);
         }
 
         const response = await axios.put(
@@ -263,7 +369,9 @@ export default function Details(props) {
           formData
         );
         if (response.data.message === "Success") {
-          navigate("/finalStep", { state: { tempId: tempId } });
+          navigate("/application-form/finalStep", {
+            state: { tempId: tempId },
+          });
         }
       } catch (error) {}
       setLoader(false);
@@ -305,7 +413,7 @@ export default function Details(props) {
           fontSize: "14px",
         }}
       >
-        <img src={image}/>
+        <img src={image} />
         <Card>
           <CardHeader
             style={{
@@ -2446,6 +2554,9 @@ export default function Details(props) {
                         in JPEG, PNG or PDF format
                       </b>
                     </span>
+                    <ErrorMessage name="applicantFile">
+                      {(msg) => <div style={{ color: "red", marginTop:"10px", marginLeft:"5px"}}>{msg}</div>}
+                    </ErrorMessage>
                   </Grid>
                   <Grid item xs={12} md={4}>
                     <input
@@ -2471,6 +2582,9 @@ export default function Details(props) {
                         in JPEG, PNG or PDF format
                       </b>
                     </span>
+                    <ErrorMessage name="passportFile">
+                      {(msg) => <div style={{ color: "red", marginTop:"10px", marginLeft:"5px"}}>{msg}</div>}
+                    </ErrorMessage>
                   </Grid>
                   <Grid item xs={12} md={4}>
                     <input

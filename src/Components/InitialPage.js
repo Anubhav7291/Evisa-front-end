@@ -68,7 +68,7 @@ const InitialPage = () => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate("/")
+    navigate("/application-form/payment")
   }
 
 
