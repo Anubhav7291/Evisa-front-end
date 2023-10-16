@@ -105,15 +105,6 @@ const validationSchema = yup.object({
   IB_website: yup
     .string("Enter your Website mark")
     .required("Website mark is required"),
-  defenceOrganization: yup
-    .string("Enter your Organization mark")
-    .required("Organization mark is required"),
-  defenceDesignation: yup
-    .string("Enter your Designation mark")
-    .required("Designation mark is required"),
-  defenceRank: yup
-    .string("Enter your Rank mark")
-    .required("Rank mark is required"),
   martialStatus: yup
     .string("Enter your Martial Status mark")
     .required("Martial Status mark is required"),
