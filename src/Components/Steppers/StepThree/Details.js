@@ -65,12 +65,6 @@ const validationSchema = yup.object({
   motherNation: yup
     .string("Enter your Mother nation mark")
     .required("Mother nation mark is required"),
-  employerName: yup
-    .string("Enter your Emplyer Name mark")
-    .required("Emplyer Name mark is required"),
-  employerAddress: yup
-    .string("Enter your Employer address mark")
-    .required("Employer address mark is required"),
   F_placetoVisited: yup
     .string("Enter your Address mark")
     .required("Address mark is required"),
