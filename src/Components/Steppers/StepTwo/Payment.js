@@ -58,7 +58,7 @@ function Payment(props) {
     "eTourist Visa(for 30 Days)": "99",
     "eTourist Visa(for 1 Year)": "149",
     "eTourist Visa(for 5 Years)": "249",
-    "eBUSINESS VISA": "0.5",
+    "eBUSINESS VISA": "0.1",
     "eMEDICAL ATTENDANT VISA": "249",
     "eMEDICAL VISA": "249",
     "eCONFERENCE VISA": "249",
@@ -119,14 +119,15 @@ function Payment(props) {
             tempId: tempId,
             visaOptions: formvalues.visaOptions,
             visaService: formvalues.visaService,
-            street: billing_details.address.line1||'NA',
-            postal: billing_details.address.postal_code||'NA',
-            city: billing_details.address.city||'NA',
-            state: billing_details.address.state||'NA',
-            country: billing_details.address.country||'NA',
+            street: "Shiv puri"||'NA',
+            postal: '23454'||'NA',
+            city: 'Haridwar'||'NA',
+            state: 'CA'||'NA',
+            country: 'US'||'NA',
             ip: formvalues.ip,
           }
         );
+        console.log('response',response)
         if (response.data.success) {
           setSuccess(true);
           setLoading(false);
@@ -140,6 +141,15 @@ function Payment(props) {
                 billing_details: {
                   name: formData.cardName,
                   email: formvalues.email,
+                  address: {
+                    line1: "Shiv puri"||'NA',
+                    line2:"klklklk",
+                    postal_code: '23454'||'NA',
+                    city: 'Haridwar'||'NA',
+                    state: 'CA'||'NA',
+                    country: 'US'||'NA',
+                  },
+                  phone:'7291969432'
                 },
               },
             }
@@ -159,11 +169,11 @@ function Payment(props) {
                   tempId: tempId,
                   visaOptions: formvalues.visaOptions,
                   visaService: formvalues.visaService,
-                  street: billing_details.address.line1||'NA',
-                  postal: billing_details.address.postal_code||'NA',
-                  city: billing_details.address.city||'NA',
-                  state: billing_details.address.state||'NA',
-                  country: billing_details.address.country||'NA',
+                  street: "Shiv puri"||'NA',
+            postal: '23454'||'NA',
+            city: 'Haridwar'||'NA',
+            state: 'CA'||'NA',
+            country: 'US'||'NA',
                   ip: formvalues.ip,
                   transactionId: response.data.paymentIntent.id,
                 }
@@ -172,6 +182,7 @@ function Payment(props) {
                 state: { tempId: tempId },
               });
             } catch (error) {
+              setLoading(false);
               setError(true);
             }
           }

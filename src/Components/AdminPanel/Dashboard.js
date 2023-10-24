@@ -191,19 +191,19 @@ const Dashboard = (props) => {
           .map((val) => {
             return [
               <Link
-                to="/customerDetail"
+                to="/application-form/customerDetail"
                 onClick={(e) => handleLinkClick(e, val.TempId, false)}
               >
                 {val.TempId}
               </Link>,
               <Link
-                to="/customerDetail"
+                to="/application-form/customerDetail"
                 onClick={(e) => handleLinkClick(e, val.TempId, false)}
               >
                 {val.email}
               </Link>,
               <Link
-                to="/customerDetail"
+                to="/application-form/customerDetail"
                 onClick={(e) => handleLinkClick(e, val.TempId, false)}
               >
                 {val.firstName}
@@ -241,13 +241,13 @@ const Dashboard = (props) => {
                 ":" +
                 new Date(val?.CREATION_TIME).getSeconds(),
               <Link
-                to="/customerDetail"
+                to="/application-form/customerDetail"
                 onClick={(e) => handleLinkClick(e, val.TempId, false)}
               >
                 Form link
               </Link>,
               <Link
-                to="/customerDetail"
+                to="/application-form/customerDetail"
                 onClick={(e) => handleLinkClick(e, val.TempId, true)}
               >
                 Download

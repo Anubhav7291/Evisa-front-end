@@ -21,7 +21,7 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Container fixed style={{ fontFamily: "sans-serif", fontSize: "14px" }}>
-        {window.location.pathname === "/login" ||
+        {window.location.pathname === "/application-form/login" ||
         window.location.pathname === "/application-form/customerDetail" ||
         window.location.pathname === "/application-form/showImage" ||
         window.location.pathname === "/application-form/e-visa" ? null : (
