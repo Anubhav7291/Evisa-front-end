@@ -226,6 +226,7 @@ function Payment(props) {
           {
             tempId: tempId,
             transactionId: order?.purchase_units?.[0].payments.captures[0].id,
+            email: formvalues.email,
           })
           setLoading(false)
          navigate(`/application-form/details/${tempId}`, {
