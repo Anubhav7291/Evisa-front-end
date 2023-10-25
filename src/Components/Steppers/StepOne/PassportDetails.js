@@ -95,7 +95,7 @@ export default function PassportDetails({ formValue, tempId }) {
           formValue
         );
         if (response.data.message === "Success") {
-          navigate("/application-form/payment", { state: { tempId: paramId } });
+          navigate("/application-form/payment", { state: { tempId: paramId, email:formValue.email} });
         }
       } catch (error) {}
       setLoader(false);

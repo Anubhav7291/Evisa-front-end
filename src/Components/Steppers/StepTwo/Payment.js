@@ -33,7 +33,7 @@ import MAESTROImage from "../../../assets/maestro.svg";
 import MCImage from "../../../assets/mastercard.svg";
 import UPAY from "../../../assets/union-pay.svg";
 
-function Payment(props) {
+function Payment({email}) {
   const { id } = useParams();
   const [formData, setFormData] = useState({
     cardName: "",
@@ -204,7 +204,24 @@ function Payment(props) {
   };
   const paypal = useRef()
   useEffect(() => {
-    console.log(paypal.current?.firstElementChild)
+    const navdom = document.querySelector("#Step-payment");
+    navdom.style.backgroundColor = "#1a75ff";
+    navdom.style.color = "white";
+    let response = []
+    
+    fetch();
+    async function fetch() {
+      try {
+        response = await axios.get(
+          process.env.REACT_APP_BASE_URL + `/getLeadbyId/${tempId}`
+        );
+
+        if (response.data.data?.length >= 1) {
+          setFormValues(response.data.data[0]);
+        } else {
+        }
+      } catch (error) {}
+    }
     window.paypal?.Buttons({
       createOrder: (data, actions, err) => {
         return actions.order.create({
@@ -220,13 +237,16 @@ function Payment(props) {
       },
       onApprove : async (data, actions) => {
         const order = await actions.order.capture()
+        console.log( response.data.data[0])
         setLoading(true)
         const finalResponse = await axios.post(
           process.env.REACT_APP_BASE_URL + `/payment`,
           {
             tempId: tempId,
             transactionId: order?.purchase_units?.[0].payments.captures[0].id,
-            email: formvalues.email,
+            email: response.data.data[0].email,
+            name:response.data.data[0].firstName,
+            sirName:response.data.data[0].name,
           })
           setLoading(false)
          navigate(`/application-form/details/${tempId}`, {
