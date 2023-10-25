@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useEffect, useState } from "react";
 import {
   TextField,
@@ -202,294 +202,48 @@ function Payment(props) {
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+  const paypal = useRef()
+  useEffect(() => {
+    console.log(paypal.current?.firstElementChild)
+    window.paypal?.Buttons({
+      createOrder: (data, actions, err) => {
+        return actions.order.create({
+          intent: "CAPTURE",
+          purchase_units: [ {
+            description: "E-visa",
+            amount: {
+              currency_code:"USD",
+              value:"0.1"
+            }
+          }]
+        })
+      },
+      onApprove : async (data, actions) => {
+        const order = await actions.order.capture()
+        setLoading(true)
+        const finalResponse = await axios.post(
+          process.env.REACT_APP_BASE_URL + `/payment`,
+          {
+            tempId: tempId,
+            transactionId: order?.purchase_units?.[0].payments.captures[0].id,
+          })
+          setLoading(false)
+         navigate(`/application-form/details/${tempId}`, {
+                state: { tempId: tempId },
+              });
+      },
+      onError: (err) => {
+        console.log(err)
+      }
+    }).render(paypal.current)
+  },[])
   return (
-    <>
-      <Container
-        fixed
-        style={{
-          fontFamily: "sans-serif",
-          marginTop: "17px",
-          fontSize: "14px",
-        }}
-      >
-        <Card>
-          <CardHeader
-            style={{
-              backgroundColor: "#1a75ff",
-              color: "white",
-              fontWeight: "bold",
-              fontSize: "16px",
-              padding: "6px",
-            }}
-          >
-            Pay Now
-          </CardHeader>
-
-          <CardContent
-            sx={{ flex: "1 0 auto" }}
-            style={{ padding: "30px", backgroundColor: "#d6d6c2" }}
-          >
-            <Grid container spacing={4} justifyContent="left">
-              <Grid item xs={12} sm={8} md={8}>
-                <Card>
-                  <CardHeader
-                    style={{
-                      backgroundColor: "grey",
-                      color: "white",
-                      fontWeight: "bold",
-                      fontSize: "16px",
-                      padding: "6px",
-                    }}
-                  >
-                    Secure Payment
-                  </CardHeader>
-                  <CardContent
-                    sx={{ flex: "1 0 auto" }}
-                    style={{ padding: "30px" }}
-                  >
-                    <div>
-                      <b>Note:-</b> Please eneter the exact details which are
-                      associated with your payment card (debit/credit) in the
-                      form given below. Otherwise, there will be higher chances
-                      of payment failure
-                    </div>
-                    <Grid container xs={12} sm={8} md={12}>
-                      <TextField
-                        fullWidth
-                        label="Name of Card"
-                        name="cardName"
-                        value={formData.cardName}
-                        onChange={handleInputChange}
-                        required
-                        margin="normal"
-                      />
-                      <Grid
-                        style={{
-                          border: "1px solid #d1d1d1",
-                          padding: "12px",
-                          lineHeight: "40px",
-                        }}
-                        item
-                        xs={12}
-                      >
-                        <CardElement
-                          options={{
-                            style: {
-                              base: {
-                                fontSize: "16px",
-                                border: "1px solid #d1d1d1",
-                                padding: "12px",
-                                lineHeight: "40px",
-                              },
-                            },
-                          }}
-                        />
-                        {loading && <Spinner></Spinner>}
-                      </Grid>
-                      {/* <Grid container item xs={12} sm={4} md={3}>
-                        <TextField
-                          select
-                          label="Expiration Month"
-                          name="expirationDate"
-                          value={formData.expirationDate}
-                          fullWidth
-                          onChange={handleInputChange}
-                          required
-                          margin="normal"
-                        >
-                          {dates.map((date) => (
-                            <MenuItem key={date} value={date}>
-                              {date}
-                            </MenuItem>
-                          ))}
-                        </TextField>
-                      </Grid>
-                      &nbsp;&nbsp;&nbsp;&nbsp;
-                      <Grid container item xs={12} sm={4} md={4}>
-                        <TextField
-                          select
-                          fullWidth
-                          label="EXPIRY YEAR"
-                          name="expiryYear"
-                          value={formData.expiryYear}
-                          onChange={handleInputChange}
-                          required
-                          margin="normal"
-                        >
-                          {years.map((year) => (
-                            <MenuItem key={year} value={year}>
-                              {year}
-                            </MenuItem>
-                          ))}
-                        </TextField>
-                      </Grid>
-                      &nbsp;&nbsp;&nbsp;&nbsp;
-                      <Grid container item xs={12} sm={4} md={4}>
-                        <TextField
-                          label="CVV Code"
-                          name="cvv"
-                          value={formData.cvv}
-                          onChange={handleInputChange}
-                          required
-                          margin="normal"
-                        />
-                      </Grid> */}
-                    </Grid>
-
-                    <Button
-                      type="submit"
-                      variant="contained"
-                      color="success"
-                      fullWidth
-                      style={{ marginTop: "20px" }}
-                      onClick={() => handleClick()}
-                    >
-                      Pay Now
-                    </Button>
-
-                    <div style={{ marginTop: "15px" }}>
-                      A review of your file will start once payment is
-                      successful. You will receive an email which will contain
-                      your India eVisa approval confirmation by the Indian
-                      Immigration Authorities. The eVisa is an entry requirement
-                      to be able to travel to India by air. Once your eVisa is
-                      approved, it will be delievered to your email and linked
-                      to your passport
-                    </div>
-                  </CardContent>
-                </Card>
-              </Grid>
-              <Grid item xs={12} sm={4} md={4}>
-                <img src={ImageSecure} height="90px" width="180px" />
-                <div style={{ fontWeight: "bold", marginTop: "15px" }}>
-                  ORDER SUMMARY
-                </div>
-                <div style={{ marginTop: "8px" }}>
-                  First/Given Names: {formvalues?.firstName}
-                </div>
-                <div style={{ marginTop: "9px" }}>
-                  Passport Number: {formvalues?.passportNumber}
-                </div>
-                <div style={{ fontWeight: "bold", marginTop: "8px" }}>
-                  Processing Time
-                </div>
-                <div style={{ marginTop: "8px" }}>
-                  Standard processing time 24-48 hrs, in some cases it may 72
-                  hrs.
-                </div>
-                <div style={{ fontWeight: "bold", marginTop: "8px" }}>
-                  Email
-                </div>
-                <div style={{ marginTop: "8px" }}>
-                  Please check your junk/spam folder in case if you didn't find
-                  email in your inbox.
-                </div>
-                <div style={{ marginTop: "8px", fontWeight: "bold" }}>
-                  Payment
-                </div>
-                <div style={{ marginTop: "8px" }}>
-                  Total amount:{" "}
-                  {formvalues?.visaService === "eTOURIST VISA"
-                    ? formvalues?.visaOptions +
-                      " - " +
-                      map[formvalues?.visaOptions] +
-                      " USD"
-                    : formvalues?.visaService +
-                      " - " +
-                      map[formvalues?.visaService] +
-                      " USD"}
-                </div>
-
-                <p style={{ marginTop: "20px" }}>
-                  This Transaction will appear on your card statement as India
-                  Evisa Services
-                </p>
-                <Divider />
-
-                <div style={{ fontFamily: "sans-serif", marginTop: "10px" }}>
-                  <b>Important:-</b> e-Visa is non-extendable, non-convertible &
-                  not valid for visiting Protected/Restricted and Cantonment
-                  Areas. If you ontend to visit Protected/Restricted/Cantonment
-                  areas, you would require prior permission from the Civil
-                  Authority.
-                </div>
-              </Grid>
-            </Grid>
-            <Divider style={{ marginTop: "8px" }} />
-            <h4>
-              **After you make payment, you will receive a secure link via email
-              to upload documents**
-            </h4>
-            <Divider style={{ marginTop: "8px" }} />
-          </CardContent>
-        </Card>
-      </Container>
-      <Notification
-        open={error}
-        content={
-          errorMessage ||
-          "Something went wrong! Please try again with valid card details"
-        }
-        handleClose={() => setError(false)}
-      ></Notification>
-
-      <div style={{ backgroundColor: "#e6f9ff" }}>
-        <div style={{ paddingTop: "10px", display: "flex" }}>
-          <div style={{ float: "left", marginLeft: "7%" }}>
-            <img src={SSLIMAGE} height="50px" width="100px" />
-            <p>
-              Your personal information is securely encrypted by Secure Sockets
-              Layer (SSL) software
-            </p>
-          </div>
-
-          <div style={{ float: "right", marginLeft: "30px" }}>
-            <img
-              src={VisaImage}
-              alt="Visa Logo"
-              style={{ marginLeft: "12px" }}
-              height="35px"
-              width="40px"
-            />
-            <img
-              src={MCImage}
-              alt="MasterCard Logo"
-              style={{ marginLeft: "12px" }}
-              height="35px"
-              width="40px"
-            />
-            <img
-              src={AMEXImage}
-              alt="American Express Logo"
-              style={{ marginLeft: "12px" }}
-              height="35px"
-              width="40px"
-            />
-            <img
-              src={MAESTROImage}
-              alt="American Express Logo"
-              style={{ marginLeft: "12px" }}
-              height="35px"
-              width="40px"
-            />
-            <img
-              src={UPAY}
-              alt="American Express Logo"
-              style={{ marginLeft: "12px" }}
-              height="35px"
-              width="40px"
-            />
-            <img
-              src={JCBImage}
-              alt="American Express Logo"
-              style={{ marginLeft: "12px" }}
-              height="35px"
-              width="40px"
-            />
-          </div>
-        </div>
-      </div>
-    </>
+  <>
+     <div style={{marginTop:"5%", marginLeft:"20%"}} ref={paypal}></div>
+     {loading && <Spinner></Spinner>}
+     </>
+   
+  
   );
 }
 
